@@ -18,7 +18,7 @@
         
     </title>
 
-    <link rel="canonical" href="http://jimwang97.github.io/page/4/">
+    <link rel="canonical" href="http://jimwang97.github.io/archives/2/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -220,28 +220,228 @@
 
 <div class="post-preview">
 
-    <a href="/article/操作系统/内核态和用户态以及其切换/">
+    <a href="/article/计网/TCP停止等待协议、连续ARQ协议/">
         <h2 class="post-title">
                                  
-            进程线程间的通信方式
+            TCP停止等待协议、连续ARQ协议
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            进程线程间的通信方式
-为什么进程间需要通信
-进程是一个独立的资源分配单元，不同进程（这里所说的进程通常指的是用户进程）之间的资源是独立的，没有关联，不能在一个进程中直接访问另一个进程的资源（例如打开的文件描述符）。
-进程间通信的目的：
+            TCP停止等待协议、连续ARQ协议
+停止等待协议
+所谓停止等待协议就是每发送完一组数据后，等待对方确认并且收到确认后，再发送下一组数据。
+可能会发生四种情况：无差错，出现差错，确认丢失和确认迟到
+出现差错
+当B收到M1时，检测出了差错，就抛弃M1，并什么也不做
+A在超过一段时间仍然没有收到确认，就认为数据丢失了，然后会重传一次。这叫超时重传
 
-数据传输：一个进程需要将它的数据发送给另一个进程。
-通知事件：一个进程需要向另一个或一组进程发送消息，通知它（它们）发生了某种事件（如进程终止时要通知父进程......
+确认丢失
+当A发送M1消息，B收到后，B向A发送......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-01-28
+            2021-02-10
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/计网/TCP流量控制和拥塞控制/">
+        <h2 class="post-title">
+                                 
+            TCP流量控制和拥塞控制
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            TCP流量控制和拥塞控制
+什么是拥塞控制和流量控制
+流量控制：如果发送方把数据发送得过快，接收方可能会来不及接收，这就会造成数据的丢失。
+TCP的流量控制是利用滑动窗口机制实现的，接收方在返回的数据中会包含自己的接收窗口的大小，以控制发送方的数据发送。
+拥塞控制：拥塞控制就是防止过多的数据注入到网络中，这样可以使网络中的路由器或链路不致过载。
+两者的区别：流量控制是为了预防拥塞。如：在马路上......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-10
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/计网/TCP粘包和拆包/">
+        <h2 class="post-title">
+                                 
+            TCP粘包和拆包
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            TCP粘包和拆包
+什么是粘包和拆包
+为了提高带宽利用率，tcp协议会使用Nagle算法，将多个数据包打包成一个tcp报文发送出去，这就是所谓的粘包。
+而如果通讯的一端发送的数据包超过一次tcp报文所能传输的最大值MTU时，就会将一个数据包拆成多个最大tcp长度的tcp报文分开传输，这就叫做拆包。
+MTU:
+泛指通讯协议中的最大传输单元。一般用来说明TCP/IP四层协议中数据链路层的最大传输单......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-10
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/计网/TCP三次握手和四次挥手/">
+        <h2 class="post-title">
+                                 
+            TCP三次握手和四次挥手
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            TCP三次握手和四次挥手
+TCP是可靠的双向通道传输协议，所以需要三次握手建立连接和四次挥手关闭连接来保证信息传输的可靠性。
+报文标识位
+先来了解一下TCP在握手连接时候的报文用到的标志位。
+
+SYN：建立连接消息的标志
+ACK（Acknowledgment Number）：应答消息的标志
+FIN：连接关闭的标志
+
+三次握手
+
+第一次握手：建立连接。客户端发送SYN连接请求报文段，将SYN位......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-09
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/计网/OSI七层协议、TCPIP四层协议/">
+        <h2 class="post-title">
+                                 
+            OSI七层协议、TCP/IP四层协议
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            OSI七层协议、TCP/IP四层协议
+
+
+
+OSI七层网络模型
+TCP/IP四层概念模型
+对应网络协议
+
+
+
+
+应用层（Application）
+应用层
+HTTP、TFTP, FTP, NFS, WAIS、SMTP
+
+
+表示层（Presentation）
+应用层
+Telnet, Rlogin, SNMP, Gopher
+
+
+会话层（Session）
+应用层
+SMTP, DNS
+
+
+传输层（T......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-08
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/操作系统/页面置换算法/">
+        <h2 class="post-title">
+                                 
+            页面置换算法
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            页面置换算法
+当通过虚拟地址映射物理地址的过程中，发现页面不存在，此时就会发生缺页中断。需要通过页面置换算法将硬盘中的信息置换到内存中
+最佳置换算法 OPT
+从主存中移出永远不再需要的页面；如无这样的页面存在，则选择最长时间不需要访问的页面。于所选择的被淘汰页面将是以后永不使用的，或者是在最长时间内不再被访问的页面，这样可以保证获得最低的缺页率。
+先进先出置换算法 FIFO
+是最简单的页面置......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-06
         </p>
         <div class="tags">
             
@@ -255,27 +455,135 @@
 
 <div class="post-preview">
 
-    <a href="/article/操作系统/OS的运行机制和体系结构/">
+    <a href="/article/操作系统/死锁/">
         <h2 class="post-title">
                                  
-            OS的运行机制和体系结构
+            死锁
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            OS的运行机制和体系结构
+            死锁
+什么是死锁
+在并发环境下，各进程竞争资源而造成的一种相互等待对方手里资源，导致各个进程都阻塞，都无法向前推进的现象，就是死锁
+死锁的必要条件
 
-什么是指令
-代码都会被翻译成很多条的指令执行，每一条指令就是让cpu干一些工作。“指令”就是CPU能识别、执行的最基本命令。比如加法指令。
-有的指令是普通的指令，比如加减乘除运算指令，我们称它为非特权指令。而有的指令拥有着很高的权限，比如内存清零、关机等，一旦用户程序执行了这个指令，可能会造成严重的后果，我们称这样的指令为特权指令。
-特权指令不允许普通的用户程序使......
+互斥条件：对必须互斥访问的资源的争抢才会导致死锁
+不可剥夺条件：进程所获的的资源没有使用完之前，不能由其他进程强行夺走，只能主动释放
+循环等待条件：存在循环等待链，链上的每一个进程已经获得的资源被下一个进程请求。
+请求和保持条件：进程已经获取了......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-01-28
+            2021-02-06
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/操作系统/生产者消费者问题/">
+        <h2 class="post-title">
+                                 
+            生产者消费者问题
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            生产者消费者问题
+
+对于缓冲区而言是互斥的，同一时刻只能由一个进程完成生产或消费（缓冲区是临界资源，各进程必须互斥的访问）
+生产者、消费者共享一个初始为空、大小为n的缓冲区。
+只有缓冲区没满时，生产者才能把产品放进缓冲区，否则必须等待。
+只有缓冲区不空时，消费者才能从中取出产品，否则等待。
+1234567891011121314151617181920212223242526272829se......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-06
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/操作系统/进程同步与进程互斥/">
+        <h2 class="post-title">
+                                 
+            进程同步与进程互斥
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            进程同步与进程互斥
+进程互斥
+进程互斥也称为间接制约关系，进程间对临界资源的访问，必须是互斥的执行。指一个进程进入临界区访问临界资源的时候，其他进程只能等待。
+123456do &#123;    entry section;  // 进入区 检查是否可以进入临界区，可以进入，设置访问临界资源的标志，防止其他进程进入    critical section; // 临界区  访问临界资源的代......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-04
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/操作系统/调度算法/">
+        <h2 class="post-title">
+                                 
+            调度算法
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            调度算法
+调度算法的评价指标
+cpu利用率 = 忙碌时间 / 总时间
+系统吞吐量 = 总完成作业 / 总时间，单位时间内完成作业数量
+周转时间 = 作业完成时间 - 作业到达时间，包含各种等待时间
+等待时间 = 进程建立之后等待到被服务的时间之和 + 在外存后备队列等待时间（进行时等待IO不算）
+响应时间 = 用户提交请求到首次产生响应的时间
+调度算法
+先来先服务FCFS
+既可以用于作业调度......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-04
         </p>
         <div class="tags">
             
@@ -294,9 +602,13 @@
 <ul class="pager">
     
         <li class="previous">
-            <a href="/page/3/">&larr; Newer Posts</a>
+            <a href="/">&larr; Newer Posts</a>
         </li>
     
+    
+        <li class="next">
+            <a href="/archives/3/">Older Posts &rarr;</a>
+        </li>
     
 </ul>
 
