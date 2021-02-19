@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          IO模型 - JimWang | Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://jimwang97.github.io/article/操作系统/IO模型/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/article_header/background.jpg')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#操作系统" title="操作系统">操作系统</a>
+                            
+                        </div>
+                        <h1 style="font-weight: bolder; font-size: 72px; font-family: Hannotate SC;">IO模型</h1>
+                        <h2 class="subheading" style="font-weight: bolder; font-size: x-large; font-family: Hannotate SC;"></h2>
+                        <span class="meta">
+                            Posted by JimWang on
+                            2021-02-02
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">JimBlog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+		   <li>
+                        <a href="/tags"> Tags</a>
+                    </li>
+		   <li>
+                        <a href="/archives"> Archives </a>
+                    </li>
+		   <li>
+                        <a href="/about"> About </a>
+                    </li>
+<!--
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+-->                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="io模型">IO模型</h1>
+<h2 id="同步阻塞io-blocking-io-也叫做bio">同步阻塞IO (blocking IO) 也叫做BIO</h2>
+<p><img src="https://gitee.com/super-jimwang/img/raw/master/img/20210202201654.png" alt="image-20210202201654267"></p>
+<p>用户线程通过系统调用read发起IO读操作，由用户空间转到内核空间。内核等到数据包到达后，然后将接收的数据拷贝到用户空间，完成read操作。</p>
+<p><strong>整个读取过程，用户线程是被阻塞的，导致在发起IO请求时，不能做任何事情，对CPU资源利用不够</strong></p>
+<h2 id="同步非阻塞io-non-blocking-io-也叫做nio">同步非阻塞IO (Non-blocking IO) 也叫做NIO</h2>
+<p>同步非阻塞IO是在同步阻塞IO的基础上，将socket设置为NONBLOCK。这样做用户线程可以在发起IO请求后可以立即返回。</p>
+<p><img src="https://gitee.com/super-jimwang/img/raw/master/img/20210202201839.png" alt="image-20210202201839390"></p>
+<p>由于socket是非阻塞的方式，因此用户线程发起IO请求时立即返回。但并未读取到任何数据，<strong>用户线程需要不断地发起IO请求，直到数据到达后，才真正读取到数据，继续执行。</strong></p>
+<p><strong>不断的轮询，重复请求，会消耗大量的cpu资源</strong></p>
+<h2 id="io多路复用-也叫做异步阻塞模型">IO多路复用 也叫做异步阻塞模型</h2>
+<p>IO多路复用是一种同步IO模型，实现一个线程可以监控多个文件句柄。一旦某个文件句柄就绪，就能通知应用程序进行相应的IO操作。没有文件句柄时就会发生阻塞，交出cpu。多路指多个文件句柄，复用指同一个线程</p>
+<p>一句话解释：单线程或单进程同时监控若干个文件描述符是否可以执行IO操作的能力</p>
+<p><img src="https://gitee.com/super-jimwang/img/raw/master/img/20210202202204.png" alt="image-20210202202204434"></p>
+<p>IO多路复用模型是建立在内核提供的多路分离函数select基础之上的，使用select函数可以避免同步非阻塞IO模型中轮询等待的问题。</p>
+<p><strong>用户首先将需要进行IO操作的socket添加到select中，然后阻塞等待select系统调用返回。当数据到达时，socket被激活，select函数返回。用户线程正式发起read请求，读取数据并继续执行。</strong></p>
+<p><strong>这里与BIO类似，等待数据到达的时间都是会阻塞的。但是好处在于一个线程可以设置多个监听socket，不断的调用select函数，从而激活不同的socket，达到在同一个线程内同时处理多个IO请求的目的</strong></p>
+<h3 id="使用reactor设计模式的多路复用">使用Reactor设计模式的多路复用</h3>
+<p><img src="https://gitee.com/super-jimwang/img/raw/master/img/20210202202741.png" alt="image-20210202202741071"></p>
+<p>通过Reactor的方式，可以将用户线程轮询IO操作状态的工作统一交给handle_events事件循环进行处理。<strong>用户线程注册事件处理器之后可以继续执行做其他的工作（异步），而Reactor线程负责调用内核的select函数检查socket状态。当有socket被激活时，则通知相应的用户线程（或执行用户线程的回调函数），执行handle_event进行数据读取、处理的工作。</strong></p>
+<p>由于select是阻塞的，而用户线程异步，因此也称为<strong>异步阻塞模型</strong></p>
+<h3 id="select函数接口-使用示例">select函数接口、使用示例</h3>
+<p>接口</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/select.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/time.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FD_SETSIZE 1024</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NFDBITS (8 * sizeof(unsigned long))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __FDSET_LONGS (FD_SETSIZE/NFDBITS)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 数据结构 (bitmap)</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> fds_bits[__FDSET_LONGS];</span><br><span class="line">&#125; fd_set;</span><br><span class="line"></span><br><span class="line"><span class="comment">// API</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">select</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">int</span> max_fd, </span></span></span><br><span class="line"><span class="function"><span class="params">    fd_set *readset,  <span class="comment">// 读 写 异常三张bitmap</span></span></span></span><br><span class="line"><span class="function"><span class="params">    fd_set *writeset, </span></span></span><br><span class="line"><span class="function"><span class="params">    fd_set *exceptset, </span></span></span><br><span class="line"><span class="function"><span class="params">    struct timeval *timeout</span></span></span><br><span class="line"><span class="function"><span class="params">)</span>                              <span class="comment">// 返回值就绪描述符的数目</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">FD_ZERO</span><span class="params">(<span class="keyword">int</span> fd, fd_set* fds)</span>   <span class="comment">// 清空集合</span></span></span><br><span class="line"><span class="function"><span class="title">FD_SET</span><span class="params">(<span class="keyword">int</span> fd, fd_set* fds)</span>    <span class="comment">// 将给定的描述符加入集合</span></span></span><br><span class="line"><span class="function"><span class="title">FD_ISSET</span><span class="params">(<span class="keyword">int</span> fd, fd_set* fds)</span>  <span class="comment">// 判断指定描述符是否在集合中 </span></span></span><br><span class="line"><span class="function"><span class="title">FD_CLR</span><span class="params">(<span class="keyword">int</span> fd, fd_set* fds)</span>    <span class="comment">// 将给定的描述符从文件中删除</span></span></span><br></pre></td></tr></table></figure>
+<p>示例</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">   * 这里进行一些初始化的设置，</span></span><br><span class="line"><span class="comment">   * 包括socket建立，地址的设置等,</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line"></span><br><span class="line">  fd_set read_fs, write_fs;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">timeout</span>;</span></span><br><span class="line">  <span class="keyword">int</span> max = <span class="number">0</span>;  <span class="comment">// 用于记录最大的fd，在轮询中时刻更新即可</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 初始化比特位</span></span><br><span class="line">  FD_ZERO(&amp;read_fs);</span><br><span class="line">  FD_ZERO(&amp;write_fs);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> nfds = <span class="number">0</span>; <span class="comment">// 记录就绪的事件，可以减少遍历的次数</span></span><br><span class="line">  <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="comment">// 1.阻塞获取 将所有的 fd_set 传入内核 让它帮我们监听是否有事件准备就绪</span></span><br><span class="line">    <span class="comment">// 2.每次需要把多有的fd_set从用户态拷贝到内核态  read_fd write_fd...</span></span><br><span class="line">    <span class="comment">// 3.nfds 表示内核返回给你有多少个 fd 准备就绪了，并将有数据的fd在bitmap中置位</span></span><br><span class="line">    <span class="comment">// 这里就是使用select 返回的是就绪描述符的数目</span></span><br><span class="line">    nfds = select(max + <span class="number">1</span>, &amp;read_fd, &amp;write_fd, <span class="literal">NULL</span>, &amp;timeout); <span class="comment">// 这里的max+1主要是为了告诉内核最大fd的，以便内核监听</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 1.用户态的进程是不知道到底哪个 fd 准备就绪的，那么它就需要再遍历一遍之前需要遍历所有的 fd</span></span><br><span class="line">    <span class="comment">// 2.判断有无读写事件发生 看下哪几个数据准备就绪了，然后进行处理</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= max &amp;&amp; nfds; ++i) &#123;</span><br><span class="line">      <span class="keyword">if</span> (i == listenfd) &#123;</span><br><span class="line">         --nfds;</span><br><span class="line">         <span class="comment">// 这里处理accept事件</span></span><br><span class="line"></span><br><span class="line">         FD_SET(i, &amp;read_fd);<span class="comment">//将客户端socket加入到集合中</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (FD_ISSET(i, &amp;read_fd)) &#123;</span><br><span class="line">        --nfds;</span><br><span class="line">        <span class="comment">// 这里处理read事件</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (FD_ISSET(i, &amp;write_fd)) &#123;</span><br><span class="line">         --nfds;</span><br><span class="line">        <span class="comment">// 这里处理write事件</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>缺点</strong></p>
+<ul>
+<li>单个进程所打开的FD是有限制的，通过FD_SETSIZE设置，默认1024。==因为select使用描述字集，典型地是一个整数数组，其中每个整数中的每一位对应一个文件描述字。==</li>
+<li>每次调用select，都需要把fd_set（文件描述符标记的bitmap）从用户态拷贝到内核态，这个开销在fd很多时会很大。这个fd_set由于会改变，所以不可重用。</li>
+<li>唤醒的时候由于进程不知道是哪个 fd 已经就绪，需要进行一次遍历，采用轮询的方法，效率较低（高并发时）<code>for (int i = 0; i &lt;= max &amp;&amp; nfds; ++i)</code></li>
+</ul>
+<h3 id="poll函数">poll函数</h3>
+<p>功能与select类似</p>
+<p>接口</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;poll.h&gt;</span></span></span><br><span class="line"><span class="comment">// 数据结构</span></span><br><span class="line"><span class="comment">// 没有使用bitmap带来了一定好处</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pollfd</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> fd;                         <span class="comment">// 需要监视的文件描述符</span></span><br><span class="line">    <span class="keyword">short</span> events;                   <span class="comment">// 需要内核监视的事件</span></span><br><span class="line">    <span class="keyword">short</span> revents;                  <span class="comment">// 实际发生的事件</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// API</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">poll</span><span class="params">(struct pollfd fds[], <span class="keyword">nfds_t</span> nfds, <span class="keyword">int</span> timeout)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>示例</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 先宏定义长度</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_POLLFD_LEN 4096  </span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">   * 在这里进行一些初始化的操作，</span></span><br><span class="line"><span class="comment">   * 比如初始化数据和socket等。</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> nfds = <span class="number">0</span>;</span><br><span class="line">  pollfd fds[MAX_POLLFD_LEN];</span><br><span class="line">  <span class="built_in">memset</span>(fds, <span class="number">0</span>, <span class="keyword">sizeof</span>(fds));</span><br><span class="line">  fds[<span class="number">0</span>].fd = listenfd;</span><br><span class="line">  fds[<span class="number">0</span>].events = POLLRDNORM;</span><br><span class="line">  <span class="keyword">int</span> max  = <span class="number">0</span>;  <span class="comment">// 队列的实际长度，是一个随时更新的，也可以自定义其他的</span></span><br><span class="line">  <span class="keyword">int</span> timeout = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> current_size = max;</span><br><span class="line">  <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="comment">// 1. 阻塞获取  每次需要把pollfd数组从用户态拷贝到内核态</span></span><br><span class="line">    <span class="comment">// 2. 当内核监听到有事件就绪的时候，会把pollfd结构体中的revents置成内核监听事件，并返回就绪数目</span></span><br><span class="line">    nfds = poll(fds, max+<span class="number">1</span>, timeout);</span><br><span class="line">    <span class="keyword">if</span> (fds[<span class="number">0</span>].revents &amp; POLLRDNORM) &#123;</span><br><span class="line">        <span class="comment">// 这里处理accept事件</span></span><br><span class="line">        connfd = accept(listenfd);</span><br><span class="line">        <span class="comment">//将新的描述符添加到读描述符集合中</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 每次需要遍历所有fd，判断有无读写事件发生</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; max; ++i) &#123;</span><br><span class="line">      <span class="comment">// 可以修改fds[i].fd 和 fds[i].revents = 0 实现复用</span></span><br><span class="line">      <span class="keyword">if</span> (fds[i].revents &amp; POLLRDNORM) &#123; </span><br><span class="line">         sockfd = fds[i].fd</span><br><span class="line">         <span class="keyword">if</span> ((n = read(sockfd, buf, MAXLINE)) &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">// 这里处理read事件</span></span><br><span class="line">            <span class="keyword">if</span> (n == <span class="number">0</span>) &#123;</span><br><span class="line">                close(sockfd);</span><br><span class="line">                fds[i].fd = <span class="number">-1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">         &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">             <span class="comment">// 这里处理write事件     </span></span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">if</span> (--nfds &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">break</span>;       </span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果有就绪的poll是会改变其结构体pollfd内的events置成内核监听事件</p>
+<p><strong>优点</strong></p>
+<ul>
+<li>相比select 文件描述符的数量已不再受限制</li>
+<li>可以修改fds[i].fd文件描述符 和 fds[i].revents = 0 实现数组的复用</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>每次调用poll，都需要把pollfd集合从用户态拷贝到内核态，这个开销在fd很多时会很大</li>
+<li>对fd集合扫描时仍然是线性扫描，采用轮询的方法，效率较低（高并发时）<code>for (int i = 1; i &lt; max; ++i)</code></li>
+</ul>
+<h3 id="epoll函数">epoll函数</h3>
+<p>接口</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/epoll.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 数据结构</span></span><br><span class="line"><span class="comment">// 每一个epoll对象都有一个独立的eventpoll结构体</span></span><br><span class="line"><span class="comment">// 用于存放通过epoll_ctl方法向epoll对象中添加进来的事件</span></span><br><span class="line"><span class="comment">// epoll_wait检查是否有事件发生时，只需要检查eventpoll对象中的rdlist双链表中是否有epitem元素即可</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">eventpoll</span> &#123;</span></span><br><span class="line">    <span class="comment">/*红黑树的根节点，这颗树中存储着所有添加到epoll中的需要监控的事件*/</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">rb_root</span>  <span class="title">rbr</span>;</span></span><br><span class="line">    <span class="comment">/*双链表中则存放着将要通过epoll_wait返回给用户的满足条件的事件*/</span></span><br><span class="line">    <span class="comment">// 就绪队列</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">rdlist</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// API</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 内核中加一个 eventpoll 对象，把所有需要监听的 fd 都放到这个对象中</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">epoll_create</span><span class="params">(<span class="keyword">int</span> size)</span></span>; </span><br><span class="line"><span class="comment">// epoll_ctl 负责把 fd 增加、删除到内核红黑树</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">epoll_ctl</span><span class="params">(<span class="keyword">int</span> epfd, <span class="keyword">int</span> op, <span class="keyword">int</span> fd, struct epoll_event *event)</span></span>;</span><br><span class="line"><span class="comment">// epoll_wait 负责检测红黑树，就绪则放到可读队列，没有可读 fd 则阻塞进程</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">epoll_wait</span><span class="params">(<span class="keyword">int</span> epfd, struct epoll_event * events, <span class="keyword">int</span> maxevents, <span class="keyword">int</span> timeout)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">epoll_event</span> &#123;</span></span><br><span class="line">    <span class="keyword">__uint32_t</span> events; <span class="comment">// 回调事件</span></span><br><span class="line">    <span class="keyword">epoll_data_t</span> data; <span class="comment">// 存储fd等</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>示例</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="comment">/*</span></span><br><span class="line"><span class="comment">   * 在这里进行一些初始化的操作，</span></span><br><span class="line"><span class="comment">   * 比如初始化数据和socket等。</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 内核中创建eventpoll对象</span></span><br><span class="line">    epfd=epoll_create(<span class="number">256</span>);</span><br><span class="line">    <span class="comment">// 需要监听的epfd 放到 eventpoll中</span></span><br><span class="line">    epoll_ctl(epfd,EPOLL_CTL_ADD,listenfd,&amp;ev);</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line">      <span class="comment">// 阻塞获取 准备好了的 epfd。</span></span><br><span class="line">      <span class="comment">// 内核监测到就绪的事件之后，把时间放到rdlist</span></span><br><span class="line">      nfds = epoll_wait(epfd,events,<span class="number">20</span>,<span class="number">0</span>);</span><br><span class="line">      <span class="comment">// 这里就直接对收到就绪的rdlist 进行遍历  不需要再遍历所有的 fd</span></span><br><span class="line">      <span class="comment">// 是怎么做到的呢，下面继续分析</span></span><br><span class="line">      <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;nfds;++i) &#123;</span><br><span class="line">          <span class="keyword">if</span>(events[i].data.fd==listenfd) &#123;</span><br><span class="line">              <span class="comment">// 这里处理accept事件</span></span><br><span class="line">              connfd = accept(listenfd);</span><br><span class="line">              <span class="comment">// 接收新连接写到内核对象中</span></span><br><span class="line">              epoll_ctl(epfd,EPOLL_CTL_ADD,connfd,&amp;ev);</span><br><span class="line">          &#125; <span class="keyword">else</span> <span class="keyword">if</span> (events[i].events&amp;EPOLLIN) &#123;</span><br><span class="line">              <span class="comment">// 这里处理read事件</span></span><br><span class="line">              read(sockfd, BUF, MAXLINE);</span><br><span class="line">              <span class="comment">//读完后准备写</span></span><br><span class="line">              epoll_ctl(epfd,EPOLL_CTL_MOD,sockfd,&amp;ev);</span><br><span class="line">          &#125; <span class="keyword">else</span> <span class="keyword">if</span>(events[i].events&amp;EPOLLOUT) &#123;</span><br><span class="line">              <span class="comment">// 这里处理write事件</span></span><br><span class="line">              write(sockfd, BUF, n);</span><br><span class="line">              <span class="comment">//写完后准备读</span></span><br><span class="line">              epoll_ctl(epfd,EPOLL_CTL_MOD,sockfd,&amp;ev);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>epolln内部存了一个列表，所以不需要遍历所有的fd了，只需要遍历这个列表就行了<code>for(i=0;i&lt;nfds;++i)</code></p>
+<h2 id="异步io">异步IO</h2>
+<p><img src="https://gitee.com/super-jimwang/img/raw/master/img/20210202203301.png" alt="image-20210202203301515"></p>
+<p>异步IO模型中，用户线程直接使用内核提供的异步IO API发起read请求，且发起后立即返回，继续执行用户线程代码。不过此时用户线程已经将调用的AsynchronousOperation和CompletionHandler注册到内核，然后操作系统开启独立的内核线程去处理IO操作。当read请求的数据到达时，由内核负责读取socket中的数据，并写入用户指定的缓冲区中。最后内核将read的数据和用户线程注册的CompletionHandler分发给内部Proactor，Proactor将IO完成的信息通知给用户线程（一般通过调用用户线程注册的完成事件处理函数），完成异步IO。</p>
+<p><strong>在多路复用中，用户线程是收到Reactor的通知，再去拷贝数据，而在异步IO中，内核会直接读取socket中的数据，拷贝到指定缓冲区，再通知用户。</strong></p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/article/操作系统/处理机调度/" data-toggle="tooltip" data-placement="top" title="处理机调度">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/article/操作系统/线程/" data-toggle="tooltip" data-placement="top" title="线程">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#io模型"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">IO&#x6A21;&#x578B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#同步阻塞io-blocking-io-也叫做bio"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x540C;&#x6B65;&#x963B;&#x585E;IO (blocking IO) &#x4E5F;&#x53EB;&#x505A;BIO</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#同步非阻塞io-non-blocking-io-也叫做nio"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x540C;&#x6B65;&#x975E;&#x963B;&#x585E;IO (Non-blocking IO) &#x4E5F;&#x53EB;&#x505A;NIO</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#io多路复用-也叫做异步阻塞模型"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">IO&#x591A;&#x8DEF;&#x590D;&#x7528; &#x4E5F;&#x53EB;&#x505A;&#x5F02;&#x6B65;&#x963B;&#x585E;&#x6A21;&#x578B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用reactor设计模式的多路复用"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">&#x4F7F;&#x7528;Reactor&#x8BBE;&#x8BA1;&#x6A21;&#x5F0F;&#x7684;&#x591A;&#x8DEF;&#x590D;&#x7528;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#select函数接口-使用示例"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">select&#x51FD;&#x6570;&#x63A5;&#x53E3;&#x3001;&#x4F7F;&#x7528;&#x793A;&#x4F8B;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#poll函数"><span class="toc-nav-number">1.3.3.</span> <span class="toc-nav-text">poll&#x51FD;&#x6570;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#epoll函数"><span class="toc-nav-number">1.3.4.</span> <span class="toc-nav-text">epoll&#x51FD;&#x6570;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#异步io"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">&#x5F02;&#x6B65;IO</span></a></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/JimWang97">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/宇靖-王-554272190">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; JimWang 2021 
+                    <br>
+                    Theme by BeanTech
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://jimwang97.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://jimwang97.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
