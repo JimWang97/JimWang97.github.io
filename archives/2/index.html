@@ -18,7 +18,7 @@
         
     </title>
 
-    <link rel="canonical" href="http://jimwang97.github.io/page/3/">
+    <link rel="canonical" href="http://jimwang97.github.io/archives/2/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -150,14 +150,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -220,33 +220,326 @@
 
 <div class="post-preview">
 
-    <a href="/article/操作系统/进程调度的时机、切换与过程、方式/">
+    <a href="/article/计网/TCP停止等待协议、连续ARQ协议/">
         <h2 class="post-title">
                                  
-            进程调度的时机、切换与过程、方式
+            TCP停止等待协议、连续ARQ协议
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            进程调度的时机、切换与过程、方式
-进程调度的时机
-需要进行进程调度与切换的情况
+            TCP停止等待协议、连续ARQ协议
+停止等待协议
+所谓停止等待协议就是每发送完一组数据后，等待对方确认并且收到确认后，再发送下一组数据。
+可能会发生四种情况：无差错，出现差错，确认丢失和确认迟到
+出现差错
+当B收到M1时，检测出了差错，就抛弃M1，并什么也不做
+A在超过一段时间仍然没有收到确认，就认为数据丢失了，然后会重传一次。这叫超时重传
 
-当前运行的进程主动放弃处理器
+确认丢失
+当A发送M1消息，B收到后，B向A发送......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-10
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
+            
+        </div>
+    
 
-如（1.进程正常终止。2.运行过程中发生异常而终止。3.进程主动请求阻塞（如等待I/O））
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/计网/TCP流量控制和拥塞控制/">
+        <h2 class="post-title">
+                                 
+            TCP流量控制和拥塞控制
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            TCP流量控制和拥塞控制
+什么是拥塞控制和流量控制
+流量控制：如果发送方把数据发送得过快，接收方可能会来不及接收，这就会造成数据的丢失。
+TCP的流量控制是利用滑动窗口机制实现的，接收方在返回的数据中会包含自己的接收窗口的大小，以控制发送方的数据发送。
+拥塞控制：拥塞控制就是防止过多的数据注入到网络中，这样可以使网络中的路由器或链路不致过载。
+两者的区别：流量控制是为了预防拥塞。如：在马路上......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-10
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/计网/TCP粘包和拆包/">
+        <h2 class="post-title">
+                                 
+            TCP粘包和拆包
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            TCP粘包和拆包
+什么是粘包和拆包
+为了提高带宽利用率，tcp协议会使用Nagle算法，将多个数据包打包成一个tcp报文发送出去，这就是所谓的粘包。
+而如果通讯的一端发送的数据包超过一次tcp报文所能传输的最大值MTU时，就会将一个数据包拆成多个最大tcp长度的tcp报文分开传输，这就叫做拆包。
+MTU:
+泛指通讯协议中的最大传输单元。一般用来说明TCP/IP四层协议中数据链路层的最大传输单......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-10
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/计网/TCP三次握手和四次挥手/">
+        <h2 class="post-title">
+                                 
+            TCP三次握手和四次挥手
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            TCP三次握手和四次挥手
+TCP是可靠的双向通道传输协议，所以需要三次握手建立连接和四次挥手关闭连接来保证信息传输的可靠性。
+报文标识位
+先来了解一下TCP在握手连接时候的报文用到的标志位。
+
+SYN：建立连接消息的标志
+ACK（Acknowledgment Number）：应答消息的标志
+FIN：连接关闭的标志
+
+三次握手
+
+第一次握手：建立连接。客户端发送SYN连接请求报文段，将SYN位......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-09
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/计网/OSI七层协议、TCPIP四层协议/">
+        <h2 class="post-title">
+                                 
+            OSI七层协议、TCP/IP四层协议
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            OSI七层协议、TCP/IP四层协议
 
 
-当前运行的进程被动放弃处理器
 
-如（1.分给进程的时间片用完了。2.有更紧急的事要要处理（如I/O中断）。3.有更高优先级的进程加入阻塞队列）
+OSI七层网络模型
+TCP/IP四层概念模型
+对应网络协议
 
 
 
-不需要进行进程调度与切换的情况
 
-......
+应用层（Application）
+应用层
+HTTP、TFTP, FTP, NFS, WAIS、SMTP
+
+
+表示层（Presentation）
+应用层
+Telnet, Rlogin, SNMP, Gopher
+
+
+会话层（Session）
+应用层
+SMTP, DNS
+
+
+传输层（T......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-08
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/操作系统/页面置换算法/">
+        <h2 class="post-title">
+                                 
+            页面置换算法
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            页面置换算法
+当通过虚拟地址映射物理地址的过程中，发现页面不存在，此时就会发生缺页中断。需要通过页面置换算法将硬盘中的信息置换到内存中
+最佳置换算法 OPT
+从主存中移出永远不再需要的页面；如无这样的页面存在，则选择最长时间不需要访问的页面。于所选择的被淘汰页面将是以后永不使用的，或者是在最长时间内不再被访问的页面，这样可以保证获得最低的缺页率。
+先进先出置换算法 FIFO
+是最简单的页面置......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-06
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/操作系统/死锁/">
+        <h2 class="post-title">
+                                 
+            死锁
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            死锁
+什么是死锁
+在并发环境下，各进程竞争资源而造成的一种相互等待对方手里资源，导致各个进程都阻塞，都无法向前推进的现象，就是死锁
+死锁的必要条件
+
+互斥条件：对必须互斥访问的资源的争抢才会导致死锁
+不可剥夺条件：进程所获的的资源没有使用完之前，不能由其他进程强行夺走，只能主动释放
+循环等待条件：存在循环等待链，链上的每一个进程已经获得的资源被下一个进程请求。
+请求和保持条件：进程已经获取了......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-06
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/操作系统/生产者消费者问题/">
+        <h2 class="post-title">
+                                 
+            生产者消费者问题
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            生产者消费者问题
+
+对于缓冲区而言是互斥的，同一时刻只能由一个进程完成生产或消费（缓冲区是临界资源，各进程必须互斥的访问）
+生产者、消费者共享一个初始为空、大小为n的缓冲区。
+只有缓冲区没满时，生产者才能把产品放进缓冲区，否则必须等待。
+只有缓冲区不空时，消费者才能从中取出产品，否则等待。
+1234567891011121314151617181920212223242526272829se......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-06
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/操作系统/进程同步与进程互斥/">
+        <h2 class="post-title">
+                                 
+            进程同步与进程互斥
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            进程同步与进程互斥
+进程互斥
+进程互斥也称为间接制约关系，进程间对临界资源的访问，必须是互斥的执行。指一个进程进入临界区访问临界资源的时候，其他进程只能等待。
+123456do &#123;    entry section;  // 进入区 检查是否可以进入临界区，可以进入，设置访问临界资源的标志，防止其他进程进入    critical section; // 临界区  访问临界资源的代......
         </div>
     </a>
     
@@ -266,314 +559,31 @@
 
 <div class="post-preview">
 
-    <a href="/article/操作系统/挂起与阻塞/">
+    <a href="/article/操作系统/调度算法/">
         <h2 class="post-title">
                                  
-            挂起与阻塞
+            调度算法
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            挂起与阻塞
-阻塞
-线程在运行的过程中因为某些原因而发生阻塞，阻塞状态的线程特点是：该线程放弃CPU的使用，暂停运行，只有等导致阻塞的原因消除后才恢复，或者被其他线程中断阻塞，抛出异常
-正在执行的进程暂时无法继续执行，导致进程调度，OS把处理器分配给了其他的就绪进程，那么受阻塞进程就进入了阻塞状态。
-挂起
-挂起进程在操作系统中可以定义为暂时被淘汰出内存的进程，机器的资源是有限的，在资源不足的情......
+            调度算法
+调度算法的评价指标
+cpu利用率 = 忙碌时间 / 总时间
+系统吞吐量 = 总完成作业 / 总时间，单位时间内完成作业数量
+周转时间 = 作业完成时间 - 作业到达时间，包含各种等待时间
+等待时间 = 进程建立之后等待到被服务的时间之和 + 在外存后备队列等待时间（进行时等待IO不算）
+响应时间 = 用户提交请求到首次产生响应的时间
+调度算法
+先来先服务FCFS
+既可以用于作业调度......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-02-03
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/操作系统/处理机调度/">
-        <h2 class="post-title">
-                                 
-            处理机调度
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            处理机调度
-在多道程序系统中，进程的数量往往多于处理机的个数，这样就不能同时并行的处理各个进程。
-处理机调度就是，从就绪队列中按照一定的算法选择一个进程并将处理机分配给它运行，已实现进程的并行执行。
-处理机调度层次
-分为三个层次：高级调度、中级调度、低级调度
-高级调度（作业调度）
-由于内存空间有限，有时无法将用户提交的作业全部的放入到内存中，因此就需要确定某种规则来决定将作业调入内存的顺序。......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-03
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/操作系统/IO模型/">
-        <h2 class="post-title">
-                                 
-            IO模型
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            IO模型
-同步阻塞IO (blocking IO) 也叫做BIO
-
-用户线程通过系统调用read发起IO读操作，由用户空间转到内核空间。内核等到数据包到达后，然后将接收的数据拷贝到用户空间，完成read操作。
-整个读取过程，用户线程是被阻塞的，导致在发起IO请求时，不能做任何事情，对CPU资源利用不够
-同步非阻塞IO (Non-blocking IO) 也叫做NIO
-同步非阻塞IO是在同步阻......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-02
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/操作系统/线程/">
-        <h2 class="post-title">
-                                 
-            线程
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            线程
-线程带来的变化
-资源分配、调度方面：
-在传统的进程机制中，进程是资源分配、调度的基本单位。引入线程以后，进程是资源分配的基本单位，线程是调度的基本单位。
-并发性方面：
-在传统的进程机制中，只能进程间并发。引入线程之后，各线程间也能并发，也就意味着一个应用程序通过分时复用可以同时的做多件事，比如qq同时视频和发送消息。
-系统开销方面：
-传统的进程间并发，需要切换进程的运行环境，系统开销很......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-01
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/操作系统/中断、异常和系统调用/">
-        <h2 class="post-title">
-                                 
-            中断、异常和系统调用
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            中断、异常和系统调用
-中断
-发生中断意味着操作系统的介入，开展管理工作。cpu收到中断信号，切换到内核态，cpu把权限交给操作系统，操作系统内核对中断信号进行处理（如进程1的时间片用完了，触发中断，操作系统进程管理模块切换为进程2执行，把cpu交给进程2，切换回用户态）。
-
-中断发生，cpu立刻进入内核态
-中断发生，暂停线程的执行，并由操作系统对中断进行处理
-对于不同的中断信号会有不同的处理......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-01
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/操作系统/内存泄漏和内存溢出/">
-        <h2 class="post-title">
-                                 
-            内存泄漏和内存溢出
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            内存泄漏和内存溢出
-内存溢出
-指程序在申请内存时，没有足够的空间使用。比如申请了一个integer，但给它存了long才能存下的数，那就是内存溢出。内存溢出就是你要求分配的内存超出了系统能给你的，系统不能满足需求，于是产生溢出。
-内存溢出的可能原因
-
-内存中加载的数据量过于庞大，以至于一次性存不下
-死循环或者过多次数的递归
-启动参数内存设置的过小
-对象引用没有回收，导致jvm gc无法回收，......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-01
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/操作系统/虚拟内存与分配/">
-        <h2 class="post-title">
-                                 
-            虚拟内存与分配
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            虚拟内存与分配
-虚拟内存
-虚拟内存的基本思想是，每个进程有用独立的逻辑地址空间，内存被分为大小相等的多个块,称为页(Page).每个页都是一段连续的地址。对于进程来看,逻辑上貌似有很多内存空间，其中一部分对应物理内存上的一块(称为页框，通常页和页框大小相等)，还有一些没加载在内存中的对应在硬盘上
-虚拟内存实际上可以比物理内存大。当访问虚拟内存时，会访问**MMU（内存管理单元）**去匹配对应......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-01-31
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/操作系统/进程的状态与转换、控制/">
-        <h2 class="post-title">
-                                 
-            进程的状态与转换、控制
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            进程的状态与转换、控制
-
-运行状态下：CPU和资源都用到了
-就绪状态下：资源准备好了，但是还没分到CPU
-阻塞状态下：资源和CPU都没有
-运行、就绪、阻塞态是进程的三种基本状态
-
-运行态-》阻塞态是一个进程自身作出的主动行为
-阻塞态-〉就绪态是被动行为
-...
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-01-30
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/操作系统/进程的定义、组成、组织方式和特征/">
-        <h2 class="post-title">
-                                 
-            进程的定义、组成、组织方式和特征
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            进程的定义、组成、组织方式和特征
-定义
-
-进程是程序的一次执行
-进程是可以和别的计算并行执行
-进程是程序在一个数据集合上运行的过程，它是系统进行资源分配和调度的一个独立单位
-
-组成
-
-进程由PCB、程序段、数据段组成。
-其中PCB是系统为每一个程序分配的一个数据结构，称为进程控制块（PCB），用来描述进程的各种信息（如程序代码的存放位置），操作系统通过PCB来管理进程，因此PCB中包含着操作......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-01-30
+            2021-02-04
         </p>
         <div class="tags">
             
@@ -592,12 +602,12 @@
 <ul class="pager">
     
         <li class="previous">
-            <a href="/page/2/">&larr; Newer Posts</a>
+            <a href="/">&larr; Newer Posts</a>
         </li>
     
     
         <li class="next">
-            <a href="/page/4/">Older Posts &rarr;</a>
+            <a href="/archives/3/">Older Posts &rarr;</a>
         </li>
     
 </ul>
