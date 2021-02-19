@@ -18,7 +18,7 @@
         
     </title>
 
-    <link rel="canonical" href="http://jimwang97.github.io/archives/3/">
+    <link rel="canonical" href="http://jimwang97.github.io/page/4/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -143,14 +143,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -220,39 +220,28 @@
 
 <div class="post-preview">
 
-    <a href="/article/操作系统/进程调度的时机、切换与过程、方式/">
+    <a href="/article/操作系统/内核态和用户态以及其切换/">
         <h2 class="post-title">
                                  
-            进程调度的时机、切换与过程、方式
+            进程线程间的通信方式
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            进程调度的时机、切换与过程、方式
-进程调度的时机
-需要进行进程调度与切换的情况
+            进程线程间的通信方式
+为什么进程间需要通信
+进程是一个独立的资源分配单元，不同进程（这里所说的进程通常指的是用户进程）之间的资源是独立的，没有关联，不能在一个进程中直接访问另一个进程的资源（例如打开的文件描述符）。
+进程间通信的目的：
 
-当前运行的进程主动放弃处理器
-
-如（1.进程正常终止。2.运行过程中发生异常而终止。3.进程主动请求阻塞（如等待I/O））
-
-
-当前运行的进程被动放弃处理器
-
-如（1.分给进程的时间片用完了。2.有更紧急的事要要处理（如I/O中断）。3.有更高优先级的进程加入阻塞队列）
-
-
-
-不需要进行进程调度与切换的情况
-
-......
+数据传输：一个进程需要将它的数据发送给另一个进程。
+通知事件：一个进程需要向另一个或一组进程发送消息，通知它（它们）发生了某种事件（如进程终止时要通知父进程......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-02-04
+            2021-01-28
         </p>
         <div class="tags">
             
@@ -266,314 +255,27 @@
 
 <div class="post-preview">
 
-    <a href="/article/操作系统/挂起与阻塞/">
+    <a href="/article/操作系统/OS的运行机制和体系结构/">
         <h2 class="post-title">
                                  
-            挂起与阻塞
+            OS的运行机制和体系结构
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            挂起与阻塞
-阻塞
-线程在运行的过程中因为某些原因而发生阻塞，阻塞状态的线程特点是：该线程放弃CPU的使用，暂停运行，只有等导致阻塞的原因消除后才恢复，或者被其他线程中断阻塞，抛出异常
-正在执行的进程暂时无法继续执行，导致进程调度，OS把处理器分配给了其他的就绪进程，那么受阻塞进程就进入了阻塞状态。
-挂起
-挂起进程在操作系统中可以定义为暂时被淘汰出内存的进程，机器的资源是有限的，在资源不足的情......
+            OS的运行机制和体系结构
+
+什么是指令
+代码都会被翻译成很多条的指令执行，每一条指令就是让cpu干一些工作。“指令”就是CPU能识别、执行的最基本命令。比如加法指令。
+有的指令是普通的指令，比如加减乘除运算指令，我们称它为非特权指令。而有的指令拥有着很高的权限，比如内存清零、关机等，一旦用户程序执行了这个指令，可能会造成严重的后果，我们称这样的指令为特权指令。
+特权指令不允许普通的用户程序使......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-02-03
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/操作系统/处理机调度/">
-        <h2 class="post-title">
-                                 
-            处理机调度
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            处理机调度
-在多道程序系统中，进程的数量往往多于处理机的个数，这样就不能同时并行的处理各个进程。
-处理机调度就是，从就绪队列中按照一定的算法选择一个进程并将处理机分配给它运行，已实现进程的并行执行。
-处理机调度层次
-分为三个层次：高级调度、中级调度、低级调度
-高级调度（作业调度）
-由于内存空间有限，有时无法将用户提交的作业全部的放入到内存中，因此就需要确定某种规则来决定将作业调入内存的顺序。......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-03
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/操作系统/IO模型/">
-        <h2 class="post-title">
-                                 
-            IO模型
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            IO模型
-同步阻塞IO (blocking IO) 也叫做BIO
-
-用户线程通过系统调用read发起IO读操作，由用户空间转到内核空间。内核等到数据包到达后，然后将接收的数据拷贝到用户空间，完成read操作。
-整个读取过程，用户线程是被阻塞的，导致在发起IO请求时，不能做任何事情，对CPU资源利用不够
-同步非阻塞IO (Non-blocking IO) 也叫做NIO
-同步非阻塞IO是在同步阻......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-02
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/操作系统/线程/">
-        <h2 class="post-title">
-                                 
-            线程
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            线程
-线程带来的变化
-资源分配、调度方面：
-在传统的进程机制中，进程是资源分配、调度的基本单位。引入线程以后，进程是资源分配的基本单位，线程是调度的基本单位。
-并发性方面：
-在传统的进程机制中，只能进程间并发。引入线程之后，各线程间也能并发，也就意味着一个应用程序通过分时复用可以同时的做多件事，比如qq同时视频和发送消息。
-系统开销方面：
-传统的进程间并发，需要切换进程的运行环境，系统开销很......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-01
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/操作系统/中断、异常和系统调用/">
-        <h2 class="post-title">
-                                 
-            中断、异常和系统调用
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            中断、异常和系统调用
-中断
-发生中断意味着操作系统的介入，开展管理工作。cpu收到中断信号，切换到内核态，cpu把权限交给操作系统，操作系统内核对中断信号进行处理（如进程1的时间片用完了，触发中断，操作系统进程管理模块切换为进程2执行，把cpu交给进程2，切换回用户态）。
-
-中断发生，cpu立刻进入内核态
-中断发生，暂停线程的执行，并由操作系统对中断进行处理
-对于不同的中断信号会有不同的处理......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-01
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/操作系统/内存泄漏和内存溢出/">
-        <h2 class="post-title">
-                                 
-            内存泄漏和内存溢出
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            内存泄漏和内存溢出
-内存溢出
-指程序在申请内存时，没有足够的空间使用。比如申请了一个integer，但给它存了long才能存下的数，那就是内存溢出。内存溢出就是你要求分配的内存超出了系统能给你的，系统不能满足需求，于是产生溢出。
-内存溢出的可能原因
-
-内存中加载的数据量过于庞大，以至于一次性存不下
-死循环或者过多次数的递归
-启动参数内存设置的过小
-对象引用没有回收，导致jvm gc无法回收，......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-01
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/操作系统/虚拟内存与分配/">
-        <h2 class="post-title">
-                                 
-            虚拟内存与分配
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            虚拟内存与分配
-虚拟内存
-虚拟内存的基本思想是，每个进程有用独立的逻辑地址空间，内存被分为大小相等的多个块,称为页(Page).每个页都是一段连续的地址。对于进程来看,逻辑上貌似有很多内存空间，其中一部分对应物理内存上的一块(称为页框，通常页和页框大小相等)，还有一些没加载在内存中的对应在硬盘上
-虚拟内存实际上可以比物理内存大。当访问虚拟内存时，会访问**MMU（内存管理单元）**去匹配对应......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-01-31
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/操作系统/进程的状态与转换、控制/">
-        <h2 class="post-title">
-                                 
-            进程的状态与转换、控制
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            进程的状态与转换、控制
-
-运行状态下：CPU和资源都用到了
-就绪状态下：资源准备好了，但是还没分到CPU
-阻塞状态下：资源和CPU都没有
-运行、就绪、阻塞态是进程的三种基本状态
-
-运行态-》阻塞态是一个进程自身作出的主动行为
-阻塞态-〉就绪态是被动行为
-...
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-01-30
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/操作系统/进程的定义、组成、组织方式和特征/">
-        <h2 class="post-title">
-                                 
-            进程的定义、组成、组织方式和特征
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            进程的定义、组成、组织方式和特征
-定义
-
-进程是程序的一次执行
-进程是可以和别的计算并行执行
-进程是程序在一个数据集合上运行的过程，它是系统进行资源分配和调度的一个独立单位
-
-组成
-
-进程由PCB、程序段、数据段组成。
-其中PCB是系统为每一个程序分配的一个数据结构，称为进程控制块（PCB），用来描述进程的各种信息（如程序代码的存放位置），操作系统通过PCB来管理进程，因此PCB中包含着操作......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-01-30
+            2021-01-28
         </p>
         <div class="tags">
             
@@ -592,13 +294,9 @@
 <ul class="pager">
     
         <li class="previous">
-            <a href="/archives/2/">&larr; Newer Posts</a>
+            <a href="/page/3/">&larr; Newer Posts</a>
         </li>
     
-    
-        <li class="next">
-            <a href="/archives/4/">Older Posts &rarr;</a>
-        </li>
     
 </ul>
 
