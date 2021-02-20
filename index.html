@@ -143,14 +143,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -217,6 +217,291 @@
             
                 <!-- Main Content -->
 
+
+<div class="post-preview">
+
+    <a href="/article/数据库/超键、候选键、主键、外键以及sql约束/">
+        <h2 class="post-title">
+                                 
+            超键、候选键、主键、外键以及sql约束
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            超键、候选键、主键、外键以及sql约束
+键
+定义
+超键(super key): 在关系中能唯一标识元组的属性集称为关系模式的超键
+候选键(candidate key): 不含有多余属性的超键称为候选键。也就是在候选键中，若再删除属性，就不是键了！
+主键(primary key): 用户选作元组标识的一个候选键程序主键
+外键(foreign key)：如果关系模式R中属性K是其它模式的主键，那......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-20
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#数据库" title="数据库">数据库</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/数据库/数据库的锁/">
+        <h2 class="post-title">
+                                 
+            数据库的锁
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            数据库的锁
+锁分为乐观锁和悲观锁。
+其中悲观锁按照类型可以划分为：
+
+共享锁（读锁）
+排他锁（写锁）
+
+也可以按照锁的范围分为：
+
+行锁
+表锁
+
+乐观锁
+假设不会发生并发冲突，只在提交操作时检查是否违反数据完整性。
+乐观锁是一种不会阻塞其他线程并发的控制，它不会使用数据库的锁进行实现，它的设计里面由于不阻塞其他线程，所以并不会引起线程频繁挂起和恢复，这样便能够提高并发能力，所以也有人把它称为......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-20
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#数据库" title="数据库">数据库</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/数据库/drop、truncate、delete区别/">
+        <h2 class="post-title">
+                                 
+            drop、truncate、delete区别
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            drop、truncate、delete区别
+
+drop 直接删除表；
+truncate 删除表中数据，再插入时自增长id又从1开始 ；
+delete 删除表中数据，可以加where字句。
+
+drop table：
+
+属于DDL（Data Definition Language，数据库定义语言）
+不可回滚
+不可带 where
+删除表内容和结构
+删除速度快
+
+truncate table：
+
+......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-20
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#数据库" title="数据库">数据库</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/数据库/事务的ACID和隔离级别/">
+        <h2 class="post-title">
+                                 
+            事务的ACID和隔离级别
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            事务的ACID和隔离级别
+什么是事务以及ACID
+事务简单来说：一个Session中所进行的所有操作，要么同时成功，要么同时失败；作为单个逻辑工作单元执行的一系列操作，满足四大特性：
+
+原子性（Atomicity）：事务作为一个整体被执行 ，要么全部执行，要么全部不执行
+一致性（Consistency）：保证数据库状态从一个一致状态转变为另一个一致状态
+隔离性（Isolation）：多个事务......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-20
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#数据库" title="数据库">数据库</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/数据库/什么是索引以及索引的分类/">
+        <h2 class="post-title">
+                                 
+            什么是索引以及索引的分类
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            什么是索引以及索引的分类
+什么是索引
+索引是对数据库表中一个或多个列的值进行排序的数据结构，以协助快速查询、更新数据库表中数据。
+索引的底层结构
+底层数据结构是B+树。
+在数据结构中，我们最为常见的搜索结构就是二叉搜索树和AVL树(高度平衡的二叉搜索树，为了提高二叉搜索树的效率，减少树的平均搜索长度)了。然而，无论二叉搜索树还是AVL树，当数据量比较大时，都会由于树的深度过大而造成I/O读写......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-20
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#数据库" title="数据库">数据库</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/数据库/数据库三范式/">
+        <h2 class="post-title">
+                                 
+            数据库三范式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            数据库三范式
+第一范式
+列不可分
+1NF（第一范式）是对属性具有原子性的要求，不可再分。
+比如：
+
+
+
+学号
+姓名
+性别
+出生年月日
+
+
+
+
+如果认为年月日可以分为年、月、日。那么这就不满足1NF
+第二范式
+消除非主属性对码对部分函数依赖
+2NF（第二范式）是对记录有唯一性的要求，即实体的唯一性，不存在部分依赖，每一列与主键都相关
+比如：
+
+
+
+学号
+课程号
+姓名
+学分
+
+
+
+
+该表明显说明......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-20
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#数据库" title="数据库">数据库</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/计网/DNS为什么使用UDP，又与TCP有什么关系/">
+        <h2 class="post-title">
+                                 
+            DNS为什么使用UDP，又与TCP有什么关系
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            DNS为什么使用UDP，又与TCP有什么关系
+为什么用UDP
+DNS请求数据时，整个数据包除了DNS协议相关的内容之外，还包含以太网、IP和UDP的协议头。虽然包含了这么多信息，但是一个DNS请求只有几十个字节。是非常小的数据包。
+UDP 和 TCP 的通信机制非常不同，作为可靠的传输协议，TCP 协议需要通信的双方通过 三次握手 建立 TCP 连接后才可以通信，但是在 30 年前的 DNS......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-19
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
+            
+        </div>
+    
+
+</div>
+<hr>
 
 <div class="post-preview">
 
@@ -328,267 +613,6 @@
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/article/计网/DNS解析的过程/">
-        <h2 class="post-title">
-                                 
-            DNS解析的过程
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            DNS解析的过程
-
-
-浏览器先检查自身缓存中有没有被解析过的这个域名对应的ip地址，如果有，解析结束。同时域名被缓存的时间也可通过TTL属性来设置。
-
-
-如果浏览器缓存中没有（专业点叫还没命中），浏览器会检查操作系统缓存中有没有对应的已解析过的结果。而操作系统也有一个域名解析的过程。在windows中可通过c盘里一个叫hosts的文件来设置，如果你在这里指定了一个域名对应的ip地址，那浏览器......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-16
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/计网/HTTP缓存机制/">
-        <h2 class="post-title">
-                                 
-            HTTP缓存机制
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            HTTP缓存机制
-缓存机制
-有两种缓存机制，强制缓存和对比缓存
-强制缓存
-对于强制缓存来说，响应header中会有两个字段来标明失效规则（Expires/Cache-Control）
-Expires
-　　Expires的值为服务端返回的到期时间，即下一次请求时，请求时间小于服务端返回的到期时间，直接使用缓存数据。
-不过Expires 是HTTP 1.0的东西，现在默认浏览器均默认使用HTTP......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-14
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/计网/session和cookie/">
-        <h2 class="post-title">
-                                 
-            session和cookie
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            session和cookie
-Cookie
-给客户端们颁发一个通行证吧，每人一个，无论谁访问都必须携带自己通行证。这样服务器就能从通行证上确认客户身份了。这就是Cookie的工作原理。
-客户端请求服务器，如果服务器需要记录该用户状态，就使用response向客户端浏览器颁发一个Cookie。客户端浏览器会把Cookie保存起来。当浏览器再请求该网站时，浏览器把请求的网址连同该Cookie一同......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-14
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/计网/HTTPS/">
-        <h2 class="post-title">
-                                 
-            HTTPS
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            HTTPS
-HTTPS（SSL/TLS）的加密机制虽然是个前端后端等都应了解的基本问题，但网上的很多HTTPS相关文章也总会忽略一些内容，我学习它的时候也废了挺大功夫。
-对称加密、非对称加密、数字签名、数字证书等等，在学习过程中，除了了解“它是什么”，你是否有想过“为什么是它”？我认为理解了后者才真正理解了HTTPS的加密机制。
-本文以问题的形式逐步展开，一步步解开HTTPS的面纱，希望能帮......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-13
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/计网/HTTP1.0、1.1和2.0的区别/">
-        <h2 class="post-title">
-                                 
-            HTTP1.0、1.1和2.0的区别
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            HTTP1.0、1.1和2.0的区别
-HTTP连接使用的是“请求—响应”的方式，不仅在请求时需要先建立连接，而且需要客户端向服务器发出请求后，服务器端才能回复数据。
-1.0和1.1的区别
-
-长连接，http1.0需要使用keep-live参数告知服务器建立一个连接，http1.1默认支持长连接。http本身是基于TCP/IP协议的，TCP协议提供传输控制，按顺序组织数据，和错误指正。创建一个......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-13
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/计网/HTTP请求方法与状态码，以及访问网页的过程/">
-        <h2 class="post-title">
-                                 
-            HTTP请求方法与状态码，以及访问网页的过程
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            HTTP请求方法与状态码，以及访问网页的过程
-请求方法
-HTTP1.0中定义了三种：GET，POST和HEAD
-HTTP1.1中定义了五种：OPTIONS，PUT，DELETE，TRACE和CONNECT
-
-
-
-方法
-描述
-
-
-
-
-GET
-请求指定的页面信息，并返回实体主体
-
-
-HEAD
-类似于get请求，用于获取报头
-
-
-POST
-向指定资源提交数据请求处理
-
-
-PUT
-从客户端向服务端传......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-10
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/计网/TCP停止等待协议、连续ARQ协议/">
-        <h2 class="post-title">
-                                 
-            TCP停止等待协议、连续ARQ协议
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            TCP停止等待协议、连续ARQ协议
-停止等待协议
-所谓停止等待协议就是每发送完一组数据后，等待对方确认并且收到确认后，再发送下一组数据。
-可能会发生四种情况：无差错，出现差错，确认丢失和确认迟到
-出现差错
-当B收到M1时，检测出了差错，就抛弃M1，并什么也不做
-A在超过一段时间仍然没有收到确认，就认为数据丢失了，然后会重传一次。这叫超时重传
-
-确认丢失
-当A发送M1消息，B收到后，B向A发送......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-10
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -597,7 +621,7 @@ A在超过一段时间仍然没有收到确认，就认为数据丢失了，然�
     
     
         <li class="next">
-            <a href="/archives/2/">Older Posts &rarr;</a>
+            <a href="/page/2/">Older Posts &rarr;</a>
         </li>
     
 </ul>
@@ -679,23 +703,23 @@ A在超过一段时间仍然没有收到确认，就认为数据丢失了，然�
     <ul>
       
         <li>
-          <a href="/article/数据结构/八大排序以及java实现/">八大排序以及java实现</a>
+          <a href="/article/数据库/超键、候选键、主键、外键以及sql约束/">超键、候选键、主键、外键以及sql约束</a>
         </li>
       
         <li>
-          <a href="/article/数据结构/二叉树的遍历/">二叉树的遍历</a>
+          <a href="/article/数据库/数据库的锁/">数据库的锁</a>
         </li>
       
         <li>
-          <a href="/article/数据结构/红黑树、哈希表、堆/">红黑树、哈希表、堆</a>
+          <a href="/article/数据库/drop、truncate、delete区别/">drop、truncate、delete区别</a>
         </li>
       
         <li>
-          <a href="/article/计网/DNS解析的过程/">DNS解析的过程</a>
+          <a href="/article/数据库/事务的ACID和隔离级别/">事务的ACID和隔离级别</a>
         </li>
       
         <li>
-          <a href="/article/计网/HTTP缓存机制/">HTTP缓存机制</a>
+          <a href="/article/数据库/什么是索引以及索引的分类/">什么是索引以及索引的分类</a>
         </li>
       
     </ul>
@@ -706,7 +730,7 @@ A在超过一段时间仍然没有收到确认，就认为数据丢失了，然�
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">26</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">33</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">5</span></li></ul>
     </div>
 
         <hr>
