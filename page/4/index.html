@@ -220,6 +220,110 @@
 
 <div class="post-preview">
 
+    <a href="/article/操作系统/挂起与阻塞/">
+        <h2 class="post-title">
+                                 
+            挂起与阻塞
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            挂起与阻塞
+阻塞
+线程在运行的过程中因为某些原因而发生阻塞，阻塞状态的线程特点是：该线程放弃CPU的使用，暂停运行，只有等导致阻塞的原因消除后才恢复，或者被其他线程中断阻塞，抛出异常
+正在执行的进程暂时无法继续执行，导致进程调度，OS把处理器分配给了其他的就绪进程，那么受阻塞进程就进入了阻塞状态。
+挂起
+挂起进程在操作系统中可以定义为暂时被淘汰出内存的进程，机器的资源是有限的，在资源不足的情......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-03
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/操作系统/处理机调度/">
+        <h2 class="post-title">
+                                 
+            处理机调度
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            处理机调度
+在多道程序系统中，进程的数量往往多于处理机的个数，这样就不能同时并行的处理各个进程。
+处理机调度就是，从就绪队列中按照一定的算法选择一个进程并将处理机分配给它运行，已实现进程的并行执行。
+处理机调度层次
+分为三个层次：高级调度、中级调度、低级调度
+高级调度（作业调度）
+由于内存空间有限，有时无法将用户提交的作业全部的放入到内存中，因此就需要确定某种规则来决定将作业调入内存的顺序。......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-03
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/操作系统/IO模型/">
+        <h2 class="post-title">
+                                 
+            IO模型
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            IO模型
+同步阻塞IO (blocking IO) 也叫做BIO
+
+用户线程通过系统调用read发起IO读操作，由用户空间转到内核空间。内核等到数据包到达后，然后将接收的数据拷贝到用户空间，完成read操作。
+整个读取过程，用户线程是被阻塞的，导致在发起IO请求时，不能做任何事情，对CPU资源利用不够
+同步非阻塞IO (Non-blocking IO) 也叫做NIO
+同步非阻塞IO是在同步阻......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-02
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/article/操作系统/线程/">
         <h2 class="post-title">
                                  
@@ -470,40 +574,6 @@
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/article/操作系统/OS的运行机制和体系结构/">
-        <h2 class="post-title">
-                                 
-            OS的运行机制和体系结构
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            OS的运行机制和体系结构
-
-什么是指令
-代码都会被翻译成很多条的指令执行，每一条指令就是让cpu干一些工作。“指令”就是CPU能识别、执行的最基本命令。比如加法指令。
-有的指令是普通的指令，比如加减乘除运算指令，我们称它为非特权指令。而有的指令拥有着很高的权限，比如内存清零、关机等，一旦用户程序执行了这个指令，可能会造成严重的后果，我们称这样的指令为特权指令。
-特权指令不允许普通的用户程序使......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-01-28
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -514,6 +584,10 @@
             <a href="/page/3/">&larr; Newer Posts</a>
         </li>
     
+    
+        <li class="next">
+            <a href="/page/5/">Older Posts &rarr;</a>
+        </li>
     
 </ul>
 
@@ -594,23 +668,23 @@
     <ul>
       
         <li>
+          <a href="/article/数据库/B树、B+树区别，索引为何使用B+树/">B树、B+树区别，索引为何使用B+树</a>
+        </li>
+      
+        <li>
+          <a href="/article/数据库/InnoDB和MyISAM的索引/">InnoDB和MyISAM索引</a>
+        </li>
+      
+        <li>
+          <a href="/article/数据库/innodb和myisam存储引擎的区别/">innodb和myisam存储引擎的区别</a>
+        </li>
+      
+        <li>
           <a href="/article/数据库/超键、候选键、主键、外键以及sql约束/">超键、候选键、主键、外键以及sql约束</a>
         </li>
       
         <li>
           <a href="/article/数据库/数据库的锁/">数据库的锁</a>
-        </li>
-      
-        <li>
-          <a href="/article/数据库/drop、truncate、delete区别/">drop、truncate、delete区别</a>
-        </li>
-      
-        <li>
-          <a href="/article/数据库/事务的ACID和隔离级别/">事务的ACID和隔离级别</a>
-        </li>
-      
-        <li>
-          <a href="/article/数据库/什么是索引以及索引的分类/">什么是索引以及索引的分类</a>
         </li>
       
     </ul>
@@ -621,7 +695,7 @@
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">33</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">36</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">5</span></li></ul>
     </div>
 
         <hr>

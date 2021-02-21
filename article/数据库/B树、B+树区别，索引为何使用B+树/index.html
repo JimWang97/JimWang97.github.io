@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          超键、候选键、主键、外键以及sql约束 - JimWang | Blog
+          B树、B+树区别，索引为何使用B+树 - JimWang | Blog
         
     </title>
 
-    <link rel="canonical" href="http://jimwang97.github.io/article/数据库/超键、候选键、主键、外键以及sql约束/">
+    <link rel="canonical" href="http://jimwang97.github.io/article/数据库/B树、B+树区别，索引为何使用B+树/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -91,11 +91,11 @@
                               <a class="tag" href="/tags/#数据库" title="数据库">数据库</a>
                             
                         </div>
-                        <h1 style="font-weight: bolder; font-size: 72px; font-family: Hannotate SC;">超键、候选键、主键、外键以及sql约束</h1>
+                        <h1 style="font-weight: bolder; font-size: 72px; font-family: Hannotate SC;">B树、B+树区别，索引为何使用B+树</h1>
                         <h2 class="subheading" style="font-weight: bolder; font-size: x-large; font-family: Hannotate SC;"></h2>
                         <span class="meta">
                             Posted by JimWang on
-                            2021-02-20
+                            2021-02-21
                         </span>
                     </div>
                 
@@ -221,31 +221,41 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="超键-候选键-主键-外键以及sql约束">超键、候选键、主键、外键以及sql约束</h1>
-<h2 id="键">键</h2>
-<h3 id="定义">定义</h3>
-<p>超键(super key): 在关系中能唯一标识元组的属性集称为关系模式的超键</p>
-<p>候选键(candidate key): 不含有多余属性的超键称为候选键。也就是在候选键中，若再删除属性，就不是键了！</p>
-<p>主键(primary key): 用户选作元组标识的一个候选键程序主键</p>
-<p>外键(foreign key)：如果关系模式R中属性K是其它模式的主键，那么k在模式R中称为外键。</p>
-<h3 id="举例">举例</h3>
-<p>学生信息（学号 身份证号 性别 年龄 身高 体重 宿舍号）和 宿舍信息（宿舍号 楼号）</p>
-<p>超键：==<strong>只要含有“学号”或者“身份证号”两个属性的集合就叫超键，例如R1（学号 性别）、R2（身份证号 身高）、R3（学号 身份证号）等等都可以称为超键！</strong>==</p>
-<p>候选键：==<strong>不含有多余的属性的超键，比如（学号）、（身份证号）都是候选键</strong>==，又比如R1中学号这一个属性就可以唯一标识元组了，而有没有性别这一属性对是否唯一标识元组没有任何的影响！</p>
-<p>主键：==<strong>就是用户从很多候选键选出来的一个键就是主键</strong>==，比如你要求学号是主键，那么身份证号就不可以是主键了！</p>
-<p>外键：宿舍号就是学生信息表的外键</p>
-<h2 id="约束">约束</h2>
+                <h1 id="b树-b树区别索引为何使用b树">B树、B+树区别，索引为何使用B+树</h1>
+<h2 id="b树">B树</h2>
+<p>描述一颗B树时需要指定它的阶数，阶数表示了一个结点最多有多少个孩子结点，一般用字母m表示阶数。当m取2时，就是我们常见的二叉搜索树。</p>
+<p>一颗m阶的B树定义如下：<br>
+1）每个结点最多有m-1个关键字。<br>
+2）根结点最少可以只有1个关键字。<br>
+3）非根结点至少有Math.ceil(m/2)-1个关键字。<br>
+4）每个结点中的关键字都按照从小到大的顺序排列，<strong>每个关键字的左子树中的所有关键字都小于它，而右子树中的所有关键字都大于它。</strong><br>
+5）所有叶子结点都位于同一层，或者说根结点到每个叶子结点的长度都相同。</p>
+<p>下图为<strong>4阶B树</strong>：<br>
+<img src="https://gitee.com/super-jimwang/img/raw/master/img/20210221172547.png" alt=""></p>
+<p>一个节点可以最多保存3个(4-1)数据.并且非根节点，每个节点至少要有3/2向上取整-1个数据。</p>
+<h2 id="b树">B+树</h2>
+<ol>
+<li>有n个子节点的非叶子结点中<strong>含有n个关键字（b树是n-1个），这里不同地方的说法不同，也可能是n-1个。与B树保持一致</strong>，这些关键字不保存数据，只用来索引，所有数据都保存在叶子节点（b树是每个关键字都保存数据）;</li>
+<li>所有的叶子结点中包含了全部关键字的信息，及指向含这些关键字记录的指针，且叶子结点本身依关键字的大小自小而大顺序链接;</li>
+<li>所有的非叶子结点可以看成是索引部分，结点中仅含其子树中的最大（或最小）关键字;</li>
+<li><strong>通常在b+树上有两个头指针，一个指向根结点，一个指向关键字最小的叶子结点;</strong></li>
+<li>同一个数字会在不同节点中重复出现，根节点的最大元素就是b+树的最大元素。</li>
+</ol>
+<p><img src="https://gitee.com/super-jimwang/img/raw/master/img/20210221173550.png" alt=""></p>
+<h2 id="索引为什么用b树而不是b树">索引为什么用B+树，而不是B树</h2>
+<p>B+树的非叶子结点只包含导航信息，不包含实际的值，所有的叶子结点和相连的节点使用链表相连，便于区间查找和遍历。</p>
+<p><strong>B+ 树的优点在于：</strong></p>
+<p><strong>IO次数更少</strong>：由于B+树在内部节点上不包含数据信息，因此在内存页中能够存放更多的key。 数据存放的更加紧密，具有更好的空间局部性。因此<strong>访问叶子节点上关联的数据也具有更好的缓存命中率。</strong></p>
+<p>遍历更加方便：B+树的叶子结点都是相链的，因此对整棵树的遍历只需要一次线性遍历叶子结点即可。而且由于数据顺序排列并且相连，所以便于区间查找和搜索。而B树则需要进行每一层的递归遍历。相邻的元素可能在内存中不相邻，所以缓存命中性没有B+树好。</p>
+<p><strong>B树的优点</strong></p>
 <ul>
-<li>NOT NULL: 用于控制字段的内容一定不能为空（NULL）。</li>
-<li>UNIQUE: 控制字段内容不能重复，一个表允许有多个 Unique 约束。</li>
-<li>PRIMARY KEY: 也是用于控件字段内容不能重复，但它在一个表只允许出现一个。</li>
-<li>FOREIGN KEY: 用于预防破坏表之间连接的动作，也能防止非法数据插入外键列，因为它必须是它指向的那个表中的值之一。</li>
-<li>CHECK: 用于控制字段的值范围。</li>
+<li>由于节点就存了数据，所以不需要访问到叶子节点，访问更迅速。</li>
 </ul>
-<hr>
-<p>转载自：</p>
-<p><a href="https://blog.csdn.net/jerry11112/article/details/78160771" target="_blank" rel="noopener">https://blog.csdn.net/jerry11112/article/details/78160771</a></p>
-<p><a href="https://www.yuque.com/fanzhengxu/tba6b8/dx0hvw#4MqAL" target="_blank" rel="noopener">https://www.yuque.com/fanzhengxu/tba6b8/dx0hvw#4MqAL</a></p>
+<h3 id="原因">原因</h3>
+<p>1、 <strong>B+树的磁盘读写代价更低</strong>：B+树的内部节点并没有指向关键字具体信息的指针，因此其内部节点相对B树更小，如果把所有同一内部节点的关键字存放在同一盘块中，那么盘块所能容纳的关键字数量也越多，一次性读入内存的需要查找的关键字也就越多，相对IO读写次数就降低了。</p>
+<p>2、<strong>B+树的查询效率更加稳定</strong>：由于非终结点并不是最终指向文件内容的结点，而只是叶子结点中关键字的索引。所以任何关键字的查找必须走一条从根结点到叶子结点的路。所有关键字查询的路径长度相同，导致每一个数据的查询效率相当。</p>
+<p>3、<strong>B+树更便于遍历</strong>：由于B+树的数据都存储在叶子结点中，分支结点均为索引，方便扫库，只需要扫一遍叶子结点即可，但是B树因为其分支结点同样存储着数据，我们要找到具体的数据，需要进行一次中序遍历按序来扫，所以B+树更加适合在区间查询的情况，所以通常B+树用于数据库索引。<strong>数据都在叶子节点，叶子节点又有额外的指针相连，所以区间查询以及遍历更容易</strong></p>
+<p>4、B+树更适合基于范围的查询：B树在提高了IO性能的同时并没有解决元素遍历的我效率低下的问题，正是为了解决这个问题，B+树应用而生。B+树只需要去遍历叶子节点就可以实现整棵树的遍历。而且在数据库中基于范围的查询是非常频繁的，而B树不支持这样的操作或者说效率太低。</p>
 
                 
 
@@ -253,13 +263,9 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/数据库/innodb和myisam存储引擎的区别/" data-toggle="tooltip" data-placement="top" title="innodb和myisam存储引擎的区别">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/article/数据库/数据库的锁/" data-toggle="tooltip" data-placement="top" title="数据库的锁">Next Post &rarr;</a>
+                            <a href="/article/数据库/InnoDB和MyISAM的索引/" data-toggle="tooltip" data-placement="top" title="InnoDB和MyISAM索引">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -309,7 +315,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#超键-候选键-主键-外键以及sql约束"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x8D85;&#x952E;&#x3001;&#x5019;&#x9009;&#x952E;&#x3001;&#x4E3B;&#x952E;&#x3001;&#x5916;&#x952E;&#x4EE5;&#x53CA;sql&#x7EA6;&#x675F;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#键"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x952E;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#定义"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">&#x5B9A;&#x4E49;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#举例"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">&#x4E3E;&#x4F8B;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#约束"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x7EA6;&#x675F;</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#b树-b树区别索引为何使用b树"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">B&#x6811;&#x3001;B+&#x6811;&#x533A;&#x522B;&#xFF0C;&#x7D22;&#x5F15;&#x4E3A;&#x4F55;&#x4F7F;&#x7528;B+&#x6811;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#b树"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">B&#x6811;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#b树"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">B+&#x6811;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#索引为什么用b树而不是b树"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x7D22;&#x5F15;&#x4E3A;&#x4EC0;&#x4E48;&#x7528;B+&#x6811;&#xFF0C;&#x800C;&#x4E0D;&#x662F;B&#x6811;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#原因"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">&#x539F;&#x56E0;</span></a></li></ol></li></ol></li></ol>
         
         </div>
       </aside>

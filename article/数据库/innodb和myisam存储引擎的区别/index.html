@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          超键、候选键、主键、外键以及sql约束 - JimWang | Blog
+          innodb和myisam存储引擎的区别 - JimWang | Blog
         
     </title>
 
-    <link rel="canonical" href="http://jimwang97.github.io/article/数据库/超键、候选键、主键、外键以及sql约束/">
+    <link rel="canonical" href="http://jimwang97.github.io/article/数据库/innodb和myisam存储引擎的区别/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -91,11 +91,11 @@
                               <a class="tag" href="/tags/#数据库" title="数据库">数据库</a>
                             
                         </div>
-                        <h1 style="font-weight: bolder; font-size: 72px; font-family: Hannotate SC;">超键、候选键、主键、外键以及sql约束</h1>
+                        <h1 style="font-weight: bolder; font-size: 72px; font-family: Hannotate SC;">innodb和myisam存储引擎的区别</h1>
                         <h2 class="subheading" style="font-weight: bolder; font-size: x-large; font-family: Hannotate SC;"></h2>
                         <span class="meta">
                             Posted by JimWang on
-                            2021-02-20
+                            2021-02-21
                         </span>
                     </div>
                 
@@ -221,31 +221,120 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="超键-候选键-主键-外键以及sql约束">超键、候选键、主键、外键以及sql约束</h1>
-<h2 id="键">键</h2>
-<h3 id="定义">定义</h3>
-<p>超键(super key): 在关系中能唯一标识元组的属性集称为关系模式的超键</p>
-<p>候选键(candidate key): 不含有多余属性的超键称为候选键。也就是在候选键中，若再删除属性，就不是键了！</p>
-<p>主键(primary key): 用户选作元组标识的一个候选键程序主键</p>
-<p>外键(foreign key)：如果关系模式R中属性K是其它模式的主键，那么k在模式R中称为外键。</p>
-<h3 id="举例">举例</h3>
-<p>学生信息（学号 身份证号 性别 年龄 身高 体重 宿舍号）和 宿舍信息（宿舍号 楼号）</p>
-<p>超键：==<strong>只要含有“学号”或者“身份证号”两个属性的集合就叫超键，例如R1（学号 性别）、R2（身份证号 身高）、R3（学号 身份证号）等等都可以称为超键！</strong>==</p>
-<p>候选键：==<strong>不含有多余的属性的超键，比如（学号）、（身份证号）都是候选键</strong>==，又比如R1中学号这一个属性就可以唯一标识元组了，而有没有性别这一属性对是否唯一标识元组没有任何的影响！</p>
-<p>主键：==<strong>就是用户从很多候选键选出来的一个键就是主键</strong>==，比如你要求学号是主键，那么身份证号就不可以是主键了！</p>
-<p>外键：宿舍号就是学生信息表的外键</p>
-<h2 id="约束">约束</h2>
+                <h1 id="innodb和myisam存储引擎的区别">innodb和myisam存储引擎的区别</h1>
+<p>在MySQL 5.5之前，MyISAM是mysql的默认数据库引擎，其由早期的ISAM（Indexed Sequential Access Method：有索引的顺序访问方法）所改良。虽然MyISAM性能极佳，但却有一个显著的缺点：不支持事务处理。不过，MySQL也导入了另一种数据库引擎InnoDB，以强化参考完整性与并发违规处理机制，后来就逐渐取代MyISAM。</p>
+<h2 id="区别">区别</h2>
+<p><strong>存储结构：</strong></p>
 <ul>
-<li>NOT NULL: 用于控制字段的内容一定不能为空（NULL）。</li>
-<li>UNIQUE: 控制字段内容不能重复，一个表允许有多个 Unique 约束。</li>
-<li>PRIMARY KEY: 也是用于控件字段内容不能重复，但它在一个表只允许出现一个。</li>
-<li>FOREIGN KEY: 用于预防破坏表之间连接的动作，也能防止非法数据插入外键列，因为它必须是它指向的那个表中的值之一。</li>
-<li>CHECK: 用于控制字段的值范围。</li>
+<li>MyISAM表是独立于操作系统的，这说明可以轻松地将其从Windows服务器移植到Linux服务器；每当我们建立一个MyISAM引擎的表时，就会在本地磁盘上建立三个文件，文件名就是表名。例如，我建立了一个MyISAM引擎的test表，那么就会生成以下三个文件：
+<ul>
+<li>test.frm，存储表定义；</li>
+<li>test.MYD，存储数据；</li>
+<li>test.MYI，存储索引。<strong>索引文件中的索引指向数据文件中的数据</strong></li>
 </ul>
+</li>
+<li>InnoDB <strong>使用表空间存储数据和索引。</strong> 可以选择使用共享表空间还是独占表空间，默认是共享表。除了表空间，InnoDB也会生成.frm存储表定义。
+<ul>
+<li>共享表空间以及独占表空间都是针对数据的从物理意义上来讲</li>
+<li>共享表空间:  会把表集中存储在一个系统表空间里。即每一个数据库的所有表的数据，索引文件全部放在一个文件中。该文件目录默认的是服务器的数据目录。 默认的文件名为:ibdata1  初始化为10M。</li>
+<li>独占表空间:  每一个表分别创建一个表空间，这时。在对应的数据库目录里每一个表都有.ibd文件(这个文件包括了单独一个表的数据内容以及索引内容)。</li>
+<li>总共生产2个文件：
+<ul>
+<li>test.frm</li>
+<li>test.ibd</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>存储空间：</strong></p>
+<ul>
+<li>MyISAM可被压缩，占据的存储空间较小，支持静态表、动态表、压缩表三种不同的存储格式。
+<ul>
+<li>静态表：比如char(20)，那么就会实打实的存20个字符，如果不足20个字符，用空格填充满。查询速度快因为知道下一个字段一定从21个字符开始。但是需要更多的存储空间。</li>
+<li>动态表：比如char(20)，实际有多少存多少。用更少的存储空间，但是难以维护。</li>
+<li>压缩表：只读表，每条记录分开压缩，所以不能同时访问</li>
+</ul>
+</li>
+<li>InnoDB需要更多的内存和存储，它会在主内存中建立其专用的缓冲池用于高速缓冲数据和索引。（使用LRU最近最少使用的置换算法）</li>
+</ul>
+<p><strong>可移植性、备份及恢复：</strong></p>
+<ul>
+<li>MyISAM的数据是以文件的形式存储 <strong>是独立于操作系统的</strong> ，所以在跨平台的数据转移中会很方便，同时在备份和恢复时也可单独针对某个表进行操作。</li>
+<li>InnoDB备份的方案可以是拷贝数据文件、备份 binlog，或者用 mysqldump，在数据量达到几十G的时候就相对痛苦了。</li>
+</ul>
+<p><strong>事务支持：</strong></p>
+<ul>
+<li>MyISAM强调的是性能，每次查询具有原子性，其执行数度比InnoDB类型更快，但是不提供事务支持。</li>
+<li>InnoDB提供事务、外键等高级数据库功能，具有事务提交、回滚和崩溃修复能力。</li>
+</ul>
+<p><strong>AUTO_INCREMENT：</strong></p>
+<ul>
+<li>
+<p>InnoDB的auto_increment字段必须是索引。如果是组合索引，必须为组合索引的第一列。</p>
+<ul>
+<li>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> autoincrement_demo_inno(</span><br><span class="line">id1 <span class="built_in">int</span> <span class="keyword">not</span> <span class="literal">null</span> auto_increment,</span><br><span class="line">id2 <span class="built_in">int</span> <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line"><span class="keyword">name</span> <span class="built_in">varchar</span>(<span class="number">10</span>),</span><br><span class="line"><span class="keyword">index</span>(id1, id2)</span><br><span class="line">) <span class="keyword">engine</span>=<span class="keyword">InnoDB</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>这里插入几条数据，id1就会增加多少</p>
+</li>
+</ul>
+</li>
+<li>
+<p>在MyISAM中，auto_increment字段也必须是索引，但如果是组合索引，可以不是组合索引的第一列</p>
+<ul>
+<li>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> autoincrement_demo_inno(</span><br><span class="line">id1 <span class="built_in">int</span> <span class="keyword">not</span> <span class="literal">null</span> auto_increment,</span><br><span class="line">id2 <span class="built_in">int</span> <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line"><span class="keyword">name</span> <span class="built_in">varchar</span>(<span class="number">10</span>),</span><br><span class="line"><span class="keyword">index</span>(id2, id1)</span><br><span class="line">) <span class="keyword">engine</span>=MyISAM</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>这里自增的是id1，但是索引第一个是id2.结果如下</p>
+</li>
+<li>
+<p><img src="https://gitee.com/super-jimwang/img/raw/master/img/20210221152113.png" alt=""></p>
+</li>
+<li>
+<p>id1的自增在id2相同的情况下才会进行。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>表锁差异：</strong></p>
+<ul>
+<li>MyISAM只支持表级锁，用户在操作MyISAM表时，select、update、delete和insert语句都会给表自动加锁，如果加锁以后的表满足insert并发的情况下，可以在表的尾部插入新的数据。</li>
+<li>InnoDB支持事务和行级锁。行锁大幅度提高了多用户并发操作的性能，但是<strong>InnoDB的行锁，只是在WHERE的主键是有效的</strong>，非主键的WHERE都会锁全表的。</li>
+</ul>
+<p><strong>表主键：</strong></p>
+<ul>
+<li>MyISAM允许没有任何索引和主键的表存在，<strong>索引保存的是行的地址，不含数据</strong>。</li>
+<li>对于InnoDB，如果没有设定主键或者非空唯一索引，就会自动生成一个6字节的主键(用户不可见)，<strong>InnoDB数据库中的数据和主键节点保存在一起，所有其他索引节点中保存的是主键索引的值。</strong></li>
+</ul>
+<p><strong>表的具体行数：</strong></p>
+<ul>
+<li>MyISAM保存表的总行数，select count() from table;会直接取出出该值；</li>
+<li>而InnoDB没有保存表的总行数，如果使用select count() from table；就会遍历整个表，消耗相当大，但是在加了wehre条件后，myisam和innodb处理的方式都一样。</li>
+</ul>
+<p><strong>CURD操作：</strong></p>
+<ul>
+<li>在MyISAM中，如果执行大量的SELECT，MyISAM是更好的选择。
+<ul>
+<li><strong>为什么MyISAM查询更快？</strong> 看myisam于innodb的索引细节
+<ul>
+<li>查询的时候，由于innodb支持事务，所以会有mvvc的一个比较。这个过程会损耗性能。</li>
+<li>查询的时候，如果走了索引，由于innodb是聚簇索引，会有一个回表的过程，即：先去非聚簇索引树中查询数据，找到数据对应的key之后，再通过key回表到聚簇索引树，最后找到需要的数据。而myisam直接就是非簇集索引，查询的时候查到的最后结果不是聚簇索引树的key，而是磁盘地址，所以会直接去查询磁盘。</li>
+<li>锁的一个损耗，innodb锁支持行锁，在检查锁的时候不仅检查表锁，还要看行锁。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>对于InnoDB，如果你的数据执行大量的INSERT或UPDATE，出于性能方面的考虑，应该使用InnoDB表。DELETE从性能上InnoDB更优，但DELETE FROM table时，InnoDB不会重新建立表，而是一行一行的删除，在innodb上如果要清空保存有大量数据的表，最好使用truncate table这个命令。</li>
+</ul>
+<p><strong>外键：</strong><br>
+MyISAM不支持外键，而InnoDB支持外键。</p>
+<h2 id="总结">总结</h2>
+<p>MyISAM更适合读多，并发少的场景。</p>
 <hr>
-<p>转载自：</p>
-<p><a href="https://blog.csdn.net/jerry11112/article/details/78160771" target="_blank" rel="noopener">https://blog.csdn.net/jerry11112/article/details/78160771</a></p>
-<p><a href="https://www.yuque.com/fanzhengxu/tba6b8/dx0hvw#4MqAL" target="_blank" rel="noopener">https://www.yuque.com/fanzhengxu/tba6b8/dx0hvw#4MqAL</a></p>
+<p>部分转载自：<a href="https://www.yuque.com/fanzhengxu/tba6b8/dx0hvw#EE6qF" target="_blank" rel="noopener">https://www.yuque.com/fanzhengxu/tba6b8/dx0hvw#EE6qF</a></p>
 
                 
 
@@ -254,12 +343,12 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/article/数据库/innodb和myisam存储引擎的区别/" data-toggle="tooltip" data-placement="top" title="innodb和myisam存储引擎的区别">&larr; Previous Post</a>
+                            <a href="/article/数据库/InnoDB和MyISAM的索引/" data-toggle="tooltip" data-placement="top" title="InnoDB和MyISAM索引">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/article/数据库/数据库的锁/" data-toggle="tooltip" data-placement="top" title="数据库的锁">Next Post &rarr;</a>
+                            <a href="/article/数据库/超键、候选键、主键、外键以及sql约束/" data-toggle="tooltip" data-placement="top" title="超键、候选键、主键、外键以及sql约束">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -309,7 +398,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#超键-候选键-主键-外键以及sql约束"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x8D85;&#x952E;&#x3001;&#x5019;&#x9009;&#x952E;&#x3001;&#x4E3B;&#x952E;&#x3001;&#x5916;&#x952E;&#x4EE5;&#x53CA;sql&#x7EA6;&#x675F;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#键"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x952E;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#定义"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">&#x5B9A;&#x4E49;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#举例"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">&#x4E3E;&#x4F8B;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#约束"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x7EA6;&#x675F;</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#innodb和myisam存储引擎的区别"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">innodb&#x548C;myisam&#x5B58;&#x50A8;&#x5F15;&#x64CE;&#x7684;&#x533A;&#x522B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#区别"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x533A;&#x522B;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#总结"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x603B;&#x7ED3;</span></a></li></ol></li></ol>
         
         </div>
       </aside>
