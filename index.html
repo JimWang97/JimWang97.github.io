@@ -143,14 +143,14 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -217,6 +217,106 @@
             
                 <!-- Main Content -->
 
+
+<div class="post-preview">
+
+    <a href="/article/数据库/查询语句的元素/">
+        <h2 class="post-title">
+                                 
+            查询语句的元素
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            查询语句的元素
+join
+inner join
+两张表重合的部分匹配连接到一起
+12345678910111213141516171819202122232425262728293031323334mysql&gt; use RUNOOB;Database changedmysql&gt; SELECT * FROM tcount_tbl;+---------------+---------......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-23
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#数据库" title="数据库">数据库</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/数据库/sql优化/">
+        <h2 class="post-title">
+                                 
+            sql优化
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            sql优化
+SQL语句优化
+慢查询日志发现有问题的SQL
+通过MySQL慢查询日志对有效率问题的SQL进行监控
+MySQL的慢查询日志是MySQL提供的一种日志记录，它用来记录在MySQL中响应时间超过阀值的语句，具体指运行时间超过long_query_time值的SQL，则会被记录到慢查询日志中。long_query_time的默认值为10，意思是运行10s以上的语句。通过MySQL的慢查......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-23
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#数据库" title="数据库">数据库</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/数据库/死锁判定原理和具体场景/">
+        <h2 class="post-title">
+                                 
+            死锁判定原理和具体场景
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            死锁判定原理和具体场景
+什么是死锁
+数据库是一个多用户使用的共享资源，当多个用户 并发地存取数据的时候，在数据库中就会发生多个事务同时存取同一个数据的情况，加锁是进行数据库并发控制的一种非常重要的技术。在实际应用中，如果两个事务需要一组有冲突的锁，而不能继续进行下去，这时便发生了死锁。
+死锁的原因
+1.事务之间对资源访问顺序的交替
+此类常见于两个用户分别首先访问A表和B表，并锁住当前表，但是......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-23
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#数据库" title="数据库">数据库</a>
+            
+        </div>
+    
+
+</div>
+<hr>
 
 <div class="post-preview">
 
@@ -477,133 +577,6 @@ truncate table：
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/article/数据库/什么是索引以及索引的分类/">
-        <h2 class="post-title">
-                                 
-            什么是索引以及索引的分类
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            什么是索引以及索引的分类
-什么是索引
-索引是对数据库表中一个或多个列的值进行排序的数据结构，以协助快速查询、更新数据库表中数据。
-索引的底层结构
-底层数据结构是B+树。
-在数据结构中，我们最为常见的搜索结构就是二叉搜索树和AVL树(高度平衡的二叉搜索树，为了提高二叉搜索树的效率，减少树的平均搜索长度)了。然而，无论二叉搜索树还是AVL树，当数据量比较大时，都会由于树的深度过大而造成I/O读写......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-20
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#数据库" title="数据库">数据库</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/数据库/数据库三范式/">
-        <h2 class="post-title">
-                                 
-            数据库三范式
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            数据库三范式
-第一范式
-列不可分
-1NF（第一范式）是对属性具有原子性的要求，不可再分。
-比如：
-
-
-
-学号
-姓名
-性别
-出生年月日
-
-
-
-
-如果认为年月日可以分为年、月、日。那么这就不满足1NF
-第二范式
-消除非主属性对码对部分函数依赖
-2NF（第二范式）是对记录有唯一性的要求，即实体的唯一性，不存在部分依赖，每一列与主键都相关
-比如：
-
-
-
-学号
-课程号
-姓名
-学分
-
-
-
-
-该表明显说明......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-20
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#数据库" title="数据库">数据库</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/计网/DNS为什么使用UDP，又与TCP有什么关系/">
-        <h2 class="post-title">
-                                 
-            DNS为什么使用UDP，又与TCP有什么关系
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            DNS为什么使用UDP，又与TCP有什么关系
-为什么用UDP
-DNS请求数据时，整个数据包除了DNS协议相关的内容之外，还包含以太网、IP和UDP的协议头。虽然包含了这么多信息，但是一个DNS请求只有几十个字节。是非常小的数据包。
-UDP 和 TCP 的通信机制非常不同，作为可靠的传输协议，TCP 协议需要通信的双方通过 三次握手 建立 TCP 连接后才可以通信，但是在 30 年前的 DNS......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-19
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -694,23 +667,23 @@ UDP 和 TCP 的通信机制非常不同，作为可靠的传输协议，TCP 协�
     <ul>
       
         <li>
+          <a href="/article/数据库/查询语句的元素/">查询语句的元素</a>
+        </li>
+      
+        <li>
+          <a href="/article/数据库/sql优化/">sql优化</a>
+        </li>
+      
+        <li>
+          <a href="/article/数据库/死锁判定原理和具体场景/">死锁判定原理和具体场景</a>
+        </li>
+      
+        <li>
           <a href="/article/数据库/B树、B+树区别，索引为何使用B+树/">B树、B+树区别，索引为何使用B+树</a>
         </li>
       
         <li>
           <a href="/article/数据库/InnoDB和MyISAM的索引/">InnoDB和MyISAM索引</a>
-        </li>
-      
-        <li>
-          <a href="/article/数据库/innodb和myisam存储引擎的区别/">innodb和myisam存储引擎的区别</a>
-        </li>
-      
-        <li>
-          <a href="/article/数据库/超键、候选键、主键、外键以及sql约束/">超键、候选键、主键、外键以及sql约束</a>
-        </li>
-      
-        <li>
-          <a href="/article/数据库/数据库的锁/">数据库的锁</a>
         </li>
       
     </ul>
@@ -721,7 +694,7 @@ UDP 和 TCP 的通信机制非常不同，作为可靠的传输协议，TCP 协�
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">36</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">39</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">5</span></li></ul>
     </div>
 
         <hr>

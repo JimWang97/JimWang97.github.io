@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          虚拟内存与分配 - JimWang | Blog
+          sql优化 - JimWang | Blog
         
     </title>
 
-    <link rel="canonical" href="http://jimwang97.github.io/article/操作系统/虚拟内存与分配/">
+    <link rel="canonical" href="http://jimwang97.github.io/article/数据库/sql优化/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -88,14 +88,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#操作系统" title="操作系统">操作系统</a>
+                              <a class="tag" href="/tags/#数据库" title="数据库">数据库</a>
                             
                         </div>
-                        <h1 style="font-weight: bolder; font-size: 72px; font-family: Hannotate SC;">虚拟内存与分配</h1>
+                        <h1 style="font-weight: bolder; font-size: 72px; font-family: Hannotate SC;">sql优化</h1>
                         <h2 class="subheading" style="font-weight: bolder; font-size: x-large; font-family: Hannotate SC;"></h2>
                         <span class="meta">
                             Posted by JimWang on
-                            2021-01-31
+                            2021-02-23
                         </span>
                     </div>
                 
@@ -221,55 +221,66 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="虚拟内存与分配">虚拟内存与分配</h1>
-<h2 id="虚拟内存">虚拟内存</h2>
-<p>虚拟内存的基本思想是，每个进程有用独立的逻辑地址空间，内存被分为大小相等的多个块,称为页(Page).每个页都是一段连续的地址。<strong>对于进程来看,逻辑上貌似有很多内存空间，其中一部分对应物理内存上的一块(称为页框，通常页和页框大小相等)，还有一些没加载在内存中的对应在硬盘上</strong></p>
-<p>虚拟内存实际上可以比物理内存大。当访问虚拟内存时，会访问**MMU（内存管理单元）**去匹配对应的物理地址，<strong>而如果虚拟内存的页并不存在于物理内存中，会产生缺页中断，从磁盘中取得缺的页放入内存，如果内存已满，还会根据某种算法将磁盘中的页换出。</strong></p>
-<p>而虚拟内存和物理内存的匹配是通过页表实现，页表存在MMU中</p>
-<h3 id="没有虚拟内存的问题">没有虚拟内存的问题</h3>
+                <h1 id="sql优化">sql优化</h1>
+<h2 id="sql语句优化">SQL语句优化</h2>
+<h3 id="慢查询日志发现有问题的sql">慢查询日志发现有问题的SQL</h3>
+<p>通过MySQL慢查询日志对有效率问题的SQL进行监控</p>
+<p>MySQL的慢查询日志是MySQL提供的一种日志记录，它用来记录在MySQL中响应时间超过阀值的语句，具体指运行时间超过long_query_time值的SQL，则会被记录到慢查询日志中。long_query_time的默认值为10，意思是运行10s以上的语句。通过MySQL的慢查询日志，我们可以查询出执行的次数多占用的时间长的SQL</p>
+<h3 id="通过explain查询和分析sql的执行计划">通过explain查询和分析SQL的执行计划</h3>
+<p>使用 EXPLAIN 关键字可以知道MySQL是如何处理你的SQL语句的，以便分析查询语句或是表结构的性能瓶颈。通过explain命令可以得到表的读取顺序、数据读取操作的操作类型、哪些索引可以使用、哪些索引被实际使用、表之间的引用以及每张表有多少行被优化器查询等问题。当扩展列extra出现Using filesort和Using temporay，则往往表示SQL需要优化了。</p>
+<h3 id="sql语句的优化">SQL语句的优化</h3>
+<p>⒈优化insert语句：一次插入多值；</p>
+<p>⒉应尽量避免在 where 子句中使用!=或&lt;&gt;操作符，否则将引擎放弃使用索引而进行全表扫描；</p>
+<p>⒊应尽量避免在 where 子句中对字段进行null值判断，否则将导致引擎放弃使用索引而进行全表扫描；</p>
+<p>⒋优化嵌套查询：子查询可以被更有效率的连接(Join)替代；</p>
+<p>⒌很多时候用 exists 代替 in 是一个好的选择。</p>
+<p>⒍选择最有效率的表名顺序：数据库的解析器按照从右到左的顺序处理FROM子句中的表名，FROM子句中写在最后的表将被最先处理</p>
 <ul>
-<li>多个程序需要运行，但是内存空间不足了，就需要将其他程序暂时拷贝到硬盘当中，然后将新的程序装入内存运行.由于大量的数据装入装出，内存的使用效率低</li>
-<li>程序可以直接访问物理内存，一个进程可以修改其他进程的内存数据</li>
-<li>多线程情况下，不知道哪些物理内存可用</li>
-</ul>
-<p>虚拟内存主要提供了如下三个重要的能力：</p>
+<li>在FROM子句中包含多个表的情况下：
 <ul>
-<li>它把主存看作为一个存储在硬盘上的虚拟地址空间的高速缓存，并且只在主存中缓存活动区域（按需缓存）。</li>
-<li>它为每个进程提供了一个一致的地址空间，从而降低了程序员对内存管理的复杂性。</li>
-<li>它还保护了每个进程的地址空间不会被其他进程破坏。</li>
+<li>如果三个表是完全无关系的话，将记录和列名最少的表，写在最后，然后依次类推。也就是说：选择记录条数最少的表放在最后。</li>
+<li>如果有3个以上的表连接查询：如果三个表是有关系的话，将引用最多的表，放在最后，然后依次类推。也就是说：被其他表所引用的表放在最后。</li>
 </ul>
-<h2 id="内存分配">内存分配</h2>
-<p>内存分配申请的是虚拟的内存空间，并没有拿到真正的物理内存空间。但是<strong>在第一次访问该内存的时候</strong>，程序会发现虚拟内存地址没有影射到物理内存地址，于是触发<strong>缺页中断（异常）</strong></p>
-<p>此时，进程会陷入内核态，执行一下操作：</p>
+</li>
+</ul>
+<p>⒎用IN代替OR：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> emp <span class="keyword">where</span> sal = <span class="number">1500</span> <span class="keyword">or</span> sal = <span class="number">3000</span> <span class="keyword">or</span> sal = <span class="number">800</span>;</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> emp <span class="keyword">where</span> sal <span class="keyword">in</span> (<span class="number">1500</span>,<span class="number">3000</span>,<span class="number">800</span>);</span><br></pre></td></tr></table></figure>
+<p>⒏SELECT子句中避免使用*号：<br>
+我们最开始接触 SQL 的时候，“*” 号是可以获取表中全部的字段数据的，但是它要通过查询数据字典完成，这意味着将消耗更多的时间，而且使用 “*” 号写出来的 SQL 语句也不够直观。</p>
+<h2 id="索引优化">索引优化</h2>
+<p>建议在经常作查询选择的字段、经常作表连接的字段以及经常出现在 order by、group by、distinct 后面的字段中建立索引。</p>
+<p>但是有些情况索引会失效</p>
+<h3 id="索引失效的情况">索引失效的情况</h3>
 <ol>
-<li>检查要访问的虚拟地址是否合法</li>
-<li>查找分配一个物理页</li>
-<li>填充物理内容（读取磁盘，或者直接置0）。</li>
-<li>建立虚拟内存和物理内存的映射关系</li>
+<li>like 以%开头，索引无效；当like前缀没有%，后缀有%时，索引有效。</li>
+<li>or语句前后没有同时使用索引。当or左右查询字段只有一个是索引，该索引失效，只有当or左右查询字段均为索引时，才会生效</li>
+<li>组合索引的情况下，必须满足最左匹配原则(eg：多列索引col1、col2和col3，则索引生效的情形包括col1或col1，col2或col1，col2，col3)。</li>
+<li>数据类型出现隐式转化。如varchar不加单引号的话可能会自动转换为int型，使索引无效，产生全表扫描。</li>
+<li>在索引字段上使用not，&lt;&gt;，!=。不等于操作符是永远不会用到索引的，因此对它的处理只会产生全表扫描。 优化方法： key&lt;&gt;0 改为 key&gt;0 or key&lt;0。</li>
+<li>当全表扫描速度比索引速度快时，mysql会使用全表扫描，此时索引失效。</li>
+<li>对索引字段进行计算操作、字段上使用函数。（索引为 emp(ename,empno,sal)）</li>
 </ol>
-<h2 id="逻辑地址和物理地址的映射">逻辑地址和物理地址的映射</h2>
-<h3 id="分页机制">分页机制</h3>
-<p>程序或操作系统逻辑地址分为多个<strong>页</strong>（page），将物理地址分为多个<strong>帧</strong>（page frame 也叫页，这里方便区分称为帧）。</p>
-<p><strong>逻辑地址页到物理地址帧的映射</strong>称为 <strong>页表</strong>（page table）。页号和帧号进行映射，其实页表不仅仅存了映射关系，还存当前页、帧的状态（例如是否可用，权限是否足够等）。</p>
-<p><img src="https://gitee.com/super-jimwang/img/raw/master/img/20210131231106.png" alt="image-20210131231106127"></p>
-<p><strong>每一个进程都有一张自己的页表</strong></p>
-<p>分页内存寻址过程小例子</p>
-<p>机器：32位操作系统  256MB内存 页大小4KB</p>
-<p>程序：32位</p>
-<p>4K=12bit</p>
-<p>逻辑地址 32bit=20bit页号+12bit偏移</p>
-<p>物理地址 28bit=16bit帧号+12bit偏移</p>
-<p>对于地址0x000011a3  页号00001 偏移 1a3。根据页号找到帧号，帧号+偏移=物理地址。</p>
-<p><img src="https://gitee.com/super-jimwang/img/raw/master/img/20210131231835.png" alt="image-20210131231835787"></p>
-<p>根据页号去页表中找到对应帧号，对应帧号+偏移量就是真实物理地址</p>
+<h2 id="表结构优化">表结构优化</h2>
 <ol>
-<li>如果查表后发现帧号是磁盘会发生什么？</li>
+<li>选择合适数据类型</li>
+<li>遵守三大范式</li>
+<li>表的垂直拆分
+<ul>
+<li>把不常用的字段单独放在同一个表中；</li>
+<li>把大字段独立放入一个表中；</li>
+<li>把经常使用的字段放在一起；</li>
+</ul>
+</li>
+<li>表的水平拆分
+<ul>
+<li>表的水平拆分用于解决数据表中数据过大的问题，水平拆分每一个表的结构都是完全一致的</li>
+<li>对ID进行hash运算，如果要拆分成5个表，mod(id,5)取出0~4个值；</li>
+<li>针对不同的hashID将数据存入不同的表中；</li>
+</ul>
+</li>
 </ol>
-<p>这时候会触发<strong>缺页中断</strong>，切换到内核态，内核从磁盘读取数据加载到内存中，然后把物理地址在page table进行更新，然后重新进行内存寻址的过程。</p>
-<ol start="2">
-<li>如果从磁盘加载进内存时，内存帧满了怎么办？</li>
-</ol>
-<p>这时候会触发<strong>页面置换（页面置换算法）</strong>，将不太常用的帧 从RAM中逐出到磁盘中，让出位置来存储。</p>
+<hr>
+<p>部分转载自：<a href="https://www.yuque.com/fanzhengxu/tba6b8/dx0hvw#QHAdi" target="_blank" rel="noopener">https://www.yuque.com/fanzhengxu/tba6b8/dx0hvw#QHAdi</a></p>
 
                 
 
@@ -278,12 +289,12 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/article/操作系统/内存泄漏和内存溢出/" data-toggle="tooltip" data-placement="top" title="内存泄漏和内存溢出">&larr; Previous Post</a>
+                            <a href="/article/数据库/查询语句的元素/" data-toggle="tooltip" data-placement="top" title="查询语句的元素">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/article/操作系统/进程的状态与转换、控制/" data-toggle="tooltip" data-placement="top" title="进程的状态与转换、控制">Next Post &rarr;</a>
+                            <a href="/article/数据库/死锁判定原理和具体场景/" data-toggle="tooltip" data-placement="top" title="死锁判定原理和具体场景">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -333,7 +344,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#虚拟内存与分配"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x865A;&#x62DF;&#x5185;&#x5B58;&#x4E0E;&#x5206;&#x914D;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#虚拟内存"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x865A;&#x62DF;&#x5185;&#x5B58;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#没有虚拟内存的问题"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">&#x6CA1;&#x6709;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x7684;&#x95EE;&#x9898;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#内存分配"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x5185;&#x5B58;&#x5206;&#x914D;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#逻辑地址和物理地址的映射"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x903B;&#x8F91;&#x5730;&#x5740;&#x548C;&#x7269;&#x7406;&#x5730;&#x5740;&#x7684;&#x6620;&#x5C04;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#分页机制"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">&#x5206;&#x9875;&#x673A;&#x5236;</span></a></li></ol></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#sql优化"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">sql&#x4F18;&#x5316;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#sql语句优化"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">SQL&#x8BED;&#x53E5;&#x4F18;&#x5316;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#慢查询日志发现有问题的sql"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">&#x6162;&#x67E5;&#x8BE2;&#x65E5;&#x5FD7;&#x53D1;&#x73B0;&#x6709;&#x95EE;&#x9898;&#x7684;SQL</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#通过explain查询和分析sql的执行计划"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">&#x901A;&#x8FC7;explain&#x67E5;&#x8BE2;&#x548C;&#x5206;&#x6790;SQL&#x7684;&#x6267;&#x884C;&#x8BA1;&#x5212;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#sql语句的优化"><span class="toc-nav-number">1.1.3.</span> <span class="toc-nav-text">SQL&#x8BED;&#x53E5;&#x7684;&#x4F18;&#x5316;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#索引优化"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x7D22;&#x5F15;&#x4F18;&#x5316;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#索引失效的情况"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">&#x7D22;&#x5F15;&#x5931;&#x6548;&#x7684;&#x60C5;&#x51B5;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#表结构优化"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x8868;&#x7ED3;&#x6784;&#x4F18;&#x5316;</span></a></li></ol></li></ol>
         
         </div>
       </aside>

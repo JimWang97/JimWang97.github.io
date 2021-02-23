@@ -151,14 +151,14 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -275,6 +275,54 @@
 <li>MyISAM：不支持事务，用于只读程序提高性能；</li>
 <li>InnoDB：支持ACID事务、行级锁、并发；</li>
 </ul>
+<h2 id="解决方案">解决方案</h2>
+<h3 id="mvcc">MVCC</h3>
+<p>mvcc对版本并发控制（Multi-Version Conncurrency Control）是mysql中基于乐观锁原理实现的隔离级别的方式。==<strong>用于实现读已提交和可重复读取隔离级别。</strong>==</p>
+<p>InnoDB的MVCC，是 ==<strong>通过在每行记录后面保存两个隐藏的列来实现的。这两个列，一个保存了行的创建时间，一个保存行的过期时间（或删除时间），当然存储的并不是实际的时间值，而是系统版本号（system version number）.</strong>== 每开始一个新的事务，系统版本号都会自动递增，事务开始时刻的系统版本号会作为事务的版本号，用来和查询到的每行记录的版本号进行比较。下面看一下在repeatable Read 隔离级别下，MVCC具体是如何操作的。</p>
+<ul>
+<li>SELECT
+<ul>
+<li>（1）InnoDB只查找版本遭遇当前事务版本的数据行（行的系统版本号小于或等于事务的系统版本号），这样可以确保事务读取的行，要么是在事务开始前已经存在的，要么是事务自身插入或者修改过的。</li>
+<li>（2）行的删除版本要么未定义，要么大于当前事务版本号，这可以确保事务读取到的行，在事务开始之前没有被删除。<br>
+	只有符合上述两个条件的记录，才能作为查询结果。</li>
+</ul>
+</li>
+<li>INSERT
+<ul>
+<li>innoDB为新插入的每一行保存当前系统版本作为行版本号。</li>
+</ul>
+</li>
+<li>DELETE
+<ul>
+<li>innoDB为删除的每一行保存当前系统版本号作为行删除标识。</li>
+</ul>
+</li>
+<li>UPDATE
+<ul>
+<li>InnoDB为==插入一行新记录，保存当前系统版本号作为行版本号，同时保存当前系统版本号到原来的行作为行删除标识==</li>
+</ul>
+</li>
+</ul>
+<h4 id="mvcc使用快照读和当前读解决可重复读">MVCC使用快照读和当前读解决可重复读</h4>
+<p><strong>select 快照读</strong><br>
+当执行select操作， ==innodb默认会执行快照读，会记录下这个select后的结果，之后select的时候就会返回这次快照的数据，即使其他事务提交了不会影响当前select的数据，这就实现了可重复读了。== 快照的生成当在第一次执行select的时候，也就是说假设当A开启了事务，然后没有执行任何操作，这个时候B insert了一条数据然后commit，这时候A执行select，满额返回的数据中心就会有B添加的那条数据，之后无论再有其他事务commit都没有关系，因为快照已经生成了，后面的select都是根据快照来的。</p>
+<p><strong>当前读</strong><br>
+对于会对数据修改的操作（update,insert,delete）都是采用当前读的模式。在执行这几个操作时会读取最新的版本号记录，写操作后把版本号改为了当前事务的版本号，所以即使是被其他的事务提交的数据也可以查询到。==假设要update一条数据，但是在另一个事务中已经delete掉这条数据并且commit了，如果update就会产生冲突，所以在update的时候需要知道最新的数据，也正是因为这样才导致幻读。==</p>
+<h3 id="next-key锁解决幻读">next-key锁解决幻读</h3>
+<p>InnoDB有三种行锁的算法：</p>
+<p>1，Record Lock：单个行记录上的锁。</p>
+<p>2，Gap Lock：间隙锁，锁定一个范围，但不包括记录本身。GAP锁的目的，是为了防止同一事务的两次当前读，出现幻读的情况。</p>
+<p>3，Next-Key Lock：1+2，锁定一个范围，并且锁定记录本身。对于行的查询，都是采用该方法，主要目的是解决幻读的问题。</p>
+<p>当我们用范围条件而不是相等条件索引数据，并请求共享或排他锁时，InnoDB会给符合条件的已有数据记录的索引项加锁；对于键值在条件范围内但并不存在的记录，叫做“间隙（GAP）”。</p>
+<p>根据检索条件向下寻找最靠近检索条件的记录值A作为左区间，向上寻找最靠近检索条件的记录值B作为右区间<br>
+<img src="https://gitee.com/super-jimwang/img/raw/master/img/20210222172613.png" alt=""><br>
+对于以上这个数据，</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># session A</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> z <span class="keyword">WHERE</span> b = <span class="number">6</span> <span class="keyword">FOR</span> <span class="keyword">UPDATE</span>;</span><br><span class="line"></span><br><span class="line"># session B</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> z <span class="keyword">VALUES</span> (<span class="number">2</span>, <span class="number">4</span>);<span class="comment">/*success*/</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> z <span class="keyword">VALUES</span> (<span class="number">2</span>, <span class="number">8</span>);<span class="comment">/*blocked*/</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> z <span class="keyword">VALUES</span> (<span class="number">4</span>, <span class="number">4</span>);<span class="comment">/*blocked*/</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> z <span class="keyword">VALUES</span> (<span class="number">4</span>, <span class="number">8</span>);<span class="comment">/*blocked*/</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> z <span class="keyword">VALUES</span> (<span class="number">8</span>, <span class="number">4</span>);<span class="comment">/*blocked*/</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> z <span class="keyword">VALUES</span> (<span class="number">8</span>, <span class="number">8</span>);<span class="comment">/*success*/</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> z <span class="keyword">VALUES</span> (<span class="number">0</span>, <span class="number">4</span>);<span class="comment">/*blocked*/</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> z <span class="keyword">VALUES</span> (<span class="number">-1</span>, <span class="number">4</span>);<span class="comment">/*success*/</span></span><br></pre></td></tr></table></figure>
+<p>索引 b 上的 next-key lock(间隙锁+行锁) 的范围是(b=4,id=3)到(b=6,id=5)这个左开右闭区间和(b=6,id=5)到(b=8,id=7)这个开区间。</p>
+<p><img src="https://gitee.com/super-jimwang/img/raw/master/img/20210222172731.png" alt=""><br>
+索引会根据 b 和 id 的值进行排序，插入不同的值，锁的范围是不一样的；分别插入 (b=4,id=2) 和(b=4,id=4)以及其他数时，插入的位置如图所示：<br>
+<img src="https://gitee.com/super-jimwang/img/raw/master/img/20210222172834.png" alt=""></p>
+<p>因此，通过next-key锁锁住了范围内的间隙，就不会在出现幻读的现象了</p>
 <hr>
 <p>部分转载自：<a href="https://www.yuque.com/fanzhengxu/tba6b8/dx0hvw#oWBVa" target="_blank" rel="noopener">https://www.yuque.com/fanzhengxu/tba6b8/dx0hvw#oWBVa</a></p>
 
@@ -340,7 +388,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#事务的acid和隔离级别"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x4E8B;&#x52A1;&#x7684;ACID&#x548C;&#x9694;&#x79BB;&#x7EA7;&#x522B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#什么是事务以及acid"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x4EC0;&#x4E48;&#x662F;&#x4E8B;&#x52A1;&#x4EE5;&#x53CA;ACID</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#事务的并发问题"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x4E8B;&#x52A1;&#x7684;&#x5E76;&#x53D1;&#x95EE;&#x9898;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#隔离级别"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x9694;&#x79BB;&#x7EA7;&#x522B;</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#事务的acid和隔离级别"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x4E8B;&#x52A1;&#x7684;ACID&#x548C;&#x9694;&#x79BB;&#x7EA7;&#x522B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#什么是事务以及acid"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x4EC0;&#x4E48;&#x662F;&#x4E8B;&#x52A1;&#x4EE5;&#x53CA;ACID</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#事务的并发问题"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x4E8B;&#x52A1;&#x7684;&#x5E76;&#x53D1;&#x95EE;&#x9898;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#隔离级别"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x9694;&#x79BB;&#x7EA7;&#x522B;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#解决方案"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">&#x89E3;&#x51B3;&#x65B9;&#x6848;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#mvcc"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">MVCC</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#mvcc使用快照读和当前读解决可重复读"><span class="toc-nav-number">1.4.1.1.</span> <span class="toc-nav-text">MVCC&#x4F7F;&#x7528;&#x5FEB;&#x7167;&#x8BFB;&#x548C;&#x5F53;&#x524D;&#x8BFB;&#x89E3;&#x51B3;&#x53EF;&#x91CD;&#x590D;&#x8BFB;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#next-key锁解决幻读"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">next-key&#x9501;&#x89E3;&#x51B3;&#x5E7B;&#x8BFB;</span></a></li></ol></li></ol></li></ol>
         
         </div>
       </aside>

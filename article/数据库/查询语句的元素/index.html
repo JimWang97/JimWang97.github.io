@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          虚拟内存与分配 - JimWang | Blog
+          查询语句的元素 - JimWang | Blog
         
     </title>
 
-    <link rel="canonical" href="http://jimwang97.github.io/article/操作系统/虚拟内存与分配/">
+    <link rel="canonical" href="http://jimwang97.github.io/article/数据库/查询语句的元素/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -88,14 +88,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#操作系统" title="操作系统">操作系统</a>
+                              <a class="tag" href="/tags/#数据库" title="数据库">数据库</a>
                             
                         </div>
-                        <h1 style="font-weight: bolder; font-size: 72px; font-family: Hannotate SC;">虚拟内存与分配</h1>
+                        <h1 style="font-weight: bolder; font-size: 72px; font-family: Hannotate SC;">查询语句的元素</h1>
                         <h2 class="subheading" style="font-weight: bolder; font-size: x-large; font-family: Hannotate SC;"></h2>
                         <span class="meta">
                             Posted by JimWang on
-                            2021-01-31
+                            2021-02-23
                         </span>
                     </div>
                 
@@ -221,55 +221,48 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="虚拟内存与分配">虚拟内存与分配</h1>
-<h2 id="虚拟内存">虚拟内存</h2>
-<p>虚拟内存的基本思想是，每个进程有用独立的逻辑地址空间，内存被分为大小相等的多个块,称为页(Page).每个页都是一段连续的地址。<strong>对于进程来看,逻辑上貌似有很多内存空间，其中一部分对应物理内存上的一块(称为页框，通常页和页框大小相等)，还有一些没加载在内存中的对应在硬盘上</strong></p>
-<p>虚拟内存实际上可以比物理内存大。当访问虚拟内存时，会访问**MMU（内存管理单元）**去匹配对应的物理地址，<strong>而如果虚拟内存的页并不存在于物理内存中，会产生缺页中断，从磁盘中取得缺的页放入内存，如果内存已满，还会根据某种算法将磁盘中的页换出。</strong></p>
-<p>而虚拟内存和物理内存的匹配是通过页表实现，页表存在MMU中</p>
-<h3 id="没有虚拟内存的问题">没有虚拟内存的问题</h3>
+                <h1 id="查询语句的元素">查询语句的元素</h1>
+<h2 id="join">join</h2>
+<h3 id="inner-join">inner join</h3>
+<p>两张表重合的部分匹配连接到一起</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; use RUNOOB;</span><br><span class="line">Database changed</span><br><span class="line">mysql&gt; SELECT * FROM tcount_tbl;</span><br><span class="line">+<span class="comment">---------------+--------------+</span></span><br><span class="line">| runoob_author | runoob_count |</span><br><span class="line">+<span class="comment">---------------+--------------+</span></span><br><span class="line">| 菜鸟教程  | 10           |</span><br><span class="line">| RUNOOB.COM    | 20           |</span><br><span class="line">| Google        | 22           |</span><br><span class="line">+<span class="comment">---------------+--------------+</span></span><br><span class="line">3 rows in <span class="keyword">set</span> (<span class="number">0.01</span> sec)</span><br><span class="line"> </span><br><span class="line">mysql&gt; <span class="keyword">SELECT</span> * <span class="keyword">from</span> runoob_tbl;</span><br><span class="line">+<span class="comment">-----------+---------------+---------------+-----------------+</span></span><br><span class="line">| runoob_id | runoob_title  | runoob_author | submission_date |</span><br><span class="line">+<span class="comment">-----------+---------------+---------------+-----------------+</span></span><br><span class="line">| 1         | 学习 PHP    | 菜鸟教程  | 2017-04-12      |</span><br><span class="line">| 2         | 学习 MySQL  | 菜鸟教程  | 2017-04-12      |</span><br><span class="line">| 3         | 学习 Java   | RUNOOB.COM    | 2015-05-01      |</span><br><span class="line">| 4         | 学习 Python | RUNOOB.COM    | 2016-03-06      |</span><br><span class="line">| 5         | 学习 C      | FK            | 2017-04-05      |</span><br><span class="line">+<span class="comment">-----------+---------------+---------------+-----------------+</span></span><br><span class="line">5 rows in <span class="keyword">set</span> (<span class="number">0.01</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">SELECT</span> a.runoob_id, a.runoob_author, b.runoob_count <span class="keyword">FROM</span> runoob_tbl a <span class="keyword">INNER</span> <span class="keyword">JOIN</span> tcount_tbl b <span class="keyword">ON</span> a.runoob_author = b.runoob_author;</span><br><span class="line">+<span class="comment">-------------+-----------------+----------------+</span></span><br><span class="line">| a.runoob_id | a.runoob_author | b.runoob_count |</span><br><span class="line">+<span class="comment">-------------+-----------------+----------------+</span></span><br><span class="line">| 1           | 菜鸟教程    | 10             |</span><br><span class="line">| 2           | 菜鸟教程    | 10             |</span><br><span class="line">| 3           | RUNOOB.COM      | 20             |</span><br><span class="line">| 4           | RUNOOB.COM      | 20             |</span><br><span class="line">+<span class="comment">-------------+-----------------+----------------+</span></span><br><span class="line">4 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/super-jimwang/img/raw/master/img/20210223163421.png" alt=""></p>
+<h3 id="left-join">left join</h3>
+<p>左边表的全部以及和右边表重合的部分</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT a.runoob_id, a.runoob_author, b.runoob_count FROM runoob_tbl a LEFT JOIN tcount_tbl b ON a.runoob_author = b.runoob_author;</span><br><span class="line">+<span class="comment">-------------+-----------------+----------------+</span></span><br><span class="line">| a.runoob_id | a.runoob_author | b.runoob_count |</span><br><span class="line">+<span class="comment">-------------+-----------------+----------------+</span></span><br><span class="line">| 1           | 菜鸟教程    | 10             |</span><br><span class="line">| 2           | 菜鸟教程    | 10             |</span><br><span class="line">| 3           | RUNOOB.COM      | 20             |</span><br><span class="line">| 4           | RUNOOB.COM      | 20             |</span><br><span class="line">| 5           | FK              | NULL           |</span><br><span class="line">+<span class="comment">-------------+-----------------+----------------+</span></span><br><span class="line">5 rows in <span class="keyword">set</span> (<span class="number">0.01</span> sec)</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/super-jimwang/img/raw/master/img/20210223163522.png" alt=""></p>
+<h3 id="right-join">right join</h3>
+<p>右边表的全部以及和左边表重合的部分</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT a.runoob_id, a.runoob_author, b.runoob_count FROM runoob_tbl a RIGHT JOIN tcount_tbl b ON a.runoob_author = b.runoob_author;</span><br><span class="line">+<span class="comment">-------------+-----------------+----------------+</span></span><br><span class="line">| a.runoob_id | a.runoob_author | b.runoob_count |</span><br><span class="line">+<span class="comment">-------------+-----------------+----------------+</span></span><br><span class="line">| 1           | 菜鸟教程    | 10             |</span><br><span class="line">| 2           | 菜鸟教程    | 10             |</span><br><span class="line">| 3           | RUNOOB.COM      | 20             |</span><br><span class="line">| 4           | RUNOOB.COM      | 20             |</span><br><span class="line">| NULL        | NULL            | 22             |</span><br><span class="line">+<span class="comment">-------------+-----------------+----------------+</span></span><br><span class="line">5 rows in <span class="keyword">set</span> (<span class="number">0.01</span> sec)</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/super-jimwang/img/raw/master/img/20210223163713.png" alt=""></p>
+<h2 id="exists-和-in">exists 和 in</h2>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#对B查询涉及id，使用索引，故B表效率高，可用大表 --&gt;外小内大</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> A <span class="keyword">where</span> <span class="keyword">exists</span> (<span class="keyword">select</span> * <span class="keyword">from</span> B <span class="keyword">where</span> A.id=B.id);</span><br><span class="line"></span><br><span class="line">#对A查询涉及id，使用索引，故A表效率高，可用大表 --&gt;外大内小</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> A <span class="keyword">where</span> A.id <span class="keyword">in</span> (<span class="keyword">select</span> <span class="keyword">id</span> <span class="keyword">from</span> B);</span><br></pre></td></tr></table></figure>
+<p><strong>区别</strong><br>
+1、exists是对外表做loop循环，每次loop循环再对内表（子查询）进行查询，那么因为对内表的查询使用的索引（内表效率高，故可用大表），而外表有多大都需要遍历，不可避免（尽量用小表），故内表大的使用exists，可加快效率；</p>
 <ul>
-<li>多个程序需要运行，但是内存空间不足了，就需要将其他程序暂时拷贝到硬盘当中，然后将新的程序装入内存运行.由于大量的数据装入装出，内存的使用效率低</li>
-<li>程序可以直接访问物理内存，一个进程可以修改其他进程的内存数据</li>
-<li>多线程情况下，不知道哪些物理内存可用</li>
+<li>以上面为例，也就是A.id一个一个遍历，如果有A.id=B.id的就筛选出来</li>
 </ul>
-<p>虚拟内存主要提供了如下三个重要的能力：</p>
+<p>2、in是把外表和内表做hash连接，先查询内表，再把内表结果与外表匹配，对外表使用索引（外表效率高，可用大表），而内表多大都需要查询，不可避免，故外表大的使用in，可加快效率。</p>
 <ul>
-<li>它把主存看作为一个存储在硬盘上的虚拟地址空间的高速缓存，并且只在主存中缓存活动区域（按需缓存）。</li>
-<li>它为每个进程提供了一个一致的地址空间，从而降低了程序员对内存管理的复杂性。</li>
-<li>它还保护了每个进程的地址空间不会被其他进程破坏。</li>
+<li>先查询B，然后去A中通过索引查询是否有id一致的</li>
 </ul>
-<h2 id="内存分配">内存分配</h2>
-<p>内存分配申请的是虚拟的内存空间，并没有拿到真正的物理内存空间。但是<strong>在第一次访问该内存的时候</strong>，程序会发现虚拟内存地址没有影射到物理内存地址，于是触发<strong>缺页中断（异常）</strong></p>
-<p>此时，进程会陷入内核态，执行一下操作：</p>
-<ol>
-<li>检查要访问的虚拟地址是否合法</li>
-<li>查找分配一个物理页</li>
-<li>填充物理内容（读取磁盘，或者直接置0）。</li>
-<li>建立虚拟内存和物理内存的映射关系</li>
-</ol>
-<h2 id="逻辑地址和物理地址的映射">逻辑地址和物理地址的映射</h2>
-<h3 id="分页机制">分页机制</h3>
-<p>程序或操作系统逻辑地址分为多个<strong>页</strong>（page），将物理地址分为多个<strong>帧</strong>（page frame 也叫页，这里方便区分称为帧）。</p>
-<p><strong>逻辑地址页到物理地址帧的映射</strong>称为 <strong>页表</strong>（page table）。页号和帧号进行映射，其实页表不仅仅存了映射关系，还存当前页、帧的状态（例如是否可用，权限是否足够等）。</p>
-<p><img src="https://gitee.com/super-jimwang/img/raw/master/img/20210131231106.png" alt="image-20210131231106127"></p>
-<p><strong>每一个进程都有一张自己的页表</strong></p>
-<p>分页内存寻址过程小例子</p>
-<p>机器：32位操作系统  256MB内存 页大小4KB</p>
-<p>程序：32位</p>
-<p>4K=12bit</p>
-<p>逻辑地址 32bit=20bit页号+12bit偏移</p>
-<p>物理地址 28bit=16bit帧号+12bit偏移</p>
-<p>对于地址0x000011a3  页号00001 偏移 1a3。根据页号找到帧号，帧号+偏移=物理地址。</p>
-<p><img src="https://gitee.com/super-jimwang/img/raw/master/img/20210131231835.png" alt="image-20210131231835787"></p>
-<p>根据页号去页表中找到对应帧号，对应帧号+偏移量就是真实物理地址</p>
-<ol>
-<li>如果查表后发现帧号是磁盘会发生什么？</li>
-</ol>
-<p>这时候会触发<strong>缺页中断</strong>，切换到内核态，内核从磁盘读取数据加载到内存中，然后把物理地址在page table进行更新，然后重新进行内存寻址的过程。</p>
-<ol start="2">
-<li>如果从磁盘加载进内存时，内存帧满了怎么办？</li>
-</ol>
-<p>这时候会触发<strong>页面置换（页面置换算法）</strong>，将不太常用的帧 从RAM中逐出到磁盘中，让出位置来存储。</p>
+<h2 id="having">having</h2>
+<p>having字句可以让我们筛选成组后的各种数据</p>
+<p>当用到了聚合函数后，就不能通过where来筛选了，因为表中并没有这样的数据。</p>
+<p>举例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> region, <span class="keyword">SUM</span>(population), <span class="keyword">SUM</span>(area)</span><br><span class="line"><span class="keyword">FROM</span> bbc</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> region</span><br><span class="line"><span class="keyword">HAVING</span> <span class="keyword">SUM</span>(area)&gt;<span class="number">1000000</span></span><br></pre></td></tr></table></figure>
+<h2 id="执行顺序">执行顺序</h2>
+<p>(1) from<br>
+(2) on（跟join一起用，用来筛选右表，比如on <a href="http://right.id" target="_blank" rel="noopener">right.id</a> = 10。那么在join的时候 只有id=10的右表信息会合并过来）<br>
+(3) join<br>
+(4) where<br>
+(5) group by(开始使用select中的别名，后面的语句中都可以使用)<br>
+(6) avg,sum…<br>
+(7) having<br>
+(8) select<br>
+(9) distinct<br>
+(10) order by</p>
+<p>所有的查询语句都是从from开始执行的，在执行过程中，每个步骤都会为下一个步骤生成一个虚拟表，这个虚拟表将作为下一个执行步骤的输入。</p>
 
                 
 
@@ -277,13 +270,9 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/操作系统/内存泄漏和内存溢出/" data-toggle="tooltip" data-placement="top" title="内存泄漏和内存溢出">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/article/操作系统/进程的状态与转换、控制/" data-toggle="tooltip" data-placement="top" title="进程的状态与转换、控制">Next Post &rarr;</a>
+                            <a href="/article/数据库/sql优化/" data-toggle="tooltip" data-placement="top" title="sql优化">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -333,7 +322,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#虚拟内存与分配"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x865A;&#x62DF;&#x5185;&#x5B58;&#x4E0E;&#x5206;&#x914D;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#虚拟内存"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x865A;&#x62DF;&#x5185;&#x5B58;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#没有虚拟内存的问题"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">&#x6CA1;&#x6709;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x7684;&#x95EE;&#x9898;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#内存分配"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x5185;&#x5B58;&#x5206;&#x914D;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#逻辑地址和物理地址的映射"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x903B;&#x8F91;&#x5730;&#x5740;&#x548C;&#x7269;&#x7406;&#x5730;&#x5740;&#x7684;&#x6620;&#x5C04;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#分页机制"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">&#x5206;&#x9875;&#x673A;&#x5236;</span></a></li></ol></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#查询语句的元素"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x67E5;&#x8BE2;&#x8BED;&#x53E5;&#x7684;&#x5143;&#x7D20;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#join"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">join</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#inner-join"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">inner join</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#left-join"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">left join</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#right-join"><span class="toc-nav-number">1.1.3.</span> <span class="toc-nav-text">right join</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#exists-和-in"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">exists &#x548C; in</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#having"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">having</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#执行顺序"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">&#x6267;&#x884C;&#x987A;&#x5E8F;</span></a></li></ol></li></ol>
         
         </div>
       </aside>

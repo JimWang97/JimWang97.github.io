@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          虚拟内存与分配 - JimWang | Blog
+          死锁判定原理和具体场景 - JimWang | Blog
         
     </title>
 
-    <link rel="canonical" href="http://jimwang97.github.io/article/操作系统/虚拟内存与分配/">
+    <link rel="canonical" href="http://jimwang97.github.io/article/数据库/死锁判定原理和具体场景/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -88,14 +88,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#操作系统" title="操作系统">操作系统</a>
+                              <a class="tag" href="/tags/#数据库" title="数据库">数据库</a>
                             
                         </div>
-                        <h1 style="font-weight: bolder; font-size: 72px; font-family: Hannotate SC;">虚拟内存与分配</h1>
+                        <h1 style="font-weight: bolder; font-size: 72px; font-family: Hannotate SC;">死锁判定原理和具体场景</h1>
                         <h2 class="subheading" style="font-weight: bolder; font-size: x-large; font-family: Hannotate SC;"></h2>
                         <span class="meta">
                             Posted by JimWang on
-                            2021-01-31
+                            2021-02-23
                         </span>
                     </div>
                 
@@ -221,55 +221,33 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="虚拟内存与分配">虚拟内存与分配</h1>
-<h2 id="虚拟内存">虚拟内存</h2>
-<p>虚拟内存的基本思想是，每个进程有用独立的逻辑地址空间，内存被分为大小相等的多个块,称为页(Page).每个页都是一段连续的地址。<strong>对于进程来看,逻辑上貌似有很多内存空间，其中一部分对应物理内存上的一块(称为页框，通常页和页框大小相等)，还有一些没加载在内存中的对应在硬盘上</strong></p>
-<p>虚拟内存实际上可以比物理内存大。当访问虚拟内存时，会访问**MMU（内存管理单元）**去匹配对应的物理地址，<strong>而如果虚拟内存的页并不存在于物理内存中，会产生缺页中断，从磁盘中取得缺的页放入内存，如果内存已满，还会根据某种算法将磁盘中的页换出。</strong></p>
-<p>而虚拟内存和物理内存的匹配是通过页表实现，页表存在MMU中</p>
-<h3 id="没有虚拟内存的问题">没有虚拟内存的问题</h3>
+                <h1 id="死锁判定原理和具体场景">死锁判定原理和具体场景</h1>
+<h2 id="什么是死锁">什么是死锁</h2>
+<p>数据库是一个多用户使用的共享资源，当多个用户 并发地存取数据的时候，在数据库中就会发生多个事务同时存取同一个数据的情况，加锁是进行数据库并发控制的一种非常重要的技术。在实际应用中，如果两个事务需要一组有冲突的锁，而不能继续进行下去，这时便发生了死锁。</p>
+<h2 id="死锁的原因">死锁的原因</h2>
+<p><strong>1.事务之间对资源访问顺序的交替</strong></p>
+<p>此类常见于两个用户分别首先访问A表和B表，并锁住当前表，但是双方都需要访问对方锁住的表，都在等待对方释放锁，<br>
+也就是经典的刀叉问题。像这样的死锁，基本上就是程序员的编程逻辑出现了问题，需要调整程序的逻辑。</p>
+<p><strong>2.并发修改同一记录</strong></p>
+<p>此类常见于用户A查询一条纪录，然后修改该条纪录；这时用户B修改该条纪录，这时用户A的事务里锁的性质由查询的共享锁企图上升到独占锁，而用户B里的独占锁由于A有共享锁存在所以必须等A释放掉共享锁，而A由于B的独占锁而无法上升的独占锁也就不可能释放共享锁，于是出现了死锁。 这种死锁由于比较隐蔽，但在稍大点的项目中经常发生。像这样的解决办法就是使用乐观锁，在表的字段中增加version字段，更新时进行查询version是否为当前取到version。乐观锁可以避免长事务中的数据库加锁开销。最不推荐的是采用悲观锁进行控制，悲观锁会使排队等待的时间相当漫长，会发生灾难性的后果。</p>
 <ul>
-<li>多个程序需要运行，但是内存空间不足了，就需要将其他程序暂时拷贝到硬盘当中，然后将新的程序装入内存运行.由于大量的数据装入装出，内存的使用效率低</li>
-<li>程序可以直接访问物理内存，一个进程可以修改其他进程的内存数据</li>
-<li>多线程情况下，不知道哪些物理内存可用</li>
+<li>独占锁获取了同步状态之后，其他独占和共享访问都会阻塞。 共享锁获取了同步状态之后，共享访问不会被阻塞，独占访问会被阻塞。</li>
 </ul>
-<p>虚拟内存主要提供了如下三个重要的能力：</p>
+<p><strong>3.索引不当导致全表扫描</strong></p>
+<p>此类常见于在事务中执行了一条不满足的语句，执行全表扫描，把行级锁上升为表级锁，多个这样的事务执行之后，就很容易产生死锁和阻塞。类似的情况还有当表中的数据量非常庞大而索引建的过少或不合适的时候，使得经常发生全表扫描，最终应用系统会越来越慢，最终发生阻塞或死锁。解决其办法有，SQL语句中不要使用太复杂的关联多表的查询；使用“执行计划”对SQL语句进行分析，对于有全表扫描的SQL语句，建立相应的索引进行优化。</p>
+<p><strong>4.事务封锁范围大且相互等待</strong><br>
+保持事务简短并在一个批处理中<br>
+在同一数据库中并发执行多个需要长时间运行的事务时通常发生死锁。事务运行时间越长，其持有排它锁或更新锁的时间也就越长，从而堵塞了其它活动并可能导致死锁。保持事务在一个批处理中，可以最小化事务的网络通信往返量，减少完成事务可能的延迟并释放锁。</p>
+<p>使用低隔离级别<br>
+确定事务是否能在更低的隔离级别上运行。执行提交读允许事务读取另一个事务已读取（未修改）的数据，而不必等待第一个事务完成。使用较低的隔离级别（例如提交读）而不使用较高的隔离级别（例如可串行读）可以缩短持有共享锁的时间，从而降低了锁定争夺（比如这次的S NK和X IK 是InnoDB引擎Repeatable Read级别才有的）。</p>
+<h2 id="如何解决死锁问题">如何解决死锁问题</h2>
 <ul>
-<li>它把主存看作为一个存储在硬盘上的虚拟地址空间的高速缓存，并且只在主存中缓存活动区域（按需缓存）。</li>
-<li>它为每个进程提供了一个一致的地址空间，从而降低了程序员对内存管理的复杂性。</li>
-<li>它还保护了每个进程的地址空间不会被其他进程破坏。</li>
+<li>查出死锁的线程杀死</li>
+<li>设置锁的超时时间</li>
+<li>指定获取锁的顺序</li>
 </ul>
-<h2 id="内存分配">内存分配</h2>
-<p>内存分配申请的是虚拟的内存空间，并没有拿到真正的物理内存空间。但是<strong>在第一次访问该内存的时候</strong>，程序会发现虚拟内存地址没有影射到物理内存地址，于是触发<strong>缺页中断（异常）</strong></p>
-<p>此时，进程会陷入内核态，执行一下操作：</p>
-<ol>
-<li>检查要访问的虚拟地址是否合法</li>
-<li>查找分配一个物理页</li>
-<li>填充物理内容（读取磁盘，或者直接置0）。</li>
-<li>建立虚拟内存和物理内存的映射关系</li>
-</ol>
-<h2 id="逻辑地址和物理地址的映射">逻辑地址和物理地址的映射</h2>
-<h3 id="分页机制">分页机制</h3>
-<p>程序或操作系统逻辑地址分为多个<strong>页</strong>（page），将物理地址分为多个<strong>帧</strong>（page frame 也叫页，这里方便区分称为帧）。</p>
-<p><strong>逻辑地址页到物理地址帧的映射</strong>称为 <strong>页表</strong>（page table）。页号和帧号进行映射，其实页表不仅仅存了映射关系，还存当前页、帧的状态（例如是否可用，权限是否足够等）。</p>
-<p><img src="https://gitee.com/super-jimwang/img/raw/master/img/20210131231106.png" alt="image-20210131231106127"></p>
-<p><strong>每一个进程都有一张自己的页表</strong></p>
-<p>分页内存寻址过程小例子</p>
-<p>机器：32位操作系统  256MB内存 页大小4KB</p>
-<p>程序：32位</p>
-<p>4K=12bit</p>
-<p>逻辑地址 32bit=20bit页号+12bit偏移</p>
-<p>物理地址 28bit=16bit帧号+12bit偏移</p>
-<p>对于地址0x000011a3  页号00001 偏移 1a3。根据页号找到帧号，帧号+偏移=物理地址。</p>
-<p><img src="https://gitee.com/super-jimwang/img/raw/master/img/20210131231835.png" alt="image-20210131231835787"></p>
-<p>根据页号去页表中找到对应帧号，对应帧号+偏移量就是真实物理地址</p>
-<ol>
-<li>如果查表后发现帧号是磁盘会发生什么？</li>
-</ol>
-<p>这时候会触发<strong>缺页中断</strong>，切换到内核态，内核从磁盘读取数据加载到内存中，然后把物理地址在page table进行更新，然后重新进行内存寻址的过程。</p>
-<ol start="2">
-<li>如果从磁盘加载进内存时，内存帧满了怎么办？</li>
-</ol>
-<p>这时候会触发<strong>页面置换（页面置换算法）</strong>，将不太常用的帧 从RAM中逐出到磁盘中，让出位置来存储。</p>
+<hr>
+<p>部分转载自：<a href="https://blog.csdn.net/xiaheshun/article/details/81393796" target="_blank" rel="noopener">https://blog.csdn.net/xiaheshun/article/details/81393796</a></p>
 
                 
 
@@ -278,12 +256,12 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/article/操作系统/内存泄漏和内存溢出/" data-toggle="tooltip" data-placement="top" title="内存泄漏和内存溢出">&larr; Previous Post</a>
+                            <a href="/article/数据库/sql优化/" data-toggle="tooltip" data-placement="top" title="sql优化">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/article/操作系统/进程的状态与转换、控制/" data-toggle="tooltip" data-placement="top" title="进程的状态与转换、控制">Next Post &rarr;</a>
+                            <a href="/article/数据库/B树、B+树区别，索引为何使用B+树/" data-toggle="tooltip" data-placement="top" title="B树、B+树区别，索引为何使用B+树">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -333,7 +311,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#虚拟内存与分配"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x865A;&#x62DF;&#x5185;&#x5B58;&#x4E0E;&#x5206;&#x914D;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#虚拟内存"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x865A;&#x62DF;&#x5185;&#x5B58;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#没有虚拟内存的问题"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">&#x6CA1;&#x6709;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x7684;&#x95EE;&#x9898;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#内存分配"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x5185;&#x5B58;&#x5206;&#x914D;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#逻辑地址和物理地址的映射"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x903B;&#x8F91;&#x5730;&#x5740;&#x548C;&#x7269;&#x7406;&#x5730;&#x5740;&#x7684;&#x6620;&#x5C04;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#分页机制"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">&#x5206;&#x9875;&#x673A;&#x5236;</span></a></li></ol></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#死锁判定原理和具体场景"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x6B7B;&#x9501;&#x5224;&#x5B9A;&#x539F;&#x7406;&#x548C;&#x5177;&#x4F53;&#x573A;&#x666F;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#什么是死锁"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x4EC0;&#x4E48;&#x662F;&#x6B7B;&#x9501;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#死锁的原因"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x6B7B;&#x9501;&#x7684;&#x539F;&#x56E0;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#如何解决死锁问题"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x5982;&#x4F55;&#x89E3;&#x51B3;&#x6B7B;&#x9501;&#x95EE;&#x9898;</span></a></li></ol></li></ol>
         
         </div>
       </aside>
