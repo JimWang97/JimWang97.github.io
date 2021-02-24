@@ -76,6 +76,10 @@
         
     }
     
+    #signature{
+        background-image: url('/img/signature/london.png');
+    }
+    
 </style>
 
 <header class="intro-header" >
@@ -86,7 +90,7 @@
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 
                     <div class="site-heading" style="font-weight: bolder; font-size: 72px; font-family: Hannotate SC;">
-                        <h1>JimBlog</h1>
+                        <h1>Jim Blog</h1>
                         <!--<hr class="small">-->
                         <span class="subheading" style="font-weight: bolder; font-size: x-large; font-family: Hannotate SC;">Personal Blog Powered By Jim</span>
                     </div>
@@ -111,7 +115,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">JimBlog</a>
+            <a class="navbar-brand" href="/">Jim Blog</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -143,14 +147,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -217,6 +221,38 @@
             
                 <!-- Main Content -->
 
+
+<div class="post-preview">
+
+    <a href="/article/操作系统/虚拟内存与分配/">
+        <h2 class="post-title">
+                                 
+            虚拟内存与分配
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            虚拟内存与分配
+虚拟内存
+虚拟内存的基本思想是，每个进程有用独立的逻辑地址空间，内存被分为大小相等的多个块,称为页(Page).每个页都是一段连续的地址。对于进程来看,逻辑上貌似有很多内存空间，其中一部分对应物理内存上的一块(称为页框，通常页和页框大小相等)，还有一些没加载在内存中的对应在硬盘上
+虚拟内存实际上可以比物理内存大。当访问虚拟内存时，会访问**MMU（内存管理单元）**去匹配对应......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-01-31
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
+            
+        </div>
+    
+
+</div>
+<hr>
 
 <div class="post-preview">
 
@@ -454,6 +490,10 @@
     <ul>
       
         <li>
+          <a href="/article/JAVA/java基础面试题/">java基础面试题</a>
+        </li>
+      
+        <li>
           <a href="/article/数据库/查询语句的元素/">查询语句的元素</a>
         </li>
       
@@ -469,10 +509,6 @@
           <a href="/article/数据库/B树、B+树区别，索引为何使用B+树/">B树、B+树区别，索引为何使用B+树</a>
         </li>
       
-        <li>
-          <a href="/article/数据库/InnoDB和MyISAM的索引/">InnoDB和MyISAM索引</a>
-        </li>
-      
     </ul>
   </div>
 
@@ -481,7 +517,7 @@
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">39</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">40</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">5</span></li></ul>
     </div>
 
         <hr>

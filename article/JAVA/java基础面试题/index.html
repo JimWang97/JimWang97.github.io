@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          java基础面试题 - JimWang | Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://jimwang97.github.io/article/JAVA/java基础面试题/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/article_header/background.jpg')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/london.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#JAVA基础" title="JAVA基础">JAVA基础</a>
+                            
+                        </div>
+                        <h1 style="font-weight: bolder; font-size: 72px; font-family: Hannotate SC;">java基础面试题</h1>
+                        <h2 class="subheading" style="font-weight: bolder; font-size: x-large; font-family: Hannotate SC;"></h2>
+                        <span class="meta">
+                            Posted by JimWang on
+                            2021-02-24
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Jim Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+		   <li>
+                        <a href="/tags"> Tags</a>
+                    </li>
+		   <li>
+                        <a href="/archives"> Archives </a>
+                    </li>
+		   <li>
+                        <a href="/about"> About </a>
+                    </li>
+<!--
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+-->                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="java基础面试题">java基础面试题</h1>
+<blockquote>
+<p>==和equal的区别</p>
+</blockquote>
+<p>==：表示两个变量的值是否相等，比较两个基本数据类型的数据或者引用变量，用==。<br>
+equals:用于比较两个独立对象的内容是否相同。字符串的比较也用equals。</p>
+<blockquote>
+<p>int 和 Integer的区别</p>
+</blockquote>
+<p>Int是Java的8中基本数据类型之一，integer是int的封装类。Int类型的默认值为0，integer默认值为null，所以区别在于，integer能区分出null值和0的区别。</p>
+<blockquote>
+<p>重载和重写的区别？</p>
+</blockquote>
+<p>重载（Overload）：函数名相同，参数不同。可以改变返回值类型，参数的个数和类型。<br>
+重写（Override）：和父类的的方法名称、参数完全相同。</p>
+<blockquote>
+<p>String和StringBuffuer、StringBuilder的区别？</p>
+</blockquote>
+<p>String:字符串数值不可变；<br>
+StringBuffer：字符串可修改，可以动态构造字符数据。StringBuffer类是可以通过Append()来修改值。线程安全。<br>
+StringBuilder：线程不安全。</p>
+<p>三者在执行速度方面的比较：StringBuilder &gt;  StringBuffer  &gt;  String<br>
+对于三者使用的总结：<br>
+1.如果要操作少量的数据用 = String　　<br>
+2.单线程操作字符串缓冲区下操作大量数据 = StringBuilder<br>
+3.多线程操作字符串缓冲区下操作大量数据 = StringBuffer</p>
+<blockquote>
+<p>java中有几种方法实现一个线程？用什么关键字修饰同步方法？</p>
+</blockquote>
+<p>第一种：继承Thread类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Thread t = <span class="keyword">new</span> Thread()&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="comment">//要执行的任务</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 启动线程</span></span><br><span class="line">t.setName(<span class="string">"thread1"</span>);</span><br><span class="line">t.start();</span><br></pre></td></tr></table></figure>
+<p>第二种：实现Runable接口。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Runnable runnable = <span class="keyword">new</span> Runnable()&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//要执行的任务</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 创建线程对象</span></span><br><span class="line">Thread t = <span class="keyword">new</span> Thread(runnable);</span><br><span class="line">t.start();</span><br></pre></td></tr></table></figure>
+<p>第三种：线程池创建多线程。<br>
+第四种：实现Callable接口，重写call函数（<br>
+继承Thread类实现多线程，重写run方法时没有返回值也不能抛出异常，使用Callable接口就可以解决这个问题。</p>
+<p>用synchronized 关键字修饰同步方法。</p>
+<blockquote>
+<p>stop()和suspend()方法为何不推荐使用？那该如何终止线程？</p>
+</blockquote>
+<p>suspend在调用后，线程不会释放已经占有的资源比如锁，而是带着资源进入睡眠状态，十分容易引发死锁。同样stop方法在终结一个线程时，不能保证线程资源的正常释放，通常没有基于线程完成资源释放的机会。</p>
+<p>使用中断方法interupt或者cancel标志位方法都有机会让线程取释放自己占有的资源，这种方法更安全和优雅。</p>
+<blockquote>
+<p>Callable接口和Runnable接口的不同之处：</p>
+</blockquote>
+<p>1.Callable规定的方法是call，而Runnable是run<br>
+2.call方法可以抛出异常，但是run方法不行<br>
+3.Callable对象执行后可以有返回值，运行Callable任务可以得到一个Future对象，通过Future对象可以了解任务执行情况，可以取消任务的执行，而Runnable不可有返回值<br>
+）</p>
+<blockquote>
+<p>sleep()和wait()有什么区别？</p>
+</blockquote>
+<p>sleep是线程被调用时，占着cpu休眠，其他线程不能占用cpu，os认为该线程正在工作，不会让出系统资源，wait是进入等待池等待，让出系统资源，其他线程可以占用cpu。</p>
+<blockquote>
+<p>请对比synchronized与java.util.concurrent.locks.Lock的异同？</p>
+</blockquote>
+<p>主要相同点：Lock能完成synchronized所实现的所有功能<br>
+主要不同点：Lock有比synchronized更精确的线程语义和更好的性能。synchronized会自动释放锁，而Lock一定要求程序员手工释放，并且必须在finally从句中释放。</p>
+<p>那为什么还要用synchronized？</p>
+<ul>
+<li>因为软件测试里讲过，为了降低出现错误的可能性，synchronized是自动加锁释放，而lock需要手动。</li>
+</ul>
+<blockquote>
+<p>String  s =new  String (“syz”);创建了几个String Object?</p>
+</blockquote>
+<p>1.如果String常量池(常量缓冲区)中，已经创建&quot;xyz&quot;，则不会继续创建，此时只创建了一个对象new String(“xyz”)；<br>
+2.如果String常量池中，没有创建&quot;xyz&quot;，则会创建两个对象，一个对象的值是&quot;xyz&quot;，一个对象new String(“xyz”)。</p>
+<blockquote>
+<p>java的四种权限作用域是什么？说一下其范围和默认的作用域是什么？</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>作用域</th>
+<th>当前类</th>
+<th>同一包（package）</th>
+<th>子孙类</th>
+<th>其他包</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>public</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>protected</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>N</td>
+</tr>
+<tr>
+<td>default</td>
+<td>Y</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr>
+<td>private</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+</tr>
+</tbody>
+</table>
+<p>默认情况下就是default，当前类和同一个包内可以使用</p>
+<blockquote>
+<p>forward和redirect两种跳转方式的区别是什么</p>
+</blockquote>
+<p>1.从地址栏显示来说<br>
+forward是服务器请求资源,服务器直接访问目标地址的URL,把那个URL的响应内容读取过来,然后把这些内容再发给浏览器.浏览器根本不知道服务器发送的内容从哪里来的,所以它的地址栏还是原来的地址.<br>
+redirect是服务端根据逻辑,发送一个状态码,告诉浏览器重新去请求那个地址.所以地址栏显示的是新的URL.</p>
+<p>2.从数据共享来说<br>
+forward:转发页面和转发到的页面可以共享request里面的数据.<br>
+redirect:不能共享数据.</p>
+<p>3.从运用地方来说<br>
+forward:一般用于用户登陆的时候,根据角色转发到相应的模块.<br>
+redirect:一般用于用户注销登陆时返回主页面和跳转到其它的网站等.</p>
+<p>4.从效率来说<br>
+forward:高.<br>
+redirect:低.</p>
+<p>本质上说, 转发是服务器行为，重定向是客户端行为。其工作流程如下：<br>
+转发过程：==客户浏览器发送http请求----》web服务器接受此请求–》调用内部的一个方法在容器内部完成请求处理和转发动作----》将目标资源发送给客户；在这里，转发的路径必须是同一个web容器下的url==，其不能转向到其他的web路径上去，中间传递的是自己的容器内的request。在客户浏览器路径栏显示的仍然是其第一次访问的路径，也就是说客户是感觉不到服务器做了转发的。转发行为是浏览器只做了一次访问请求。</p>
+<p>重定向过程：==客户浏览器发送http请求----》web服务器接受后发送302状态码响应及对应新的location给客户浏览器–》客户浏览器发现是302响应，则自动再发送一个新的http请求，请求url是新的location地址----》服务器根据此请求寻找资源并发送给客户。== 在这里 location可以重定向到任意URL，既然是浏览器重新发出了请求，则就没有什么request传递的概念了。在客户浏览器路径栏显示的是其重定向的路径，客户可以观察到地址的变化的。重定向行为是浏览器做了至少两次的访问请求的。</p>
+<blockquote>
+<p>HashMap和HashSet的区别</p>
+</blockquote>
+<p>HashMap：实现了Map接口，允许空(null)键值(key),由于非线程安全，在只有一个线程访问的情况下，效率高于Hashtable。<br>
+Hashtable：不能将null作为key或者value。方法是同步的，线程安全。</p>
+<blockquote>
+<p>List、Set和Map的区别</p>
+</blockquote>
+<p>List:是存储单列数据的集合，存储有顺序，允许重复。继承Collection接口。<br>
+Set: 是存储单列数据的集合。继承Collection接口。不允许重复。<br>
+Map:存储键和值这样的双列数据的集合，存储数据无顺序，键(key)不能重复，值(value)。可以重复。</p>
+<blockquote>
+<p>java创建对象的方式有哪些</p>
+</blockquote>
+<p>1.使用new关键字<br>
+2.使用反射机制创建对象：<br>
+(1)使用Class类的newInstance方法<br>
+(2)java.lang.reflect.Constructor类里也有一个newInstance方法可以创建对象。<br>
+3.使用clone方法：先实现Cloneable接口并实现其定义的clone方法<br>
+4.使用反序列化</p>
+<blockquote>
+<p>error和exception的区别。exception的分类</p>
+</blockquote>
+<p>Error（错误）表示系统级的错误和程序不必处理的异常，是java运行环境中的内部错误或者硬件问题。比如：内存资源不足等。对于这种错误，程序基本无能为力，除了退出运行外别无选择，它是由Java虚拟机抛出的。<br>
+Exception（违例）表示需要捕捉或者需要程序进行处理的异搜索常，它处理的是因为程序设计的瑕疵而引起的问题或者在外的输入等引起的一般性问题，是程序必须处理的。<br>
+Exception又分为运行时异常，受检查异常。</p>
+<ul>
+<li>运行时异常，表示无法让程序恢复的异常，导致的原因通常是因为执行了错误的操作，建议终止程序，因此，编译器不检查这些异常。</li>
+<li>受检查异常，是表示程序可以处理的异常，也即表示程序可以修复（由程序自己接受异常并且做出处理）， 所以称之为受检查异常。</li>
+</ul>
+<blockquote>
+<p>JDBC使用步骤的过程</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1.注册驱动</span></span><br><span class="line">Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line"><span class="comment">// 2.获取连接</span></span><br><span class="line">String url = <span class="string">"jdbc:mysql://localhost:3306/wyj"</span>;</span><br><span class="line">String user = <span class="string">"root"</span>;</span><br><span class="line">String password = <span class="string">"12345678"</span>;</span><br><span class="line">conn = DriverManager.getConnection(url, user, password);</span><br><span class="line"><span class="comment">// 3.获取数据库操作对象</span></span><br><span class="line">stmt = conn.createStatement();</span><br><span class="line"><span class="comment">// 4.创建statement</span></span><br><span class="line">String sql = <span class="string">"insert into dept (deptno,dname,loc) values (50,'人事部','北京')"</span>;</span><br><span class="line"><span class="comment">// 5.执行sql</span></span><br><span class="line"><span class="keyword">int</span> count = stmt.executeUpdate(sql);</span><br><span class="line">System.out.println(count==<span class="number">1</span>?<span class="string">"保存成功"</span>:<span class="string">"保存失败"</span>); <span class="comment">//因为insert只影响一条记录</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 6.处理查询结果集</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 7. 关闭jdbc对象</span></span><br><span class="line">stmt.close();</span><br><span class="line">conn.close();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>抽象类和接口的区别</p>
+</blockquote>
+<p>抽象类：用abstract修饰，抽象类不能创建实例对象。抽象方法必须在子类中实现，不能有抽象构造方法或者抽象静态方法。<br>
+接口：抽象类的一种特例，接口中的方法必须是抽象的。<br>
+两者的区别：</p>
+<ol>
+<li>抽象类可以有构造方法，接口没有构造方法</li>
+<li>抽象类可以有普通成员变量，接口没有普通成员变量。</li>
+<li>抽象类可以有非抽象的普通方法，接口中的方法必须是抽象的。</li>
+<li>抽象类中的抽象方法访问类型可以是public，protected，接口中抽闲方法必须是public类型的。</li>
+<li>抽象类可以包含静态方法，接口中不能包含静态方法。</li>
+<li>一个类可以实现多个接口，但是只能继承一个抽象类。</li>
+<li>接口中基本数据类型的数据成员，都默认为static和final，抽象类则不是。</li>
+</ol>
+<blockquote>
+<p>hashCode与equals的区别和联系</p>
+</blockquote>
+<p>一、equals方法的作用<br>
+1、默认情况（没有覆盖equals方法）下equals方法都是调用Object类的equals方法，而Object的equals方法主要用于判断对象的内存地址引用是不是同一个地址（是不是同一个对象）。<br>
+2 、要是类中覆盖了equals方法，那么就要根据具体的代码来确定equals方法的作用了，覆盖后一般都是通过对象的内容是否相等来判断对象是否相等。</p>
+<p>二、Hashcode（）方法：<br>
+1、我们并没有覆盖equals方法只覆盖了hashCode方法，两个对象虽然hashCode一样，但在将stu1和stu2放入set集合时由于equals方法比较的两个对象是false，所以就没有在比较两个对象的hashcode值。<br>
+2、覆盖一下equals方法和hashCode方法，stu1和stu2通过equals方法比较相等，而且返回的hashCode值一样，所以放入set集合中时只放入了一个对象。<br>
+3、我们让两个对象equals方法比较相等，但hashCode值不相等试试，虽然stu1和stu2通过equals方法比较相等，但两个对象的hashcode的值并不相等，所以在将stu1和stu2放入set集合中时认为是两个不同的对象。</p>
+<blockquote>
+<p>HashSet是如何比较是否属于同一个对象的？</p>
+</blockquote>
+<p>先判断hashcode是否相同，如果相同再判断equals方法</p>
+<blockquote>
+<p>String是否重写了toString()?</p>
+</blockquote>
+<p>toString是对自我描述的方法：getClass().getName() + “@” +Integer.toHexString(hashCode());<br>
+而String重写了，直接输出的是对象存储的字符串。</p>
+<blockquote>
+<p>什么是反射？以及四种反射获取</p>
+</blockquote>
+<p>JAVA 反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的方法的功能称为 java 语言的反射机制。</p>
+<p>1.知道具体类的情况下可以使用：<br>
+<code>Class alunbarClass = TargetObject.class;</code></p>
+<p>2.通过 Class.forName()传入类的路径获取：<br>
+<code>Class alunbarClass1 = Class.forName(&quot;cn.javaguide.TargetObject&quot;);</code></p>
+<p>3.通过对象实例instance.getClass()获取：<br>
+<code>Employee e = new Employee(); Class alunbarClass2 = e.getClass();</code></p>
+<p>4.通过类加载器xxxClassLoader.loadClass()传入类路径获取<br>
+<code>class clazz = ClassLoader.LoadClass(&quot;cn.javaguide.TargetObject&quot;);</code><br>
+这种方式获取的class对象不会进行初始化。意味着不进行包括初始化等一些列步骤，静态块和静态对象不会得到执行</p>
+<blockquote>
+<p>final的含义，用在类上，变量上和方法上的含义</p>
+</blockquote>
+<p>用在类上表明不可被继承，所有的成员方法都会被指定为final</p>
+<p>用在方法上表示不能被重写</p>
+<p>用在了变量上，表明是常量，不能被修改。</p>
+<blockquote>
+<p>static的四种场景</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>修饰成员变量和成员方法:</strong> 被 static 修饰的成员属于类，不属于单个这个类的某个对象，被类中所有对象共享，可以并且建议通过类名调用。被static 声明的成员变量属于静态成员变量，静态变量 存放在 Java 内存区域的方法区。调用格式：类名.静态变量名 类名.静态方法名()</p>
+</li>
+<li>
+<p><strong>静态代码块:</strong> 静态代码块定义在类中方法外, 静态代码块在非静态代码块之前执行(静态代码块—&gt;非静态代码块—&gt;构造方法)。 该类不管创建多少对象，静态代码块只执行一次.</p>
+<ul>
+<li>静态代码块对于定义在它之后的静态变量，可以赋值，但是不能访问.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">demo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        i = <span class="number">3</span>; <span class="comment">//可以赋值</span></span><br><span class="line">        System.out.println(i);<span class="comment">// 出错。不能访问</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>静态内部类（static修饰类的话只能修饰内部类）：</strong> 静态内部类与非静态内部类之间存在一个最大的区别: 非静态内部类在编译完成之后会隐含地保存着一个引用，该引用是指向创建它的外围类，但是静态内部类却没有。没有这个引用就意味着：1. 它的创建是不需要依赖外围类的创建。2. 它不能使用任何外围类的非static成员变量和方法。</p>
+</li>
+<li>
+<p><strong>静态导包(用来导入类中的静态资源，1.5之后的新特性):</strong> 格式为：import static 这两个关键字连用可以指定导入某个类中的指定静态资源，并且不需要使用类名调用类中静态成员，可以直接使用类中静态成员变量和成员方法。</p>
+</li>
+</ul>
+<blockquote>
+<p>java中的BIO</p>
+</blockquote>
+<p><img src="https://gitee.com/super-jimwang/img/raw/master/img/20210224160851.png" alt=""><br>
+采用 BIO 通信模型 的服务端，通常由一个独立的 Acceptor 线程负责监听客户端的连接。我们一般通过在while(true) 循环中服务端会调用 accept() 方法等待接收客户端的连接的方式监听请求，请求一旦接收到一个连接请求，就可以建立通信套接字在这个通信套接字上进行读写操作，此时不能再接收其他客户端连接请求，只能等待同当前连接的客户端的操作执行完成， 不过可以通过多线程来支持多个客户端的连接，如上图所示。</p>
+<p>如果要让 BIO 通信模型 能够同时处理多个客户端请求，就必须使用多线程（主要原因是socket.accept()、socket.read()、socket.write() 涉及的三个主要函数都是同步阻塞的），也就是说它在接收到客户端连接请求之后为每个客户端创建一个新的线程进行链路处理，处理完成之后，通过输出流返回应答给客户端，线程销毁。这就是典型的 一请求一应答通信模型 。</p>
+<blockquote>
+<p>java中的伪异步IO</p>
+</blockquote>
+<p>为了解决同步阻塞I/O面临的一个链路需要一个线程处理的问题，后来有人对它的线程模型进行了优化一一一后端通过一个线程池来处理多个客户端的请求接入，形成客户端个数M：线程池最大线程数N的比例关系，其中M可以远远大于N.通过线程池可以灵活地调配线程资源，设置线程的最大值，防止由于海量并发接入导致线程耗尽。<br>
+<img src="https://gitee.com/super-jimwang/img/raw/master/img/20210224161053.png" alt=""><br>
+采用线程池和任务队列可以实现一种叫做伪异步的 I/O 通信框架，它的模型图如上图所示。当有新的客户端接入时，将客户端的 Socket 封装成一个Task（该任务实现java.lang.Runnable接口）投递到后端的线程池中进行处理，JDK 的线程池维护一个消息队列和 N 个活跃线程，对消息队列中的任务进行处理。由于线程池可以设置消息队列的大小和最大线程数，因此，它的资源占用是可控的，无论多少个客户端并发访问，都不会导致资源的耗尽和宕机。</p>
+<p>伪异步I/O通信框架采用了线程池实现，因此避免了为每个请求都创建一个独立线程造成的线程资源耗尽问题。不过因为它的底层仍然是同步阻塞的BIO模型，因此无法从根本上解决问题。</p>
+<blockquote>
+<p>java中的NIO与IO的不同</p>
+</blockquote>
+<p>NIO中的N可以理解为Non-blocking，不单纯是New。它支持面向缓冲的，基于通道的I/O操作方法。 NIO提供了与传统BIO模型中的 Socket 和 ServerSocket 相对应的 SocketChannel 和 ServerSocketChannel 两种不同的套接字通道实现,两种通道都支持阻塞和非阻塞两种模式。</p>
+<ul>
+<li><strong>IO是阻塞的，NIO是非阻塞的</strong>
+<ul>
+<li>单线程中从通道读取数据到buffer，同时可以继续做别的事情，当数据读取到buffer中后，线程再继续处理数据。写数据也是一样的。另外，非阻塞写也是如此。一个线程请求写入一些数据到某通道，但不需要等待它完全写入，这个线程同时可以去做别的事情。</li>
+</ul>
+</li>
+<li><strong>IO 面向流(Stream oriented)，而 NIO 面向缓冲区(Buffer oriented)</strong>
+<ul>
+<li>在NIO厍中，所有数据都是用缓冲区处理的。在读取数据时，它是直接读到缓冲区中的; 在写入数据时，写入到缓冲区中。任何时候访问NIO中的数据，都是通过缓冲区进行操作。</li>
+</ul>
+</li>
+<li><strong>NIO通过Channel进行读写</strong>
+<ul>
+<li>通道是双向的，可读也可写，而流的读写是单向的。无论读写，通道只能和Buffer交互。因为 Buffer，通道可以异步地读写。</li>
+</ul>
+</li>
+<li><strong>IO没有选择器，而NIO有</strong>
+<ul>
+<li>选择器用于使用单个线程处理多个通道。因此，它需要较少的线程来处理这些通道。线程之间的切换对于操作系统来说是昂贵的。 因此，为了提高系统效率选择器是有用的。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>JAVA中NIO如何读取数据和写数据</p>
+</blockquote>
+<p>通常来说NIO中的所有IO都是从 Channel（通道） 开始的。</p>
+<p>从通道进行数据读取 ：创建一个缓冲区，然后请求通道读取数据。<br>
+从通道进行数据写入 ：创建一个缓冲区，填充数据，并要求通道写入数据。</p>
+<blockquote>
+<p>JAVA中NIO的三个核心组件</p>
+</blockquote>
+<ul>
+<li>selector用来单个线程管理多个通道</li>
+<li>Channel 通道，与缓冲区交互</li>
+<li>Buffer 一个通道可以对应多个buffer</li>
+</ul>
+<blockquote>
+<p>finally 代码块和 finalize()方法有什么区别?</p>
+</blockquote>
+<p>finally 代码块和 finalize()方法有什么区别?<br>
+无论是否抛出异常,finally 代码块都会执行,它主要是用来释放应用占用的资源。<br>
+finalize()方法是 Object 类的一个 protected 方法,它是在对象被垃圾回收之前由 Java 虚拟机来调用的。不要依赖使用finalize方法，因为很难知道这个方法什么时候被调用。</p>
+<blockquote>
+<p>throw 和 throws 有什么区别?</p>
+</blockquote>
+<p>throw 关键字用来在程序中明确的抛出异常,相反,throws 语句用来表明方法不能处理的异常。throws用在声明方法的时候，表示该方法可能抛出的异常，交给上层调用catch来处理</p>
+<blockquote>
+<p>泛型T和?的区别</p>
+</blockquote>
+<p>T代表某一类具体对象，list里只能存放一类。？是占位不知道list里会存放多少种类型的数据</p>
+<blockquote>
+<p>try-catch块中存在return语句，是否还执行finally块，如果执行，说出执行顺序</p>
+</blockquote>
+<p>try-catch中存在return时，会在return前把finally执行掉。<br>
+如果finally中有return会真的return，返回的数值是finally中修改的。<br>
+如果finally中没有return,==返回的数值仍是try中的数值。==</p>
+<blockquote>
+<p><strong>String.intern()的理解</strong></p>
+</blockquote>
+<p>一、new String都是在堆上创建字符串对象。当调用 intern() 方法时，编译器会将字符串添加到常量池中（stringTable维护），并返回指向该常量的引用。<br>
+<img src="https://gitee.com/super-jimwang/img/raw/master/img/20210224163725.png" alt=""></p>
+<p>二、通过字面量赋值创建字符串（如：String str=”twm”）时，会先在常量池中查找是否存在相同的字符串，若存在，则将栈中的引用直接指向该字符串；若不存在，则在常量池中生成一个字符串，再将栈中的引用指向该字符串。<br>
+<img src="https://gitee.com/super-jimwang/img/raw/master/img/20210224163856.png" alt=""></p>
+<p>三、常量字符串的“+”操作，编译阶段直接会合成为一个字符串。如string str=”JA”+”VA”，在编译阶段会直接合并成语句String str=”JAVA”，于是会去常量池中查找是否存在”JAVA”,从而进行创建或引用。</p>
+<p>四、对于final字段，编译期直接进行了常量替换（而对于非final字段则是在运行期进行赋值处理的）。<br>
+final String str1=”ja”;<br>
+final String str2=”va”;<br>
+String str3=str1+str2;<br>
+在编译时，直接替换成了String str3=”ja”+”va”，根据第三条规则，再次替换成String str3=”JAVA”</p>
+<p>五、常量字符串和变量拼接时（如：String str3=baseStr + “01”;）会调用stringBuilder.append()在堆上创建新的对象。</p>
+<p>六、JDK 1.7后，intern方法还是会先去查询常量池中是否有已经存在，如果存在，则返回常量池中的引用，这一点与之前没有区别，区别在于，如果在常量池找不到对应的字符串，则不会再将字符串拷贝到常量池，而只是在常量池中生成一个对原字符串的引用。简单的说，就是往常量池放的东西变了：原来在常量池中找不到时，复制一个副本放到常量池，1.7后则是将在堆上的地址引用复制到常量池。<br>
+<img src="https://gitee.com/super-jimwang/img/raw/master/img/20210224164414.png" alt=""></p>
+<p>代码理解<br>
+String s = new String(“1”);①<br>
+s.intern();②<br>
+String s2 = “1”;③<br>
+System.out.println(s == s2);④</p>
+<p>String s3 = new String(“1”) + new String(“1”);⑤<br>
+s3.intern();⑥<br>
+String s4 = “11”;⑦<br>
+System.out.println(s3 == s4);⑧</p>
+<p>输出：<br>
+JDK1.6以及以下：false false<br>
+JDK1.7以及以上：false true</p>
+<p>分析：<br>
+1.6以前，常量池在方法区，是直接复制字符串过去的。①在常量池创建了&quot;1&quot;，也在堆中创建了String对象，因此②没有影响==因为intern只在常量池中没有该字符串的时候生效==，③是字面量赋值，直接指向了常量池，因此④是false。⑤由于常量池已经有&quot;1&quot;了，因此只在堆中创建String，⑥由于常量池没有&quot;11&quot;，因此创建&quot;11&quot;，⑦指向常量池，因此⑧false==因为7是指向常量池的，而6是指向堆中的对象的==。<br>
+1.7以后，⑥在常量池中生成⑤对象的引用，⑦指向他，因此⑤==⑦。==7指向堆中的6==</p>
+<p>String s = new String(“1”);①<br>
+String s2 = “1”;②<br>
+s.intern();③<br>
+System.out.println(s == s2);④</p>
+<p>String s3 = new String(“1”) + new String(“1”);⑤<br>
+String s4 = “11”;⑥<br>
+s3.intern();⑦<br>
+System.out.println(s3 == s4);⑧</p>
+<p>输出：<br>
+JDK1.6以及以下：false false<br>
+JDK1.7以及以上：false false</p>
+<p>分析：<br>
+此处⑦没有作用，因为⑥已经在常量池中生成了&quot;11&quot;。</p>
+<blockquote>
+<p>什么时候finally不会执行</p>
+</blockquote>
+<p>如果在try块或者catch块中调用了退出虚拟机的方法（即System.exit();）<br>
+那么finally中的代码不会执行，不然无论在try块、catch块中执行任何代码，<br>
+出现任何情况，异常处理的finally中的代码都要被执行的。</p>
+<blockquote>
+<p>一个“.java”源文件中是否可以包括多个类（不是内部类）？有什么限制？</p>
+</blockquote>
+<p>一个“.java”源文件中可以包括多个类（不是内部类）！<br>
+单一个文件中只能有一个public类，并且该public类必须与文件名相同</p>
+<blockquote>
+<p><strong>java 数组调用clone方法，返回的对象是深拷贝还是浅拷贝</strong></p>
+</blockquote>
+<p>一维数组深拷贝（重新分配内存，并复制值）<br>
+二维数组浅拷贝（只传递引用）<br>
+注：若要实现二维数组的深拷贝，可以把二维数组内的每个数组分别用clone()方法复制。</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/article/数据库/查询语句的元素/" data-toggle="tooltip" data-placement="top" title="查询语句的元素">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#java基础面试题"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">java&#x57FA;&#x7840;&#x9762;&#x8BD5;&#x9898;</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://allwin.cyou/" target="_blank">与赢留学生二手交易平台</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/JimWang97">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/宇靖-王-554272190">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; JimWang 2021 
+                    <br>
+                    Theme by BeanTech
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://jimwang97.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://jimwang97.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
