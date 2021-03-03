@@ -224,35 +224,33 @@
 
 <div class="post-preview">
 
-    <a href="/article/JAVA/java基础面试题/">
+    <a href="/article/spring/spring/">
         <h2 class="post-title">
                                  
-            java基础面试题
+            spring
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            java基础面试题
+            spring
 
-==和equal的区别
+springbean的生命周期讲一下
 
-==：表示两个变量的值是否相等，比较两个基本数据类型的数据或者引用变量，用==。
-equals:用于比较两个独立对象的内容是否相同。字符串的比较也用equals。
+SpringBean的生命周期指一个Bean对象从创建、到销毁的过程。SpringBean不等于普通对象，实例化一个java对象只是Bean生命周期过程的一步，只有走完了流程才称之为SpringBean。核心过程如下：
 
-int 和 Integer的区别
-
-Int是Java的8中基本数据类型之一，integer是int的封装类。Int类型的默认值为0，integer默认值为null，所以区别在于，i......
+实例化Bean：主要通过反射技术，实例化Java对象；
+设置对象属性（依赖注入）：向实例化后的Java对象中注入属性......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-02-24
+            2021-03-03
         </p>
         <div class="tags">
             
-              <a href="/tags/#JAVA基础" title="JAVA基础">JAVA基础</a>
+              <a href="/tags/#redis" title="redis">redis</a>
             
         </div>
     
@@ -262,30 +260,46 @@ Int是Java的8中基本数据类型之一，integer是int的封装类。Int类�
 
 <div class="post-preview">
 
-    <a href="/article/数据库/查询语句的元素/">
+    <a href="/article/redis/redis/">
         <h2 class="post-title">
                                  
-            查询语句的元素
+            redis
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            查询语句的元素
-join
-inner join
-两张表重合的部分匹配连接到一起
-12345678910111213141516171819202122232425262728293031323334mysql&gt; use RUNOOB;Database changedmysql&gt; SELECT * FROM tcount_tbl;+---------------+---------......
+            redis
+
+redis数据存在哪，是单线程的吗，为什么快
+
+redis数据存在内存中，是单线程的。之所以快是因为它性能瓶颈不是cpu，而是内存和网络。所以多线程并没有必要
+
+redis除了做缓存还能用来做什么
+
+分布式锁 消息队列等
+
+redis和memcache的区别
+
+共同点
+
+都是基于内存的数据库，都是用来做缓存的
+都有过期策略
+性能都很高
+
+不同点
+
+redis有很多种数据类型，m......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-02-23
+            2021-03-02
         </p>
         <div class="tags">
             
-              <a href="/tags/#数据库" title="数据库">数据库</a>
+              <a href="/tags/#redis" title="redis">redis</a>
             
         </div>
     
@@ -295,30 +309,40 @@ inner join
 
 <div class="post-preview">
 
-    <a href="/article/数据库/sql优化/">
+    <a href="/article/多线程/并发/">
         <h2 class="post-title">
                                  
-            sql优化
+            并发相关问题
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            sql优化
-SQL语句优化
-慢查询日志发现有问题的SQL
-通过MySQL慢查询日志对有效率问题的SQL进行监控
-MySQL的慢查询日志是MySQL提供的一种日志记录，它用来记录在MySQL中响应时间超过阀值的语句，具体指运行时间超过long_query_time值的SQL，则会被记录到慢查询日志中。long_query_time的默认值为10，意思是运行10s以上的语句。通过MySQL的慢查......
+            并发相关问题
+
+synchronized有什么用
+
+可保证被它修饰的方法或代码块在任意时刻只能有一个线程执行
+
+synchronized的三种使用方法说一下
+
+
+修饰实例方法：进入代码块之前要获得当前对象实例的锁
+修饰静态方法进入同步代码块之前要获得当前class的锁。class的锁与对象的锁互不影响
+修饰代码块：指定加锁对象，进入代码块前要获得给定对象的锁。
+
+
+双重校验锁实现单例模式写一......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-02-23
+            2021-03-02
         </p>
         <div class="tags">
             
-              <a href="/tags/#数据库" title="数据库">数据库</a>
+              <a href="/tags/#多线程" title="多线程">多线程</a>
             
         </div>
     
@@ -328,31 +352,36 @@ MySQL的慢查询日志是MySQL提供的一种日志记录，它用来记录在M
 
 <div class="post-preview">
 
-    <a href="/article/数据库/死锁判定原理和具体场景/">
+    <a href="/article/多线程/锁/">
         <h2 class="post-title">
                                  
-            死锁判定原理和具体场景
+            锁相关问题
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            死锁判定原理和具体场景
-什么是死锁
-数据库是一个多用户使用的共享资源，当多个用户 并发地存取数据的时候，在数据库中就会发生多个事务同时存取同一个数据的情况，加锁是进行数据库并发控制的一种非常重要的技术。在实际应用中，如果两个事务需要一组有冲突的锁，而不能继续进行下去，这时便发生了死锁。
-死锁的原因
-1.事务之间对资源访问顺序的交替
-此类常见于两个用户分别首先访问A表和B表，并锁住当前表，但是......
+            锁
+
+说一下synchronized的优化，锁的升级路线
+
+引入了多个锁，无锁-&gt;偏向锁-&gt;轻量级锁-&gt;重量级锁
+还有自旋锁
+
+讲一下偏向锁是怎么回事，获取锁的过程
+
+主要用在没有多线程竞争的前提下，减少使用操作系统互斥量的性能消耗。
+当一个线程访问同步块并获取锁时，会在锁对象的对象头和栈帧中的锁记录里存储锁偏向的线程ID，以后该线程进入和退出同步块时，都不需要CAS操作。......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-02-23
+            2021-03-02
         </p>
         <div class="tags">
             
-              <a href="/tags/#数据库" title="数据库">数据库</a>
+              <a href="/tags/#多线程" title="多线程">多线程</a>
             
         </div>
     
@@ -362,33 +391,41 @@ MySQL的慢查询日志是MySQL提供的一种日志记录，它用来记录在M
 
 <div class="post-preview">
 
-    <a href="/article/数据库/B树、B+树区别，索引为何使用B+树/">
+    <a href="/article/多线程/线程池/">
         <h2 class="post-title">
                                  
-            B树、B+树区别，索引为何使用B+树
+            线程池相关问题
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            B树、B+树区别，索引为何使用B+树
-B树
-描述一颗B树时需要指定它的阶数，阶数表示了一个结点最多有多少个孩子结点，一般用字母m表示阶数。当m取2时，就是我们常见的二叉搜索树。
-一颗m阶的B树定义如下：
-1）每个结点最多有m-1个关键字。
-2）根结点最少可以只有1个关键字。
-3）非根结点至少有Math.ceil(m/2)-1个关键字。
-4）每个结点中的关键字都按照从小到大的顺序排列，每个关键......
+            线程池
+
+线程池的好处
+
+
+降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗
+提高响应速度。当任务到达时，任务可以不需要等到线程创建就立即执行
+提高线程的可管理性。如果无限创建线程会造成系统资源的浪费，还会降低系统的稳定性，线程池可以统一分配，调优和监控
+
+
+Executor架构的结构讲一下，三个主要组成部分
+
+
+任务(Runnable/Callable)
+
+执行任务需要实......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-02-21
+            2021-03-02
         </p>
         <div class="tags">
             
-              <a href="/tags/#数据库" title="数据库">数据库</a>
+              <a href="/tags/#多线程" title="多线程">多线程</a>
             
         </div>
     
@@ -398,32 +435,37 @@ B树
 
 <div class="post-preview">
 
-    <a href="/article/数据库/InnoDB和MyISAM的索引/">
+    <a href="/article/多线程/多线程/">
         <h2 class="post-title">
                                  
-            InnoDB和MyISAM索引
+            多线程相关问题
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            InnoDB和MyISAM索引
+            多线程
 
-InnoDB和MyISAM所使用的索引
-两种引擎都是使用B+树。
-MyISAM引擎，B+树的数据结构中存储的内容实际上是实际数据的地址值。也就是说它的索引和实际数据是分开的，只不过使用索引指向了实际数据。这种索引的模式被称为非聚集索引。
-Innodb引擎的索引的数据结构也是B+树，只不过数据结构中存储的都是实际的数据，这种索引有被称为聚集索引。
-MyISAM......
+并发和并行的区别说一下
+
+并发：同一个时间段内，多个任务在执行（单位时间不一定一起执行）
+并行：单位时间内，多个任务同时执行
+
+为什么要用多线程，说一下理由，比单线程好在哪
+
+从计算机底层来说：线程间的切换和调度的成本远小于进程。多核cpu意味着多个线程可以并行，减少了线程上下文切换的代价
+从发展趋势来看：多线程是高并发的基础
+对于单核来说：如果是单核，单线程，如果这个线程需要等待......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-02-21
+            2021-03-02
         </p>
         <div class="tags">
             
-              <a href="/tags/#数据库" title="数据库">数据库</a>
+              <a href="/tags/#多线程" title="多线程">多线程</a>
             
         </div>
     
@@ -433,27 +475,31 @@ MyISAM......
 
 <div class="post-preview">
 
-    <a href="/article/数据库/innodb和myisam存储引擎的区别/">
+    <a href="/article/JVM/类加载器/">
         <h2 class="post-title">
                                  
-            innodb和myisam存储引擎的区别
+            类加载器
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            innodb和myisam存储引擎的区别
-在MySQL 5.5之前，MyISAM是mysql的默认数据库引擎，其由早期的ISAM（Indexed Sequential Access Method：有索引的顺序访问方法）所改良。虽然MyISAM性能极佳，但却有一个显著的缺点：不支持事务处理。不过，MySQL也导入了另一种数据库引擎InnoDB，以强化参考完整性与并发违规处理机制，后来就逐渐取代......
+            类加载器
+
+jvm内置的类加载器说一下，各负责加载什么
+
+BootstrapClassLoader(启动类加载器)：负责加载%JAVA_HOME%/lib目录下的jar包和类或者被-Xbootclasspath参数指定的路径中的所有类
+ExtensionClassLoader(扩展类加载器)：加载%JRE_HOME%/lib/ext目录下的包和类，或者java.ext.dirs系统变量指定目......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-02-21
+            2021-03-01
         </p>
         <div class="tags">
             
-              <a href="/tags/#数据库" title="数据库">数据库</a>
+              <a href="/tags/#JVM" title="JVM">JVM</a>
             
         </div>
     
@@ -463,32 +509,41 @@ MyISAM......
 
 <div class="post-preview">
 
-    <a href="/article/数据库/超键、候选键、主键、外键以及sql约束/">
+    <a href="/article/JVM/运行时数据区/">
         <h2 class="post-title">
                                  
-            超键、候选键、主键、外键以及sql约束
+            运行时数据区
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            超键、候选键、主键、外键以及sql约束
-键
-定义
-超键(super key): 在关系中能唯一标识元组的属性集称为关系模式的超键
-候选键(candidate key): 不含有多余属性的超键称为候选键。也就是在候选键中，若再删除属性，就不是键了！
-主键(primary key): 用户选作元组标识的一个候选键程序主键
-外键(foreign key)：如果关系模式R中属性K是其它模式的主键，那......
+            运行时数据区
+
+运行时数据区内有哪些东西
+
+1.8以前：
+线程共享的有堆和方法区（永久代是其实现方式）
+线程独立的有本地方法栈、虚拟方法栈和程序计数器
+1.8以后
+线程共享的有堆
+线程独立的有本地方法栈、虚拟方法栈和程序计数器
+方法区的实现方法变为元空间放在内存中
+
+程序计数器有什么用？生命周期说一下
+
+通过改变程序计数器可以依次读取执行指令，从而实现代码的流控制
+另外，每个线程都有一个独立......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-02-20
+            2021-03-01
         </p>
         <div class="tags">
             
-              <a href="/tags/#数据库" title="数据库">数据库</a>
+              <a href="/tags/#JVM" title="JVM">JVM</a>
             
         </div>
     
@@ -498,40 +553,49 @@ MyISAM......
 
 <div class="post-preview">
 
-    <a href="/article/数据库/数据库的锁/">
+    <a href="/article/JVM/类加载过程/">
         <h2 class="post-title">
                                  
-            数据库的锁
+            类加载过程
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            数据库的锁
-锁分为乐观锁和悲观锁。
-其中悲观锁按照类型可以划分为：
+            类加载过程
 
-共享锁（读锁）
-排他锁（写锁）
+类的生命周期说一下
 
-也可以按照锁的范围分为：
+加载、连接（验证，准备，解析）、初始化、使用、卸载
 
-行锁
-表锁
+类的加载过程具体说一下
 
-乐观锁
-假设不会发生并发冲突，只在提交操作时检查是否违反数据完整性。
-乐观锁是一种不会阻塞其他线程并发的控制，它不会使用数据库的锁进行实现，它的设计里面由于不阻塞其他线程，所以并不会引起线程频繁挂起和恢复，这样便能够提高并发能力，所以也有人把它称为......
+类的加载包括了加载、连接（验证，准备，解析）、初始化
+
+加载
+
+
+通过全类名获取定义此类的二进制字节流
+将字节流所代表的静态存储结构转换为运行时数据区的结构
+在内存中生成一个代表该类的Class对象，作为方法区这些数据的访问入口
+
+
+验证
+
+
+文件格式验证
+元数据验证
+字节码验......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-02-20
+            2021-02-28
         </p>
         <div class="tags">
             
-              <a href="/tags/#数据库" title="数据库">数据库</a>
+              <a href="/tags/#JVM" title="JVM">JVM</a>
             
         </div>
     
@@ -541,42 +605,47 @@ MyISAM......
 
 <div class="post-preview">
 
-    <a href="/article/数据库/drop、truncate、delete区别/">
+    <a href="/article/JVM/垃圾回收机制/">
         <h2 class="post-title">
                                  
-            drop、truncate、delete区别
+            垃圾回收机制
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            drop、truncate、delete区别
+            垃圾回收机制
 
-drop 直接删除表；
-truncate 删除表中数据，再插入时自增长id又从1开始 ；
-delete 删除表中数据，可以加where字句。
+讲一下堆常见的分配策略
 
-drop table：
 
-属于DDL（Data Definition Language，数据库定义语言）
-不可回滚
-不可带 where
-删除表内容和结构
-删除速度快
 
-truncate table：
+对象优先在Eden区分配
 
-......
+第一次垃圾回收后，如果s区放不下，那么只能通过==分配担保机制==把新生代的对象提前转移到老年代
+
+
+
+大对象直接进入老年代
+
+新生代如果放不下，直接放到老年代
+
+
+
+长期存活的对象将进入老年代
+
+大于默认年龄的会进入老年代，一般的垃圾回收器是15，而CMS是6
+动态年龄，按照年龄从小到大排序，对占用的大小进行累计，如......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-02-20
+            2021-02-28
         </p>
         <div class="tags">
             
-              <a href="/tags/#数据库" title="数据库">数据库</a>
+              <a href="/tags/#JVM" title="JVM">JVM</a>
             
         </div>
     
@@ -674,23 +743,23 @@ truncate table：
     <ul>
       
         <li>
-          <a href="/article/JAVA/java基础面试题/">java基础面试题</a>
+          <a href="/article/spring/spring/">spring</a>
         </li>
       
         <li>
-          <a href="/article/数据库/查询语句的元素/">查询语句的元素</a>
+          <a href="/article/redis/redis/">redis</a>
         </li>
       
         <li>
-          <a href="/article/数据库/sql优化/">sql优化</a>
+          <a href="/article/多线程/并发/">并发相关问题</a>
         </li>
       
         <li>
-          <a href="/article/数据库/死锁判定原理和具体场景/">死锁判定原理和具体场景</a>
+          <a href="/article/多线程/锁/">锁相关问题</a>
         </li>
       
         <li>
-          <a href="/article/数据库/B树、B+树区别，索引为何使用B+树/">B树、B+树区别，索引为何使用B+树</a>
+          <a href="/article/多线程/线程池/">线程池相关问题</a>
         </li>
       
     </ul>
@@ -701,7 +770,7 @@ truncate table：
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">40</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">43</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">5</span></li></ul>
     </div>
 
         <hr>

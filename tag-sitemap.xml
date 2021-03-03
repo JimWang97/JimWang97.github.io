@@ -9,13 +9,6 @@
     </url>
 
     <url>
-        <loc>http://jimwang97.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
-        <lastmod>2021-02-19T15:42:27.446Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://jimwang97.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc>
         <lastmod>2021-02-19T21:31:50.737Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -31,7 +24,42 @@
 
     <url>
         <loc>http://jimwang97.github.io/tags/JAVA%E5%9F%BA%E7%A1%80/</loc>
-        <lastmod>2021-02-24T19:48:51.645Z</lastmod>
+        <lastmod>2021-02-24T19:52:25.865Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://jimwang97.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
+        <lastmod>2021-02-25T22:18:55.185Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://jimwang97.github.io/tags/JAVA%E5%AE%B9%E5%99%A8/</loc>
+        <lastmod>2021-03-01T21:50:17.725Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://jimwang97.github.io/tags/JVM/</loc>
+        <lastmod>2021-03-02T16:28:55.070Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://jimwang97.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc>
+        <lastmod>2021-03-02T16:30:39.977Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://jimwang97.github.io/tags/redis/</loc>
+        <lastmod>2021-03-03T22:45:13.588Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

@@ -224,22 +224,316 @@
 
 <div class="post-preview">
 
-    <a href="/article/数据库/事务的ACID和隔离级别/">
+    <a href="/article/容器/java容器篇/">
         <h2 class="post-title">
                                  
-            事务的ACID和隔离级别
+            java容器篇
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            事务的ACID和隔离级别
-什么是事务以及ACID
-事务简单来说：一个Session中所进行的所有操作，要么同时成功，要么同时失败；作为单个逻辑工作单元执行的一系列操作，满足四大特性：
+            java容器篇
 
-原子性（Atomicity）：事务作为一个整体被执行 ，要么全部执行，要么全部不执行
-一致性（Consistency）：保证数据库状态从一个一致状态转变为另一个一致状态
-隔离性（Isolation）：多个事务......
+哪些类实现了collection接口
+
+除了map，其他的都实现了。
+
+List
+
+ArrayList
+LinkedList 双向链表
+Vector
+Stack
+
+
+Queue
+
+PriorityQueue
+Deque
+ArrayQue
+
+
+Set
+
+HashSet 基于HashMap实现
+LinkedHashSet 基于LinkedHashMap实现
+SortedSet
+......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-28
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#JAVA容器" title="JAVA容器">JAVA容器</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/JAVA/java基础面试题/">
+        <h2 class="post-title">
+                                 
+            java基础面试题
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            java基础面试题
+
+==和equal的区别
+
+==：表示两个变量的值是否相等，比较两个基本数据类型的数据或者引用变量，用==。
+equals:用于比较两个独立对象的内容是否相同。字符串的比较也用equals。
+
+int 和 Integer的区别
+
+Int是Java的8中基本数据类型之一，integer是int的封装类。Int类型的默认值为0，integer默认值为null，所以区别在于，i......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-24
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#JAVA基础" title="JAVA基础">JAVA基础</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/数据库/查询语句的元素/">
+        <h2 class="post-title">
+                                 
+            查询语句的元素
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            查询语句的元素
+join
+inner join
+两张表重合的部分匹配连接到一起
+12345678910111213141516171819202122232425262728293031323334mysql&gt; use RUNOOB;Database changedmysql&gt; SELECT * FROM tcount_tbl;+---------------+---------......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-23
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#数据库" title="数据库">数据库</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/数据库/sql优化/">
+        <h2 class="post-title">
+                                 
+            sql优化
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            sql优化
+SQL语句优化
+慢查询日志发现有问题的SQL
+通过MySQL慢查询日志对有效率问题的SQL进行监控
+MySQL的慢查询日志是MySQL提供的一种日志记录，它用来记录在MySQL中响应时间超过阀值的语句，具体指运行时间超过long_query_time值的SQL，则会被记录到慢查询日志中。long_query_time的默认值为10，意思是运行10s以上的语句。通过MySQL的慢查......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-23
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#数据库" title="数据库">数据库</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/数据库/死锁判定原理和具体场景/">
+        <h2 class="post-title">
+                                 
+            死锁判定原理和具体场景
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            死锁判定原理和具体场景
+什么是死锁
+数据库是一个多用户使用的共享资源，当多个用户 并发地存取数据的时候，在数据库中就会发生多个事务同时存取同一个数据的情况，加锁是进行数据库并发控制的一种非常重要的技术。在实际应用中，如果两个事务需要一组有冲突的锁，而不能继续进行下去，这时便发生了死锁。
+死锁的原因
+1.事务之间对资源访问顺序的交替
+此类常见于两个用户分别首先访问A表和B表，并锁住当前表，但是......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-23
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#数据库" title="数据库">数据库</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/数据库/B树、B+树区别，索引为何使用B+树/">
+        <h2 class="post-title">
+                                 
+            B树、B+树区别，索引为何使用B+树
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            B树、B+树区别，索引为何使用B+树
+B树
+描述一颗B树时需要指定它的阶数，阶数表示了一个结点最多有多少个孩子结点，一般用字母m表示阶数。当m取2时，就是我们常见的二叉搜索树。
+一颗m阶的B树定义如下：
+1）每个结点最多有m-1个关键字。
+2）根结点最少可以只有1个关键字。
+3）非根结点至少有Math.ceil(m/2)-1个关键字。
+4）每个结点中的关键字都按照从小到大的顺序排列，每个关键......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-21
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#数据库" title="数据库">数据库</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/数据库/InnoDB和MyISAM的索引/">
+        <h2 class="post-title">
+                                 
+            InnoDB和MyISAM索引
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            InnoDB和MyISAM索引
+
+InnoDB和MyISAM所使用的索引
+两种引擎都是使用B+树。
+MyISAM引擎，B+树的数据结构中存储的内容实际上是实际数据的地址值。也就是说它的索引和实际数据是分开的，只不过使用索引指向了实际数据。这种索引的模式被称为非聚集索引。
+Innodb引擎的索引的数据结构也是B+树，只不过数据结构中存储的都是实际的数据，这种索引有被称为聚集索引。
+MyISAM......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-21
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#数据库" title="数据库">数据库</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/数据库/innodb和myisam存储引擎的区别/">
+        <h2 class="post-title">
+                                 
+            innodb和myisam存储引擎的区别
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            innodb和myisam存储引擎的区别
+在MySQL 5.5之前，MyISAM是mysql的默认数据库引擎，其由早期的ISAM（Indexed Sequential Access Method：有索引的顺序访问方法）所改良。虽然MyISAM性能极佳，但却有一个显著的缺点：不支持事务处理。不过，MySQL也导入了另一种数据库引擎InnoDB，以强化参考完整性与并发违规处理机制，后来就逐渐取代......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-02-21
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#数据库" title="数据库">数据库</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/数据库/超键、候选键、主键、外键以及sql约束/">
+        <h2 class="post-title">
+                                 
+            超键、候选键、主键、外键以及sql约束
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            超键、候选键、主键、外键以及sql约束
+键
+定义
+超键(super key): 在关系中能唯一标识元组的属性集称为关系模式的超键
+候选键(candidate key): 不含有多余属性的超键称为候选键。也就是在候选键中，若再删除属性，就不是键了！
+主键(primary key): 用户选作元组标识的一个候选键程序主键
+外键(foreign key)：如果关系模式R中属性K是其它模式的主键，那......
         </div>
     </a>
     
@@ -259,21 +553,30 @@
 
 <div class="post-preview">
 
-    <a href="/article/数据库/什么是索引以及索引的分类/">
+    <a href="/article/数据库/数据库的锁/">
         <h2 class="post-title">
                                  
-            什么是索引以及索引的分类
+            数据库的锁
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            什么是索引以及索引的分类
-什么是索引
-索引是对数据库表中一个或多个列的值进行排序的数据结构，以协助快速查询、更新数据库表中数据。
-索引的底层结构
-底层数据结构是B+树。
-在数据结构中，我们最为常见的搜索结构就是二叉搜索树和AVL树(高度平衡的二叉搜索树，为了提高二叉搜索树的效率，减少树的平均搜索长度)了。然而，无论二叉搜索树还是AVL树，当数据量比较大时，都会由于树的深度过大而造成I/O读写......
+            数据库的锁
+锁分为乐观锁和悲观锁。
+其中悲观锁按照类型可以划分为：
+
+共享锁（读锁）
+排他锁（写锁）
+
+也可以按照锁的范围分为：
+
+行锁
+表锁
+
+乐观锁
+假设不会发生并发冲突，只在提交操作时检查是否违反数据完整性。
+乐观锁是一种不会阻塞其他线程并发的控制，它不会使用数据库的锁进行实现，它的设计里面由于不阻塞其他线程，所以并不会引起线程频繁挂起和恢复，这样便能够提高并发能力，所以也有人把它称为......
         </div>
     </a>
     
@@ -284,312 +587,6 @@
         <div class="tags">
             
               <a href="/tags/#数据库" title="数据库">数据库</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/数据库/数据库三范式/">
-        <h2 class="post-title">
-                                 
-            数据库三范式
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            数据库三范式
-第一范式
-列不可分
-1NF（第一范式）是对属性具有原子性的要求，不可再分。
-比如：
-
-
-
-学号
-姓名
-性别
-出生年月日
-
-
-
-
-如果认为年月日可以分为年、月、日。那么这就不满足1NF
-第二范式
-消除非主属性对码对部分函数依赖
-2NF（第二范式）是对记录有唯一性的要求，即实体的唯一性，不存在部分依赖，每一列与主键都相关
-比如：
-
-
-
-学号
-课程号
-姓名
-学分
-
-
-
-
-该表明显说明......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-20
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#数据库" title="数据库">数据库</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/计网/DNS为什么使用UDP，又与TCP有什么关系/">
-        <h2 class="post-title">
-                                 
-            DNS为什么使用UDP，又与TCP有什么关系
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            DNS为什么使用UDP，又与TCP有什么关系
-为什么用UDP
-DNS请求数据时，整个数据包除了DNS协议相关的内容之外，还包含以太网、IP和UDP的协议头。虽然包含了这么多信息，但是一个DNS请求只有几十个字节。是非常小的数据包。
-UDP 和 TCP 的通信机制非常不同，作为可靠的传输协议，TCP 协议需要通信的双方通过 三次握手 建立 TCP 连接后才可以通信，但是在 30 年前的 DNS......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-19
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/数据结构/八大排序以及java实现/">
-        <h2 class="post-title">
-                                 
-            八大排序以及java实现
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            八大排序以及java实现
-插入排序
-算法描述
-一般来说，插入排序都采用in-place在数组上实现。具体算法描述如下：
-
-从第一个元素开始，该元素可以认为已经被排序
-取出下一个元素，在已经排序的元素序列中从后向前扫描
-如果该元素（已排序）大于新元素，将该元素移到下一位置
-重复步骤3，直到找到已排序的元素小于或者等于新元素的位置
-将新元素插入到该位置后
-重复步骤2~5
-
-
-1234567891......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-19
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#数据结构" title="数据结构">数据结构</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/数据结构/二叉树的遍历/">
-        <h2 class="post-title">
-                                 
-            二叉树的遍历
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            二叉树的遍历
-前序遍历
-123456789101112public List&lt;Integer&gt; ans = new ArrayList&lt;&gt;();public List&lt;Integer&gt; preorderTraversal(TreeNode root)&#123;  preorder(root);  return ans;&#125;public void ......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-16
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#数据结构" title="数据结构">数据结构</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/数据结构/红黑树、哈希表、堆/">
-        <h2 class="post-title">
-                                 
-            红黑树、哈希表、堆
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            红黑树、哈希表、堆
-红黑树
-红黑树的每个节点上都有存储位表示节点的颜色，可以是红(Red)或黑(Black)。
-红黑树的特性:
-（1）每个节点或者是黑色，或者是红色。
-（2）根节点是黑色。
-（3）每个叶子节点（NIL）是黑色。 [注意：这里叶子节点，是指为空(NIL或NULL)的叶子节点！]
-（4）如果一个节点是红色的，则它的子节点必须是黑色的。
-（5）从一个节点到该节点的子孙节点的所有路径......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-16
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#数据结构" title="数据结构">数据结构</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/计网/DNS解析的过程/">
-        <h2 class="post-title">
-                                 
-            DNS解析的过程
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            DNS解析的过程
-
-
-浏览器先检查自身缓存中有没有被解析过的这个域名对应的ip地址，如果有，解析结束。同时域名被缓存的时间也可通过TTL属性来设置。
-
-
-如果浏览器缓存中没有（专业点叫还没命中），浏览器会检查操作系统缓存中有没有对应的已解析过的结果。而操作系统也有一个域名解析的过程。在windows中可通过c盘里一个叫hosts的文件来设置，如果你在这里指定了一个域名对应的ip地址，那浏览器......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-16
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/计网/HTTP缓存机制/">
-        <h2 class="post-title">
-                                 
-            HTTP缓存机制
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            HTTP缓存机制
-缓存机制
-有两种缓存机制，强制缓存和对比缓存
-强制缓存
-对于强制缓存来说，响应header中会有两个字段来标明失效规则（Expires/Cache-Control）
-Expires
-　　Expires的值为服务端返回的到期时间，即下一次请求时，请求时间小于服务端返回的到期时间，直接使用缓存数据。
-不过Expires 是HTTP 1.0的东西，现在默认浏览器均默认使用HTTP......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-14
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/计网/session和cookie/">
-        <h2 class="post-title">
-                                 
-            session和cookie
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            session和cookie
-Cookie
-给客户端们颁发一个通行证吧，每人一个，无论谁访问都必须携带自己通行证。这样服务器就能从通行证上确认客户身份了。这就是Cookie的工作原理。
-客户端请求服务器，如果服务器需要记录该用户状态，就使用response向客户端浏览器颁发一个Cookie。客户端浏览器会把Cookie保存起来。当浏览器再请求该网站时，浏览器把请求的网址连同该Cookie一同......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-14
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
             
         </div>
     
@@ -691,23 +688,23 @@ Cookie
     <ul>
       
         <li>
-          <a href="/article/JAVA/java基础面试题/">java基础面试题</a>
+          <a href="/article/spring/spring/">spring</a>
         </li>
       
         <li>
-          <a href="/article/数据库/查询语句的元素/">查询语句的元素</a>
+          <a href="/article/redis/redis/">redis</a>
         </li>
       
         <li>
-          <a href="/article/数据库/sql优化/">sql优化</a>
+          <a href="/article/多线程/并发/">并发相关问题</a>
         </li>
       
         <li>
-          <a href="/article/数据库/死锁判定原理和具体场景/">死锁判定原理和具体场景</a>
+          <a href="/article/多线程/锁/">锁相关问题</a>
         </li>
       
         <li>
-          <a href="/article/数据库/B树、B+树区别，索引为何使用B+树/">B树、B+树区别，索引为何使用B+树</a>
+          <a href="/article/多线程/线程池/">线程池相关问题</a>
         </li>
       
     </ul>
@@ -718,7 +715,7 @@ Cookie
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">40</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">43</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">5</span></li></ul>
     </div>
 
         <hr>
