@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          About - JimWang | Blog
+          JimWang | Blog
         
     </title>
 
-    <link rel="canonical" href="http://jimwang97.github.io/about/">
+    <link rel="canonical" href="http://jimwang97.github.io/page/5/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -71,8 +71,8 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/img/header_img/background.jpg')
-            /*page*/
+            background-image: url('/img/header_img/background.jpg') 
+            /*config*/
         
     }
     
@@ -90,9 +90,9 @@
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 
                     <div class="site-heading" style="font-weight: bolder; font-size: 72px; font-family: Hannotate SC;">
-                        <h1>About</h1>
+                        <h1>Jim Blog</h1>
                         <!--<hr class="small">-->
-                        <span class="subheading" style="font-weight: bolder; font-size: x-large; font-family: Hannotate SC;">Focusing...</span>
+                        <span class="subheading" style="font-weight: bolder; font-size: x-large; font-family: Hannotate SC;">Personal Blog Powered By Jim</span>
                     </div>
                 
 
@@ -219,61 +219,99 @@
                 post-container
             ">
             
-                <h3 id="关于我">关于我</h3>
-<blockquote>
-<p>热爱编程，热爱生活。</p>
-</blockquote>
-<h3 id="兴趣方向">兴趣方向</h3>
-<blockquote>
-<p>java后端开发与计算机视觉。</p>
-</blockquote>
-<h3 id="参与社区">参与社区</h3>
-<blockquote>
-<p>CSDN博客:<a href="https://blog.csdn.net/yinhou1771" target="_blank" rel="noopener">https://blog.csdn.net/yinhou1771</a></p>
-<p>Github:<a href="https://github.com/JimWang97" target="_blank" rel="noopener">https://github.com/JimWang97</a></p>
-</blockquote>
-<h3 id="联系我">联系我</h3>
-<blockquote>
-<p>Email: <a href="mailto:jimwang9712@gmail.com" target="_blank" rel="noopener">jimwang9712@gmail.com</a></p>
-</blockquote>
-<h3 id="博客模版">博客模版</h3>
-<blockquote>
-<p>胡伟煌: <a href="https://www.huweihuang.com/" target="_blank" rel="noopener">https://www.huweihuang.com/</a></p>
-</blockquote>
+                <!-- Main Content -->
+
+
+<div class="post-preview">
+
+    <a href="/article/操作系统/内核态和用户态以及其切换/">
+        <h2 class="post-title">
+                                 
+            进程线程间的通信方式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            进程线程间的通信方式
+为什么进程间需要通信
+进程是一个独立的资源分配单元，不同进程（这里所说的进程通常指的是用户进程）之间的资源是独立的，没有关联，不能在一个进程中直接访问另一个进程的资源（例如打开的文件描述符）。
+进程间通信的目的：
+
+数据传输：一个进程需要将它的数据发送给另一个进程。
+通知事件：一个进程需要向另一个或一组进程发送消息，通知它（它们）发生了某种事件（如进程终止时要通知父进程......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-01-28
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/操作系统/OS的运行机制和体系结构/">
+        <h2 class="post-title">
+                                 
+            OS的运行机制和体系结构
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            OS的运行机制和体系结构
+
+什么是指令
+代码都会被翻译成很多条的指令执行，每一条指令就是让cpu干一些工作。“指令”就是CPU能识别、执行的最基本命令。比如加法指令。
+有的指令是普通的指令，比如加减乘除运算指令，我们称它为非特权指令。而有的指令拥有着很高的权限，比如内存清零、关机等，一旦用户程序执行了这个指令，可能会造成严重的后果，我们称这样的指令为特权指令。
+特权指令不允许普通的用户程序使......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-01-28
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+        <li class="previous">
+            <a href="/page/4/">&larr; Newer Posts</a>
+        </li>
+    
+    
+</ul>
+
 
 
                 <br>
 
                 <!-- require APlayer -->
                 
-                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css">
-                    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script>
-                    <script src="https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js"></script>
-                
-                    <div class="aplayer"
-                        data-id="undefined"
-                        data-server="undefined"
-                        data-type="undefined"
-                        data-fixed="false" >
-                    </div>
-                
 
                 <!-- 如果开启评论功能 -->
-                
-                    <hr>
-
-                    
-
-                    
-
-                    
-
-                    
-
-                    
-
-                    
-
                 
             </div>
 
