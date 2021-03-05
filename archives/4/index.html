@@ -18,7 +18,7 @@
         
     </title>
 
-    <link rel="canonical" href="http://jimwang97.github.io/page/2/">
+    <link rel="canonical" href="http://jimwang97.github.io/archives/4/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -147,14 +147,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -224,52 +224,43 @@
 
 <div class="post-preview">
 
-    <a href="/article/容器/java容器篇/">
+    <a href="/article/操作系统/进程调度的时机、切换与过程、方式/">
         <h2 class="post-title">
                                  
-            java容器篇
+            进程调度的时机、切换与过程、方式
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            java容器篇
+            进程调度的时机、切换与过程、方式
+进程调度的时机
+需要进行进程调度与切换的情况
 
-哪些类实现了collection接口
+当前运行的进程主动放弃处理器
 
-除了map，其他的都实现了。
-
-List
-
-ArrayList
-LinkedList 双向链表
-Vector
-Stack
+如（1.进程正常终止。2.运行过程中发生异常而终止。3.进程主动请求阻塞（如等待I/O））
 
 
-Queue
+当前运行的进程被动放弃处理器
 
-PriorityQueue
-Deque
-ArrayQue
+如（1.分给进程的时间片用完了。2.有更紧急的事要要处理（如I/O中断）。3.有更高优先级的进程加入阻塞队列）
 
 
-Set
 
-HashSet 基于HashMap实现
-LinkedHashSet 基于LinkedHashMap实现
-SortedSet
+不需要进行进程调度与切换的情况
+
 ......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-02-28
+            2021-02-04
         </p>
         <div class="tags">
             
-              <a href="/tags/#JAVA容器" title="JAVA容器">JAVA容器</a>
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
             
         </div>
     
@@ -279,35 +270,31 @@ SortedSet
 
 <div class="post-preview">
 
-    <a href="/article/JAVA/java基础面试题/">
+    <a href="/article/操作系统/挂起与阻塞/">
         <h2 class="post-title">
                                  
-            java基础面试题
+            挂起与阻塞
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            java基础面试题
-
-==和equal的区别
-
-==：表示两个变量的值是否相等，比较两个基本数据类型的数据或者引用变量，用==。
-equals:用于比较两个独立对象的内容是否相同。字符串的比较也用equals。
-
-int 和 Integer的区别
-
-Int是Java的8中基本数据类型之一，integer是int的封装类。Int类型的默认值为0，integer默认值为null，所以区别在于，i......
+            挂起与阻塞
+阻塞
+线程在运行的过程中因为某些原因而发生阻塞，阻塞状态的线程特点是：该线程放弃CPU的使用，暂停运行，只有等导致阻塞的原因消除后才恢复，或者被其他线程中断阻塞，抛出异常
+正在执行的进程暂时无法继续执行，导致进程调度，OS把处理器分配给了其他的就绪进程，那么受阻塞进程就进入了阻塞状态。
+挂起
+挂起进程在操作系统中可以定义为暂时被淘汰出内存的进程，机器的资源是有限的，在资源不足的情......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-02-24
+            2021-02-03
         </p>
         <div class="tags">
             
-              <a href="/tags/#JAVA基础" title="JAVA基础">JAVA基础</a>
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
             
         </div>
     
@@ -317,30 +304,32 @@ Int是Java的8中基本数据类型之一，integer是int的封装类。Int类�
 
 <div class="post-preview">
 
-    <a href="/article/数据库/查询语句的元素/">
+    <a href="/article/操作系统/处理机调度/">
         <h2 class="post-title">
                                  
-            查询语句的元素
+            处理机调度
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            查询语句的元素
-join
-inner join
-两张表重合的部分匹配连接到一起
-12345678910111213141516171819202122232425262728293031323334mysql&gt; use RUNOOB;Database changedmysql&gt; SELECT * FROM tcount_tbl;+---------------+---------......
+            处理机调度
+在多道程序系统中，进程的数量往往多于处理机的个数，这样就不能同时并行的处理各个进程。
+处理机调度就是，从就绪队列中按照一定的算法选择一个进程并将处理机分配给它运行，已实现进程的并行执行。
+处理机调度层次
+分为三个层次：高级调度、中级调度、低级调度
+高级调度（作业调度）
+由于内存空间有限，有时无法将用户提交的作业全部的放入到内存中，因此就需要确定某种规则来决定将作业调入内存的顺序。......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-02-23
+            2021-02-03
         </p>
         <div class="tags">
             
-              <a href="/tags/#数据库" title="数据库">数据库</a>
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
             
         </div>
     
@@ -350,30 +339,32 @@ inner join
 
 <div class="post-preview">
 
-    <a href="/article/数据库/sql优化/">
+    <a href="/article/操作系统/IO模型/">
         <h2 class="post-title">
                                  
-            sql优化
+            IO模型
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            sql优化
-SQL语句优化
-慢查询日志发现有问题的SQL
-通过MySQL慢查询日志对有效率问题的SQL进行监控
-MySQL的慢查询日志是MySQL提供的一种日志记录，它用来记录在MySQL中响应时间超过阀值的语句，具体指运行时间超过long_query_time值的SQL，则会被记录到慢查询日志中。long_query_time的默认值为10，意思是运行10s以上的语句。通过MySQL的慢查......
+            IO模型
+同步阻塞IO (blocking IO) 也叫做BIO
+
+用户线程通过系统调用read发起IO读操作，由用户空间转到内核空间。内核等到数据包到达后，然后将接收的数据拷贝到用户空间，完成read操作。
+整个读取过程，用户线程是被阻塞的，导致在发起IO请求时，不能做任何事情，对CPU资源利用不够
+同步非阻塞IO (Non-blocking IO) 也叫做NIO
+同步非阻塞IO是在同步阻......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-02-23
+            2021-02-02
         </p>
         <div class="tags">
             
-              <a href="/tags/#数据库" title="数据库">数据库</a>
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
             
         </div>
     
@@ -383,31 +374,33 @@ MySQL的慢查询日志是MySQL提供的一种日志记录，它用来记录在M
 
 <div class="post-preview">
 
-    <a href="/article/数据库/死锁判定原理和具体场景/">
+    <a href="/article/操作系统/线程/">
         <h2 class="post-title">
                                  
-            死锁判定原理和具体场景
+            线程
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            死锁判定原理和具体场景
-什么是死锁
-数据库是一个多用户使用的共享资源，当多个用户 并发地存取数据的时候，在数据库中就会发生多个事务同时存取同一个数据的情况，加锁是进行数据库并发控制的一种非常重要的技术。在实际应用中，如果两个事务需要一组有冲突的锁，而不能继续进行下去，这时便发生了死锁。
-死锁的原因
-1.事务之间对资源访问顺序的交替
-此类常见于两个用户分别首先访问A表和B表，并锁住当前表，但是......
+            线程
+线程带来的变化
+资源分配、调度方面：
+在传统的进程机制中，进程是资源分配、调度的基本单位。引入线程以后，进程是资源分配的基本单位，线程是调度的基本单位。
+并发性方面：
+在传统的进程机制中，只能进程间并发。引入线程之后，各线程间也能并发，也就意味着一个应用程序通过分时复用可以同时的做多件事，比如qq同时视频和发送消息。
+系统开销方面：
+传统的进程间并发，需要切换进程的运行环境，系统开销很......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-02-23
+            2021-02-01
         </p>
         <div class="tags">
             
-              <a href="/tags/#数据库" title="数据库">数据库</a>
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
             
         </div>
     
@@ -417,33 +410,32 @@ MySQL的慢查询日志是MySQL提供的一种日志记录，它用来记录在M
 
 <div class="post-preview">
 
-    <a href="/article/数据库/B树、B+树区别，索引为何使用B+树/">
+    <a href="/article/操作系统/中断、异常和系统调用/">
         <h2 class="post-title">
                                  
-            B树、B+树区别，索引为何使用B+树
+            中断、异常和系统调用
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            B树、B+树区别，索引为何使用B+树
-B树
-描述一颗B树时需要指定它的阶数，阶数表示了一个结点最多有多少个孩子结点，一般用字母m表示阶数。当m取2时，就是我们常见的二叉搜索树。
-一颗m阶的B树定义如下：
-1）每个结点最多有m-1个关键字。
-2）根结点最少可以只有1个关键字。
-3）非根结点至少有Math.ceil(m/2)-1个关键字。
-4）每个结点中的关键字都按照从小到大的顺序排列，每个关键......
+            中断、异常和系统调用
+中断
+发生中断意味着操作系统的介入，开展管理工作。cpu收到中断信号，切换到内核态，cpu把权限交给操作系统，操作系统内核对中断信号进行处理（如进程1的时间片用完了，触发中断，操作系统进程管理模块切换为进程2执行，把cpu交给进程2，切换回用户态）。
+
+中断发生，cpu立刻进入内核态
+中断发生，暂停线程的执行，并由操作系统对中断进行处理
+对于不同的中断信号会有不同的处理......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-02-21
+            2021-02-01
         </p>
         <div class="tags">
             
-              <a href="/tags/#数据库" title="数据库">数据库</a>
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
             
         </div>
     
@@ -453,32 +445,34 @@ B树
 
 <div class="post-preview">
 
-    <a href="/article/数据库/InnoDB和MyISAM的索引/">
+    <a href="/article/操作系统/内存泄漏和内存溢出/">
         <h2 class="post-title">
                                  
-            InnoDB和MyISAM索引
+            内存泄漏和内存溢出
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            InnoDB和MyISAM索引
+            内存泄漏和内存溢出
+内存溢出
+指程序在申请内存时，没有足够的空间使用。比如申请了一个integer，但给它存了long才能存下的数，那就是内存溢出。内存溢出就是你要求分配的内存超出了系统能给你的，系统不能满足需求，于是产生溢出。
+内存溢出的可能原因
 
-InnoDB和MyISAM所使用的索引
-两种引擎都是使用B+树。
-MyISAM引擎，B+树的数据结构中存储的内容实际上是实际数据的地址值。也就是说它的索引和实际数据是分开的，只不过使用索引指向了实际数据。这种索引的模式被称为非聚集索引。
-Innodb引擎的索引的数据结构也是B+树，只不过数据结构中存储的都是实际的数据，这种索引有被称为聚集索引。
-MyISAM......
+内存中加载的数据量过于庞大，以至于一次性存不下
+死循环或者过多次数的递归
+启动参数内存设置的过小
+对象引用没有回收，导致jvm gc无法回收，......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-02-21
+            2021-02-01
         </p>
         <div class="tags">
             
-              <a href="/tags/#数据库" title="数据库">数据库</a>
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
             
         </div>
     
@@ -488,27 +482,29 @@ MyISAM......
 
 <div class="post-preview">
 
-    <a href="/article/数据库/innodb和myisam存储引擎的区别/">
+    <a href="/article/操作系统/虚拟内存与分配/">
         <h2 class="post-title">
                                  
-            innodb和myisam存储引擎的区别
+            虚拟内存与分配
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            innodb和myisam存储引擎的区别
-在MySQL 5.5之前，MyISAM是mysql的默认数据库引擎，其由早期的ISAM（Indexed Sequential Access Method：有索引的顺序访问方法）所改良。虽然MyISAM性能极佳，但却有一个显著的缺点：不支持事务处理。不过，MySQL也导入了另一种数据库引擎InnoDB，以强化参考完整性与并发违规处理机制，后来就逐渐取代......
+            虚拟内存与分配
+虚拟内存
+虚拟内存的基本思想是，每个进程有用独立的逻辑地址空间，内存被分为大小相等的多个块,称为页(Page).每个页都是一段连续的地址。对于进程来看,逻辑上貌似有很多内存空间，其中一部分对应物理内存上的一块(称为页框，通常页和页框大小相等)，还有一些没加载在内存中的对应在硬盘上
+虚拟内存实际上可以比物理内存大。当访问虚拟内存时，会访问**MMU（内存管理单元）**去匹配对应......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-02-21
+            2021-01-31
         </p>
         <div class="tags">
             
-              <a href="/tags/#数据库" title="数据库">数据库</a>
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
             
         </div>
     
@@ -518,75 +514,74 @@ MyISAM......
 
 <div class="post-preview">
 
-    <a href="/article/数据库/超键、候选键、主键、外键以及sql约束/">
+    <a href="/article/操作系统/进程的状态与转换、控制/">
         <h2 class="post-title">
                                  
-            超键、候选键、主键、外键以及sql约束
+            进程的状态与转换、控制
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            超键、候选键、主键、外键以及sql约束
-键
+            进程的状态与转换、控制
+
+运行状态下：CPU和资源都用到了
+就绪状态下：资源准备好了，但是还没分到CPU
+阻塞状态下：资源和CPU都没有
+运行、就绪、阻塞态是进程的三种基本状态
+
+运行态-》阻塞态是一个进程自身作出的主动行为
+阻塞态-〉就绪态是被动行为
+...
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-01-30
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/操作系统/进程的定义、组成、组织方式和特征/">
+        <h2 class="post-title">
+                                 
+            进程的定义、组成、组织方式和特征
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            进程的定义、组成、组织方式和特征
 定义
-超键(super key): 在关系中能唯一标识元组的属性集称为关系模式的超键
-候选键(candidate key): 不含有多余属性的超键称为候选键。也就是在候选键中，若再删除属性，就不是键了！
-主键(primary key): 用户选作元组标识的一个候选键程序主键
-外键(foreign key)：如果关系模式R中属性K是其它模式的主键，那......
+
+进程是程序的一次执行
+进程是可以和别的计算并行执行
+进程是程序在一个数据集合上运行的过程，它是系统进行资源分配和调度的一个独立单位
+
+组成
+
+进程由PCB、程序段、数据段组成。
+其中PCB是系统为每一个程序分配的一个数据结构，称为进程控制块（PCB），用来描述进程的各种信息（如程序代码的存放位置），操作系统通过PCB来管理进程，因此PCB中包含着操作......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by JimWang on
-            2021-02-20
+            2021-01-30
         </p>
         <div class="tags">
             
-              <a href="/tags/#数据库" title="数据库">数据库</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/数据库/数据库的锁/">
-        <h2 class="post-title">
-                                 
-            数据库的锁
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            数据库的锁
-锁分为乐观锁和悲观锁。
-其中悲观锁按照类型可以划分为：
-
-共享锁（读锁）
-排他锁（写锁）
-
-也可以按照锁的范围分为：
-
-行锁
-表锁
-
-乐观锁
-假设不会发生并发冲突，只在提交操作时检查是否违反数据完整性。
-乐观锁是一种不会阻塞其他线程并发的控制，它不会使用数据库的锁进行实现，它的设计里面由于不阻塞其他线程，所以并不会引起线程频繁挂起和恢复，这样便能够提高并发能力，所以也有人把它称为......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by JimWang on
-            2021-02-20
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#数据库" title="数据库">数据库</a>
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
             
         </div>
     
@@ -601,12 +596,12 @@ MyISAM......
 <ul class="pager">
     
         <li class="previous">
-            <a href="/">&larr; Newer Posts</a>
+            <a href="/archives/3/">&larr; Newer Posts</a>
         </li>
     
     
         <li class="next">
-            <a href="/page/3/">Older Posts &rarr;</a>
+            <a href="/archives/5/">Older Posts &rarr;</a>
         </li>
     
 </ul>
@@ -688,23 +683,23 @@ MyISAM......
     <ul>
       
         <li>
-          <a href="/article/spring/spring/">spring</a>
+          <a href="/article/JAVA/java基础面试题/">java基础面试题</a>
         </li>
       
         <li>
-          <a href="/article/redis/redis/">redis</a>
+          <a href="/article/数据库/查询语句的元素/">查询语句的元素</a>
         </li>
       
         <li>
-          <a href="/article/多线程/并发/">并发相关问题</a>
+          <a href="/article/数据库/sql优化/">sql优化</a>
         </li>
       
         <li>
-          <a href="/article/多线程/线程池/">线程池相关问题</a>
+          <a href="/article/数据库/死锁判定原理和具体场景/">死锁判定原理和具体场景</a>
         </li>
       
         <li>
-          <a href="/article/多线程/锁/">锁相关问题</a>
+          <a href="/article/数据库/B树、B+树区别，索引为何使用B+树/">B树、B+树区别，索引为何使用B+树</a>
         </li>
       
     </ul>
@@ -715,7 +710,7 @@ MyISAM......
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">43</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">37</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">5</span></li></ul>
     </div>
 
         <hr>

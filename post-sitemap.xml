@@ -7,96 +7,8 @@
     </url>
 
     <url>
-        <loc>http://jimwang97.github.io/article/spring/spring/</loc>
-        <lastmod>2021-03-03T22:45:13.588Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://jimwang97.github.io/article/redis/redis/</loc>
-        <lastmod>2021-03-02T22:40:14.679Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://jimwang97.github.io/article/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E6%B1%A0/</loc>
-        <lastmod>2021-03-02T16:30:39.977Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://jimwang97.github.io/article/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E9%94%81/</loc>
-        <lastmod>2021-03-02T16:30:25.449Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://jimwang97.github.io/article/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc>
-        <lastmod>2021-03-02T16:30:03.511Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://jimwang97.github.io/article/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%B9%B6%E5%8F%91/</loc>
-        <lastmod>2021-03-02T16:29:45.613Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://jimwang97.github.io/article/JVM/%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/</loc>
-        <lastmod>2021-03-02T16:28:55.070Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://jimwang97.github.io/article/%E5%AE%B9%E5%99%A8/java%E5%AE%B9%E5%99%A8%E7%AF%87/</loc>
-        <lastmod>2021-03-01T21:50:17.725Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://jimwang97.github.io/article/JVM/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/</loc>
-        <lastmod>2021-03-01T19:44:54.372Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://jimwang97.github.io/article/JVM/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8/</loc>
-        <lastmod>2021-03-01T15:47:49.191Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://jimwang97.github.io/article/JVM/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/</loc>
-        <lastmod>2021-03-01T15:47:21.521Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://jimwang97.github.io/article/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%85%AB%E5%A4%A7%E6%8E%92%E5%BA%8F%E4%BB%A5%E5%8F%8Ajava%E5%AE%9E%E7%8E%B0/</loc>
-        <lastmod>2021-02-25T22:18:55.185Z</lastmod>
+        <loc>http://jimwang97.github.io/article/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/IO%E6%A8%A1%E5%9E%8B/</loc>
+        <lastmod>2021-03-04T21:47:34.171Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -104,7 +16,7 @@
 
     <url>
         <loc>http://jimwang97.github.io/article/JAVA/java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/</loc>
-        <lastmod>2021-02-24T19:52:25.865Z</lastmod>
+        <lastmod>2021-03-04T21:12:09.518Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -209,14 +121,6 @@
     <url>
         <loc>http://jimwang97.github.io/article/%E8%AE%A1%E7%BD%91/DNS%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8UDP%EF%BC%8C%E5%8F%88%E4%B8%8ETCP%E6%9C%89%E4%BB%80%E4%B9%88%E5%85%B3%E7%B3%BB/</loc>
         <lastmod>2021-02-19T21:31:50.737Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://jimwang97.github.io/article/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/IO%E6%A8%A1%E5%9E%8B/</loc>
-        <lastmod>2021-02-19T15:19:41.702Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -393,22 +297,6 @@
     <url>
         <loc>http://jimwang97.github.io/article/%E8%AE%A1%E7%BD%91/DNS%E8%A7%A3%E6%9E%90%E7%9A%84%E8%BF%87%E7%A8%8B/</loc>
         <lastmod>2021-02-19T15:17:40.095Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://jimwang97.github.io/article/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/</loc>
-        <lastmod>2021-02-19T15:17:31.879Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://jimwang97.github.io/article/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E7%BA%A2%E9%BB%91%E6%A0%91%E3%80%81%E5%93%88%E5%B8%8C%E8%A1%A8%E3%80%81%E5%A0%86/</loc>
-        <lastmod>2021-02-19T15:17:24.593Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

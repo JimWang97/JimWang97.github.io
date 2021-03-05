@@ -155,14 +155,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -235,7 +235,7 @@
 <p><img src="https://gitee.com/super-jimwang/img/raw/master/img/20210202201839.png" alt="image-20210202201839390"></p>
 <p>由于socket是非阻塞的方式，因此用户线程发起IO请求时立即返回。但并未读取到任何数据，<strong>用户线程需要不断地发起IO请求，直到数据到达后，才真正读取到数据，继续执行。</strong></p>
 <p><strong>不断的轮询，重复请求，会消耗大量的cpu资源</strong></p>
-<h2 id="io多路复用-也叫做异步阻塞模型">IO多路复用 也叫做异步阻塞模型</h2>
+<h2 id="io多路复用">IO多路复用</h2>
 <p>IO多路复用是一种同步IO模型，实现一个线程可以监控多个文件句柄。一旦某个文件句柄就绪，就能通知应用程序进行相应的IO操作。没有文件句柄时就会发生阻塞，交出cpu。多路指多个文件句柄，复用指同一个线程</p>
 <p>一句话解释：单线程或单进程同时监控若干个文件描述符是否可以执行IO操作的能力</p>
 <p><img src="https://gitee.com/super-jimwang/img/raw/master/img/20210202202204.png" alt="image-20210202202204434"></p>
@@ -347,7 +347,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#io模型"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">IO&#x6A21;&#x578B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#同步阻塞io-blocking-io-也叫做bio"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x540C;&#x6B65;&#x963B;&#x585E;IO (blocking IO) &#x4E5F;&#x53EB;&#x505A;BIO</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#同步非阻塞io-non-blocking-io-也叫做nio"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x540C;&#x6B65;&#x975E;&#x963B;&#x585E;IO (Non-blocking IO) &#x4E5F;&#x53EB;&#x505A;NIO</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#io多路复用-也叫做异步阻塞模型"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">IO&#x591A;&#x8DEF;&#x590D;&#x7528; &#x4E5F;&#x53EB;&#x505A;&#x5F02;&#x6B65;&#x963B;&#x585E;&#x6A21;&#x578B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用reactor设计模式的多路复用"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">&#x4F7F;&#x7528;Reactor&#x8BBE;&#x8BA1;&#x6A21;&#x5F0F;&#x7684;&#x591A;&#x8DEF;&#x590D;&#x7528;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#select函数接口-使用示例"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">select&#x51FD;&#x6570;&#x63A5;&#x53E3;&#x3001;&#x4F7F;&#x7528;&#x793A;&#x4F8B;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#poll函数"><span class="toc-nav-number">1.3.3.</span> <span class="toc-nav-text">poll&#x51FD;&#x6570;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#epoll函数"><span class="toc-nav-number">1.3.4.</span> <span class="toc-nav-text">epoll&#x51FD;&#x6570;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#异步io"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">&#x5F02;&#x6B65;IO</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#io模型"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">IO&#x6A21;&#x578B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#同步阻塞io-blocking-io-也叫做bio"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x540C;&#x6B65;&#x963B;&#x585E;IO (blocking IO) &#x4E5F;&#x53EB;&#x505A;BIO</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#同步非阻塞io-non-blocking-io-也叫做nio"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x540C;&#x6B65;&#x975E;&#x963B;&#x585E;IO (Non-blocking IO) &#x4E5F;&#x53EB;&#x505A;NIO</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#io多路复用"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">IO&#x591A;&#x8DEF;&#x590D;&#x7528;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用reactor设计模式的多路复用"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">&#x4F7F;&#x7528;Reactor&#x8BBE;&#x8BA1;&#x6A21;&#x5F0F;&#x7684;&#x591A;&#x8DEF;&#x590D;&#x7528;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#select函数接口-使用示例"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">select&#x51FD;&#x6570;&#x63A5;&#x53E3;&#x3001;&#x4F7F;&#x7528;&#x793A;&#x4F8B;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#poll函数"><span class="toc-nav-number">1.3.3.</span> <span class="toc-nav-text">poll&#x51FD;&#x6570;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#epoll函数"><span class="toc-nav-number">1.3.4.</span> <span class="toc-nav-text">epoll&#x51FD;&#x6570;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#异步io"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">&#x5F02;&#x6B65;IO</span></a></li></ol></li></ol>
         
         </div>
       </aside>

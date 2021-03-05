@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          类加载器 - JimWang | Blog
+          JimWang | Blog
         
     </title>
 
-    <link rel="canonical" href="http://jimwang97.github.io/article/JVM/类加载器/">
+    <link rel="canonical" href="http://jimwang97.github.io/archives/5/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -71,8 +71,8 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/img/article_header/background.jpg')
-            /*post*/
+            background-image: url('/img/header_img/background.jpg') 
+            /*config*/
         
     }
     
@@ -89,18 +89,10 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 
-                    <div class="post-heading">
-                        <div class="tags">
-                            
-                              <a class="tag" href="/tags/#JVM" title="JVM">JVM</a>
-                            
-                        </div>
-                        <h1 style="font-weight: bolder; font-size: 72px; font-family: Hannotate SC;">类加载器</h1>
-                        <h2 class="subheading" style="font-weight: bolder; font-size: x-large; font-family: Hannotate SC;"></h2>
-                        <span class="meta">
-                            Posted by JimWang on
-                            2021-03-01
-                        </span>
+                    <div class="site-heading" style="font-weight: bolder; font-size: 72px; font-family: Hannotate SC;">
+                        <h1>Jim Blog</h1>
+                        <!--<hr class="small">-->
+                        <span class="subheading" style="font-weight: bolder; font-size: x-large; font-family: Hannotate SC;">Personal Blog Powered By Jim</span>
                     </div>
                 
 
@@ -155,14 +147,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -212,191 +204,232 @@
 
 
     <!-- Main Content -->
-    <!-- Modify by Yu-Hsuan Yen -->
+    <!-- Main Content -->
+<div class="container">
+    <div class="row">
+        
 
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-
-            <!-- Post Container -->
+<!-- USE SIDEBAR -->
+    <!-- Post Container -->
             <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                post-container
+            ">
+            
+                <!-- Main Content -->
 
-                <h1 id="类加载器">类加载器</h1>
-<blockquote>
-<p>jvm内置的类加载器说一下，各负责加载什么</p>
-</blockquote>
-<p>BootstrapClassLoader(启动类加载器)：负责加载%JAVA_HOME%/lib目录下的jar包和类或者被-Xbootclasspath参数指定的路径中的所有类</p>
-<p>ExtensionClassLoader(扩展类加载器)：加载%JRE_HOME%/lib/ext目录下的包和类，或者java.ext.dirs系统变量指定目录下的jar包</p>
-<p>AppClassLoader(应用程序类加载器)：加载classpath下的jar包和类</p>
-<blockquote>
-<p>双亲委派机制讲一下</p>
-</blockquote>
-<p>如果要加载一个类，会先判断是否已经加载。如果为加载，会把请求委派给父加载器，如果父加载器还有父，则让父的父加载。如果父为null，则给BootstrapClassLoader。如果父无法处理，才由儿子来处理</p>
-<blockquote>
-<p>双亲委派机制的好处</p>
-</blockquote>
-<ol>
-<li>避免了重复类的加载（相同文件，被不同的类加载器加载了，就是不同的类）</li>
-<li>保证java核心代码不会被篡改（总是先由最上层来加载）</li>
-</ol>
 
-                
+<div class="post-preview">
 
-                <hr>
-                <!-- Pager -->
-                <ul class="pager">
-                    
-                        <li class="previous">
-                            <a href="/article/多线程/多线程/" data-toggle="tooltip" data-placement="top" title="多线程相关问题">&larr; Previous Post</a>
-                        </li>
-                    
-                    
-                        <li class="next">
-                            <a href="/article/JVM/运行时数据区/" data-toggle="tooltip" data-placement="top" title="运行时数据区">Next Post &rarr;</a>
-                        </li>
-                    
-                </ul>
+    <a href="/article/操作系统/内核态和用户态以及其切换/">
+        <h2 class="post-title">
+                                 
+            进程线程间的通信方式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            进程线程间的通信方式
+为什么进程间需要通信
+进程是一个独立的资源分配单元，不同进程（这里所说的进程通常指的是用户进程）之间的资源是独立的，没有关联，不能在一个进程中直接访问另一个进程的资源（例如打开的文件描述符）。
+进程间通信的目的：
+
+数据传输：一个进程需要将它的数据发送给另一个进程。
+通知事件：一个进程需要向另一个或一组进程发送消息，通知它（它们）发生了某种事件（如进程终止时要通知父进程......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-01-28
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/操作系统/OS的运行机制和体系结构/">
+        <h2 class="post-title">
+                                 
+            OS的运行机制和体系结构
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            OS的运行机制和体系结构
+
+什么是指令
+代码都会被翻译成很多条的指令执行，每一条指令就是让cpu干一些工作。“指令”就是CPU能识别、执行的最基本命令。比如加法指令。
+有的指令是普通的指令，比如加减乘除运算指令，我们称它为非特权指令。而有的指令拥有着很高的权限，比如内存清零、关机等，一旦用户程序执行了这个指令，可能会造成严重的后果，我们称这样的指令为特权指令。
+特权指令不允许普通的用户程序使......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by JimWang on
+            2021-01-28
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#操作系统" title="操作系统">操作系统</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+        <li class="previous">
+            <a href="/archives/4/">&larr; Newer Posts</a>
+        </li>
+    
+    
+</ul>
+
+
 
                 <br>
 
-                <!--打赏-->
-                
-                <!--打赏-->
-
-                <br>
-                <!--分享-->
-                
-                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
-                    <!--  css & js -->
-                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
-                
-                <!--分享-->
-                <br>                       
-                
                 <!-- require APlayer -->
                 
 
-                <!-- duoshuo Share start -->
+                <!-- 如果开启评论功能 -->
                 
-                <!-- 多说 Share end-->
-
-                <!-- 多说评论框 start -->
-                
-                <!-- 多说评论框 end -->
-
-                <!-- disqus comment start -->
-                
-                <!-- disqus comment end -->
-
-                
-
             </div>
+
+          <!-- Sidebar Container -->
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+        <!-- Short About -->
+<section class="visible-md visible-lg">
+    <h5><a href="/about/">ABOUT ME</a></h5>
+    <div class="short-about">
+
+        
+            <img id = "avatar_pic" src="/img/avatar/avatar.jpg" />
+        
+
+        
+            <p>👋 Hi there, I&#39;m Yujing Wang. I’m a postgraduate student in King&#39;s College London.</p>
+        
+
+        <!-- SNS Link -->
+        <ul class="list-inline">
             
-            <!-- Tabe of Content -->
-            <!-- Table of Contents -->
+            
+            
 
-  
-    
-      <aside id="sidebar">
-        <div id="toc" class="toc-article">
-        <strong class="toc-title">Contents</strong>
-        
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#类加载器"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x7C7B;&#x52A0;&#x8F7D;&#x5668;</span></a></li></ol>
-        
-        </div>
-      </aside>
-    
+            
 
-                
-            <!-- Sidebar Container -->
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
+            
 
-                <!-- Featured Tags -->
-                
-
-                <!-- Friends Blog -->
-                
-                <hr>
-                <h5>FRIENDS</h5>
-                <ul class="list-inline">
-
-                    
-                        <li><a href="http://allwin.cyou/" target="_blank">与赢留学生二手交易平台</a></li>
-                    
-                </ul>
-                
-            </div>
-        </div>
+            
+                <li>
+                    <a target="_blank"  href="https://github.com/JimWang97">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+            
+            
+            
+            
+                <li>
+                    <a target="_blank"  href="https://www.linkedin.com/in/宇靖-王-554272190">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+            
+        </ul>
     </div>
-</article>
+</section>
 
+        <hr>
+    
+        
+  <h5>RECENT POSTS</h3>
+  <div class="widget">
+    <ul>
+      
+        <li>
+          <a href="/article/JAVA/java基础面试题/">java基础面试题</a>
+        </li>
+      
+        <li>
+          <a href="/article/数据库/查询语句的元素/">查询语句的元素</a>
+        </li>
+      
+        <li>
+          <a href="/article/数据库/sql优化/">sql优化</a>
+        </li>
+      
+        <li>
+          <a href="/article/数据库/死锁判定原理和具体场景/">死锁判定原理和具体场景</a>
+        </li>
+      
+        <li>
+          <a href="/article/数据库/B树、B+树区别，索引为何使用B+树/">B树、B+树区别，索引为何使用B+树</a>
+        </li>
+      
+    </ul>
+  </div>
 
+        <hr>
+    
+        
+    <h5>ARCHIVES</h5>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">37</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">5</span></li></ul>
+    </div>
 
+        <hr>
+    
+        <!-- Friends Blog -->
 
+<h5>FRIENDS</h5>
+<ul class="list-inline">
 
+    
+        <li><a href="http://allwin.cyou/" target="_blank">与赢留学生二手交易平台</a></li>
+    
+</ul>
 
+        <hr>
+    
+</div>
 
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-<script>
-    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
-        anchors.options = {
-          visible: 'hover',
-          placement: 'left',
-          icon: 'ℬ'
-        };
-        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-    })
-</script>
-<style>
-    /* place left on bigger screen */
-    @media all and (min-width: 800px) {
-        .anchorjs-link{
-            position: absolute;
-            left: -0.75em;
-            font-size: 1.1em;
-            margin-top : -0.1em;
-        }
-    }
-</style>
-
-
-<!-- chrome Firefox 中文锚点定位失效-->
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
-<!-- smooth scroll behavior polyfill  -->
-<script type="text/javascript" src="/js/smoothscroll.js"></script>
-<script>
-        $('#toc').on('click','a',function(a){
-            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
-            // console.log(window.navigator.userAgent,isChrome)
-                // if(isChrome) {
-                    // console.log(a.currentTarget.outerHTML);
-                    // console.log($(a.currentTarget).attr("href"));
-                    //跳转到指定锚点
-                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
-                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
-                // }
-        })  
-</script>
+        
+    </div>
+</div>
 
 
     <!-- Footer -->

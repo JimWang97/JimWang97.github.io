@@ -155,14 +155,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -505,6 +505,8 @@ Exception又分为运行时异常，受检查异常。</p>
 <blockquote>
 <p>JAVA中NIO如何读取数据和写数据</p>
 </blockquote>
+<p>selector.select监视文件描述符，阻塞。<br>
+如果有准备就绪的就返回key。创建channel，通过缓冲区把数据读进来</p>
 <p>通常来说NIO中的所有IO都是从 Channel（通道） 开始的。</p>
 <p>从通道进行数据读取 ：创建一个缓冲区，然后请求通道读取数据。<br>
 从通道进行数据写入 ：创建一个缓冲区，填充数据，并要求通道写入数据。</p>
@@ -512,7 +514,7 @@ Exception又分为运行时异常，受检查异常。</p>
 <p>JAVA中NIO的三个核心组件</p>
 </blockquote>
 <ul>
-<li>selector用来单个线程管理多个通道</li>
+<li>selector用来选择感兴趣的事件，然后使用select进行监视</li>
 <li>Channel 通道，与缓冲区交互</li>
 <li>Buffer 一个通道可以对应多个buffer</li>
 </ul>
@@ -603,10 +605,6 @@ JDK1.7以及以上：false false</p>
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
-                    
-                        <li class="previous">
-                            <a href="/article/容器/java容器篇/" data-toggle="tooltip" data-placement="top" title="java容器篇">&larr; Previous Post</a>
-                        </li>
                     
                     
                         <li class="next">
