@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          @SpringBootApplication注解-从源码分析 - JimWang | Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://jimwang97.github.io/article/SpringBoot/SpringBoot的启动流程-从源码分析/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/article_header/background.jpg')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/london.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#SpringBoot" title="SpringBoot">SpringBoot</a>
+                            
+                        </div>
+                        <h1 style="font-weight: bolder; font-size: 72px; font-family: Hannotate SC;">@SpringBootApplication注解-从源码分析</h1>
+                        <h2 class="subheading" style="font-weight: bolder; font-size: x-large; font-family: Hannotate SC;"></h2>
+                        <span class="meta">
+                            Posted by JimWang on
+                            2021-03-05
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Jim Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+		   <li>
+                        <a href="/tags"> Tags</a>
+                    </li>
+		   <li>
+                        <a href="/archives"> Archives </a>
+                    </li>
+		   <li>
+                        <a href="/about"> About </a>
+                    </li>
+<!--
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+-->                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="springbootapplication注解-从源码分析">@SpringBootApplication注解-从源码分析</h1>
+<h2 id="1-启动类的写法">1. 启动类的写法</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestApplication</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(TestApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>启动类中包含两个重要部分：</p>
+<ul>
+<li>@SpringBootApplication注解</li>
+<li>main方法中SpringApplication.run()方法</li>
+</ul>
+<h2 id="2-springbootapplication的注解">2. @SpringBootApplication的注解</h2>
+<p>进入SpringBootApplication注解，其头部注解如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@SpringBootConfiguration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br><span class="line"><span class="meta">@ComponentScan</span>(</span><br><span class="line">    excludeFilters = &#123;<span class="meta">@Filter</span>(</span><br><span class="line">    type = FilterType.CUSTOM,</span><br><span class="line">    classes = &#123;TypeExcludeFilter.class&#125;</span><br><span class="line">), <span class="meta">@Filter</span>(</span><br><span class="line">    type = FilterType.CUSTOM,</span><br><span class="line">    classes = &#123;AutoConfigurationExcludeFilter.class&#125;</span><br><span class="line">)&#125;</span><br><span class="line">)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SpringBootApplication &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们一项一项来讲。</p>
+<h3 id="21-target">2.1 @Target</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Target &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns an array of the kinds of elements an annotation type</span></span><br><span class="line"><span class="comment">     * can be applied to.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> an array of the kinds of elements an annotation type</span></span><br><span class="line"><span class="comment">     * can be applied to</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    ElementType[] value();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该接口用于指定注解可以用于什么地方，并且用了一个枚举类数组来表示。<strong>四个元注解之一。</strong></p>
+<p><strong>关于为什么注解的属性后面有括号</strong></p>
+<p><strong>注解是java以接口为基础实现的。不同的是把方法在内部作为属性处理了。所以属性以方法的方式来进行定义，必须有括号。</strong></p>
+<p>再来看一下这个枚举类，到底是哪些地方可以用注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ElementType &#123;</span><br><span class="line">    <span class="comment">/** Class, interface (including annotation type), or enum declaration */</span></span><br><span class="line">    TYPE, <span class="comment">// 类、接口（包括注解类型）或枚举声明</span></span><br><span class="line">  </span><br><span class="line">    <span class="comment">/** Field declaration (includes enum constants) */</span></span><br><span class="line">    FIELD, <span class="comment">// 说明字段，包括枚举常量</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Method declaration */</span></span><br><span class="line">    METHOD, <span class="comment">// 方法声明</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Formal parameter declaration */</span></span><br><span class="line">    PARAMETER, <span class="comment">// 方法参数声明</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Constructor declaration */</span></span><br><span class="line">    CONSTRUCTOR, <span class="comment">// 构造方法</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Local variable declaration */</span></span><br><span class="line">    LOCAL_VARIABLE, <span class="comment">//局部变量</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Annotation type declaration */</span></span><br><span class="line">    ANNOTATION_TYPE, <span class="comment">// 注解类型</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Package declaration */</span></span><br><span class="line">    PACKAGE, <span class="comment">// 包</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Type parameter declaration</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@since</span> 1.8</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    TYPE_PARAMETER, <span class="comment">// 类型参数</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Use of a type</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@since</span> 1.8</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    TYPE_USE <span class="comment">// 类型</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="22-retention">2.2 @Retention</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Retention &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns the retention policy.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> the retention policy</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">RetentionPolicy <span class="title">value</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Indicates how long annotations with the annotated type are to be retained. 根据介绍来看，Retention是用来表示注解的生命周期的，同样的也是通过一个枚举类来指定。<strong>四个元注解之一。</strong></p>
+<p>再来看一下RetentionPolicy枚举类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> RetentionPolicy &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Annotations are to be discarded by the compiler.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    SOURCE, <span class="comment">// 注解在编译阶段就会被丢弃</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Annotations are to be recorded in the class file by the compiler</span></span><br><span class="line"><span class="comment">     * but need not be retained by the VM at run time.  This is the default</span></span><br><span class="line"><span class="comment">     * behavior.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    CLASS, <span class="comment">// 被编译在类文件中，运行时不会被JVM保留。</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Annotations are to be recorded in the class file by the compiler and</span></span><br><span class="line"><span class="comment">     * retained by the VM at run time, so they may be read reflectively.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> java.lang.reflect.AnnotatedElement</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    RUNTIME <span class="comment">// 被编译在类文件中，并且在JVM中也会保留，可以通过反射获取到</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="23-documented">2.3 @Documented</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Documented &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个注解没有方法。该注解是为了指明被注解的类型可以被javadoc文本话。<strong>四个元注解之一。</strong></p>
+<h3 id="24-inherited">2.4 @Inherited</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Inherited &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Indicates that an annotation type is automatically inherited.</p>
+<p>该注解表示父类的注解可以被子类继承。说明被@SpringBootApplication注解的类的子类也与它有相同的注解。<strong>四个元注解之一。</strong></p>
+<h3 id="25-springbootconfiguration">2.5 @SpringBootConfiguration</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SpringBootConfiguration &#123;</span><br><span class="line">    <span class="meta">@AliasFor</span>(</span><br><span class="line">        annotation = Configuration.class</span><br><span class="line">    )</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">proxyBeanMethods</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">true</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>@AliasFor</code>在这里表示继承注解。可以发现SpringBootConfiguration继承了<code>@Configuration</code>，在<code>@AliasFor</code>中并没有指明value，因此默认为<code>Configuration</code>注解中同名属性。</p>
+<p>再来看<code>@Configuration</code>是怎么样的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Configuration &#123;</span><br><span class="line">    <span class="meta">@AliasFor</span>(</span><br><span class="line">        annotation = Component.class</span><br><span class="line">    )</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">proxyBeanMethods</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">true</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还是有一个<code>@AliasFor</code>注解，和一个会被SpringBootConfiguration继承的<code>proxyBeanMethods</code>属性。</p>
+<p>先来讲一下<code>@Configuration</code>的用处。Indicates that a class declares one or more Beans methods and may be processed by Spring container to generate bean definitions and service requests for those beans at runtime.</p>
+<p><strong>意思就是说当<code>@Configuration</code>被注解在一个类上时，表明该类的内部有一个或多个生成Bean的方法，它们将被Spring容器用于生产Bean和响应运行时的服务请求。</strong></p>
+<p>而<code>proxyBeanMethods()</code>方法，Specify whether {@code @Bean} methods should get proxied in order to enforce bean lifecycle behavior。意思是指定@Bean标注的方法是否使用代理模式，直接从IOC容器中获取对象。如果不需要将Bean交给spring管理，把这项设为false，那么每次获取的都是一个新的对象。</p>
+<p>在<code>@Configuration</code>中还包含了一个继承下来的方法，涉及到了<code>@Component</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Indexed</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Component &#123;</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Indicates that an annotated class is a “component”.Such classes are considered as candidates for auto-detection when using annotation-based configuration and classpath scanning.</p>
+<p><strong>被注解为Component的类会被扫描到。其中的value方法是为component指定一个名字</strong></p>
+<h3 id="26-enableautoconfiguration">2.6 @EnableAutoConfiguration</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@AutoConfigurationPackage</span></span><br><span class="line"><span class="meta">@Import</span>(AutoConfigurationImportSelector.class)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> EnableAutoConfiguration &#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * Environment property that can be used to override when auto-configuration is</span></span><br><span class="line"><span class="comment">	 * enabled.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	String ENABLED_OVERRIDE_PROPERTY = <span class="string">"spring.boot.enableautoconfiguration"</span>; <span class="comment">// 自动装载配置</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * Exclude specific auto-configuration classes such that they will never be applied.</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span> the classes to exclude</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	Class&lt;?&gt;[] exclude() <span class="keyword">default</span> &#123;&#125;; <span class="comment">// 根据类，排除这些类，不让它们自动配置</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * Exclude specific auto-configuration class names such that they will never be</span></span><br><span class="line"><span class="comment">	 * applied.</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span> the class names to exclude</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@since</span> 1.3.0</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	String[] excludeName() <span class="keyword">default</span> &#123;&#125;; <span class="comment">// 根据类名，排除这些类，不让它们自动配置</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Enable auto-configuration of the Spring Application Context, attempting to guess and configure beans that you are likely to need. 该注解是用来自动配置的，SpringBoot会通过上文环境以及你在classpath中存放的包和你定义的bean来猜测需要哪些配置。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@Import</span>(AutoConfigurationPackages.Registrar.class)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> AutoConfigurationPackage &#123;</span><br></pre></td></tr></table></figure>
+<p><code>@Import(AutoConfigurationPackages.Registrar.class)</code>引入了Registrar类，这个类是AutoConfigurationPackages内部的静态类，只有用到的时候才会被初始化。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Registrar</span> <span class="keyword">implements</span> <span class="title">ImportBeanDefinitionRegistrar</span>, <span class="title">DeterminableImports</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerBeanDefinitions</span><span class="params">(AnnotationMetadata metadata, BeanDefinitionRegistry registry)</span> </span>&#123;</span><br><span class="line">			register(registry, <span class="keyword">new</span> PackageImports(metadata).getPackageNames().toArray(<span class="keyword">new</span> String[<span class="number">0</span>]));</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> Set&lt;Object&gt; <span class="title">determineImports</span><span class="params">(AnnotationMetadata metadata)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">return</span> Collections.singleton(<span class="keyword">new</span> PackageImports(metadata));</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>通过<code>register(registry,new PackageImports(metadata).getPackageNames().toArray(new String[0]));}</code>将主程序类包下所有的类都在spring中注册了。<strong>注意只有当前包下，不包括子包</strong></p>
+<p><img src="https://gitee.com/super-jimwang/img/raw/master/img/20210305202401.png" alt="image-20210305202401765"></p>
+<p>使用<code>registerBeanDefinition</code>方法注册了Bean</p>
+<p><strong>这里我们重点关注一下<code>@Import(AutoConfigurationImportSelector.class)</code>，当import的是importSelector类时，会把该类selectImports()方法返回的Class都定义为bean</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AutoConfigurationImportSelector</span> <span class="keyword">implements</span> <span class="title">DeferredImportSelector</span>, <span class="title">BeanClassLoaderAware</span>,</span></span><br><span class="line"><span class="class">		<span class="title">ResourceLoaderAware</span>, <span class="title">BeanFactoryAware</span>, <span class="title">EnvironmentAware</span>, <span class="title">Ordered</span> </span>&#123;</span><br><span class="line">     <span class="comment">// ...</span></span><br><span class="line">       <span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> String[] selectImports(AnnotationMetadata annotationMetadata) &#123;</span><br><span class="line">		<span class="keyword">if</span> (!isEnabled(annotationMetadata)) &#123;</span><br><span class="line">			<span class="keyword">return</span> NO_IMPORTS;</span><br><span class="line">		&#125;</span><br><span class="line">		AutoConfigurationEntry autoConfigurationEntry = getAutoConfigurationEntry(annotationMetadata);</span><br><span class="line">		<span class="keyword">return</span> StringUtils.toStringArray(autoConfigurationEntry.getConfigurations());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过AnnotationMetadata对象，该方法可以获取到标注<code>@Import</code>类的各种信息。通过<code>getAutoConfigurationEntry(annotationMetadata)</code>方法就可以获取到需要自动配置的类了。</p>
+<p><strong>整理一下</strong></p>
+<p><code>@EnableAutoConfiguration</code>注解首先通过<code>@AutoConfigurationPackage</code>将有该注解的类的包下的全部类都注入spring，然后通过<code>@Import(AutoConfigurationImportSelector.class)</code>判断需要符合条件的配置类，将它们也都注入到Spring中。</p>
+<h3 id="27-componentscan">2.7 @ComponentScan</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Repeatable</span>(ComponentScans.class)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> ComponentScan &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 与basePackages是同一个东西，只是有别名。</span></span><br><span class="line">  <span class="comment">// 指定需要扫描的package</span></span><br><span class="line">	<span class="meta">@AliasFor</span>(<span class="string">"basePackages"</span>)</span><br><span class="line">	String[] value() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@AliasFor</span>(<span class="string">"value"</span>)</span><br><span class="line">	String[] basePackages() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 指定包中的类，这些类会被扫描</span></span><br><span class="line">	Class&lt;?&gt;[] basePackageClasses() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Bean名字生成器，默认根据类名生成</span></span><br><span class="line">	Class&lt;? extends BeanNameGenerator&gt; nameGenerator() <span class="keyword">default</span> BeanNameGenerator.class;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 探测component的范围</span></span><br><span class="line">	Class&lt;? extends ScopeMetadataResolver&gt; scopeResolver() <span class="keyword">default</span> AnnotationScopeMetadataResolver.class;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 表示是否要对探测到的component使用代理</span></span><br><span class="line">	<span class="function">ScopedProxyMode <span class="title">scopedProxy</span><span class="params">()</span> <span class="keyword">default</span> ScopedProxyMode.DEFAULT</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 控制有资格被component扫描的类文件</span></span><br><span class="line">	<span class="function">String <span class="title">resourcePattern</span><span class="params">()</span> <span class="keyword">default</span> ClassPathScanningCandidateComponentProvider.DEFAULT_RESOURCE_PATTERN</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 决定是否之探测component，还是repository、service和controller都探测</span></span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">useDefaultFilters</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">true</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 指定可以被探测到的类型</span></span><br><span class="line">	Filter[] includeFilters() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 指定不能被探测到的类型</span></span><br><span class="line">	Filter[] excludeFilters() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 指定被探测到的bean是否是懒加载</span></span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">lazyInit</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">false</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 过滤器，用于includeFilters和excludeFilters</span></span><br><span class="line">	<span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line">	<span class="meta">@Target</span>(&#123;&#125;)</span><br><span class="line">	<span class="meta">@interface</span> Filter &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// filter的类型</span></span><br><span class="line">		<span class="function">FilterType <span class="title">type</span><span class="params">()</span> <span class="keyword">default</span> FilterType.ANNOTATION</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 跟classes是同一个</span></span><br><span class="line">    <span class="comment">// 用来描述哪些类被filter</span></span><br><span class="line">		<span class="meta">@AliasFor</span>(<span class="string">"classes"</span>)</span><br><span class="line">		Class&lt;?&gt;[] value() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">		<span class="meta">@AliasFor</span>(<span class="string">"value"</span>)</span><br><span class="line">		Class&lt;?&gt;[] classes() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// filter的模式</span></span><br><span class="line">		String[] pattern() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中<code>@Repeatable</code>表示这个注解可重复执行。<strong>这个注解会让被注解类的包及其子包中的类注册当spring中。这是与@EnableAutoConfiguration的不同</strong></p>
+<p><img src="https://gitee.com/super-jimwang/img/raw/master/img/20210305203929.png" alt="image-20210305203929402"></p>
+<p>在<code>SpringBootApplication</code>中它的用法是</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ComponentScan</span>(excludeFilters = &#123; <span class="meta">@Filter</span>(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),</span><br><span class="line">      <span class="meta">@Filter</span>(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) &#125;)</span><br></pre></td></tr></table></figure>
+<p>这里它指定了几个不可能探测的类。</p>
+<p><code>TypeExcludeFilter</code>指定的是那些已经被BeanFactory和被SpringBootApplication自动扫描的类。</p>
+<p><code>AutoConfigurationExcludeFilter</code>指定排除那些在AutoConfiguration中被注册到spring中的类。</p>
+<h2 id="3-springbootapplication的方法">3. @SpringBootApplication的方法</h2>
+<p>讲完了<code>@SpringBootApplication</code>的方法，现在再来讲一下其内部方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@SpringBootConfiguration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br><span class="line"><span class="meta">@ComponentScan</span>(excludeFilters = &#123; <span class="meta">@Filter</span>(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),</span><br><span class="line">		<span class="meta">@Filter</span>(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) &#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SpringBootApplication &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 排除指定的自动配置类，让他们不运行</span></span><br><span class="line">	<span class="meta">@AliasFor</span>(annotation = EnableAutoConfiguration.class)</span><br><span class="line">	Class&lt;?&gt;[] exclude() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 排除指定的自动配置类名，让他们不运行</span></span><br><span class="line">	<span class="meta">@AliasFor</span>(annotation = EnableAutoConfiguration.class)</span><br><span class="line">	String[] excludeName() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 指定被扫描的包</span></span><br><span class="line">	<span class="meta">@AliasFor</span>(annotation = ComponentScan.class, attribute = <span class="string">"basePackages"</span>)</span><br><span class="line">	String[] scanBasePackages() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 指定包中的类被扫描</span></span><br><span class="line">	<span class="meta">@AliasFor</span>(annotation = ComponentScan.class, attribute = <span class="string">"basePackageClasses"</span>)</span><br><span class="line">	Class&lt;?&gt;[] scanBasePackageClasses() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// bean名字生成器</span></span><br><span class="line">	<span class="meta">@AliasFor</span>(annotation = ComponentScan.class, attribute = <span class="string">"nameGenerator"</span>)</span><br><span class="line">	Class&lt;? extends BeanNameGenerator&gt; nameGenerator() <span class="keyword">default</span> BeanNameGenerator.class;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 指定是否使用代理模式</span></span><br><span class="line">	<span class="meta">@AliasFor</span>(annotation = Configuration.class)</span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">proxyBeanMethods</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">true</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看了这么多，可以发现<code>@SpringBootApplication</code>的所有方法都是作用于它的子注解。</p>
+<h2 id="4-总结">4. 总结</h2>
+<p>通过<code>@SpringBootApplication</code>注解，我们来看一下这个注解可以在项目启动时做哪些事。</p>
+<ul>
+<li>通过<code>@SpringBootConfiguration</code>将主程序标记为<code>@Configuration</code>，<code>@Configuration</code>内部又有<code>@Component</code>，所以会被扫描到，并且其生成的Bean也会被加入到容器中。</li>
+<li>通过<code>@EnableAutoConfiguration</code>先通过<code>@AutoConfigurationPackage</code>将有该注解的类的包下的全部类都注入spring(<strong>不包括子包</strong>)，然后通过<code>@Import(AutoConfigurationImportSelector.class)</code>判断需要自动配置的类，将他们也都注入到Spring中。</li>
+<li>通过<code>@ComponentScan</code>，将被标记类的包及其子包下所有的类注册到spring容器（通过exclude排除那些已经被注册过的类）。</li>
+</ul>
+<p><strong><code>@EnableAutoConfiguration</code>和<code>@ComponentScan</code>的不同</strong></p>
+<ul>
+<li><code>@EnableAutoConfiguration</code>只会注册当前包下的类，而<code>@ComponentScan</code>是当前包及其子包下的类。</li>
+<li><code>@EnableAutoConfiguration</code>是通过<code>registerBeanDefinition</code>方法注册bean，而<code>@ComponentScan</code>是在<code>ConfigurationClassParser</code>类中，通过<code>this.componentScanParser.parse</code>注册bean</li>
+</ul>
+<hr>
+<p>学习笔记，如有错误欢迎指出，立即改正。</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/article/JAVA/java基础面试题/" data-toggle="tooltip" data-placement="top" title="java基础面试题">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#springbootapplication注解-从源码分析"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">@SpringBootApplication&#x6CE8;&#x89E3;-&#x4ECE;&#x6E90;&#x7801;&#x5206;&#x6790;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-启动类的写法"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">1. &#x542F;&#x52A8;&#x7C7B;&#x7684;&#x5199;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-springbootapplication的注解"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">2. @SpringBootApplication&#x7684;&#x6CE8;&#x89E3;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#21-target"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">2.1 @Target</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#22-retention"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">2.2 @Retention</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#23-documented"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">2.3 @Documented</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#24-inherited"><span class="toc-nav-number">1.2.4.</span> <span class="toc-nav-text">2.4 @Inherited</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#25-springbootconfiguration"><span class="toc-nav-number">1.2.5.</span> <span class="toc-nav-text">2.5 @SpringBootConfiguration</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#26-enableautoconfiguration"><span class="toc-nav-number">1.2.6.</span> <span class="toc-nav-text">2.6 @EnableAutoConfiguration</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#27-componentscan"><span class="toc-nav-number">1.2.7.</span> <span class="toc-nav-text">2.7 @ComponentScan</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-springbootapplication的方法"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">3. @SpringBootApplication&#x7684;&#x65B9;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4-总结"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">4. &#x603B;&#x7ED3;</span></a></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://allwin.cyou/" target="_blank">与赢留学生二手交易平台</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/JimWang97">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/宇靖-王-554272190">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; JimWang 2021 
+                    <br>
+                    Theme by BeanTech
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://jimwang97.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://jimwang97.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
